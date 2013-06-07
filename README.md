@@ -29,5 +29,5 @@ Latest Updates:
 
 Version 0.0.1:
 
-- Initial release of DZAI Lite
+- Initial release of DZAI Lite based on DZAI version 0.9.5
 - Changes in equipType/weapongrade tiered system are planned.
