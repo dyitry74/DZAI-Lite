@@ -154,9 +154,7 @@ if (isServer) then
 		[_grp,_j+i] setWaypointStatements ["true", "if ((random 3) > 2) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
 		
 		if (_debug > 0) then {
-			//_markername = str(_wp_array select _i);
 			_markername = format["%1_%2",_grp,_i];
-			//diag_log format ["DEBUG :: Created waypoint marker %1.",_markername];
 			_marker = createMarker[_markername,[_cur_pos select 0,_cur_pos select 1]];
 			_marker setMarkerShape "ELLIPSE";
 			_marker setMarkerType "Dot";

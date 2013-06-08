@@ -5,10 +5,10 @@
 	
 	Usage: Called by a dynamic trigger when all players have left the trigger area.
 
-	Last updated: 1:26 PM 6/8/2013
+	Last updated: 4:44 PM 6/8/2013
 	
 */
-private ["_trigger","_grpArray","_isCleaning","_grpCount","_waitTime","_spawnCount","_newPos","_deadGroups","_allDead"];
+private ["_trigger","_grpArray","_isCleaning","_grpCount","_waitTime","_spawnCount","_newPos"];
 if (!isServer) exitWith {};							//Execute script only on server.
 
 _trigger = _this select 0;							//Get the trigger object
