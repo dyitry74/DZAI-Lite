@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 5:56 PM 6/6/2013
+	Last updated: 12:23 AM 6/8/2013
 */
 private["_worldname"];
 
@@ -43,10 +43,7 @@ DZAI_tempNVGs = false;										//If normal probability check for spawning NVGs 
 
 //AI loot Configuration										(Edible and Medical items, Miscellaneous items, Skin packs)
 DZAI_weaponGrades = [0,1,2,3];								//All possible weapon grades. A "weapon grade" is a tiered classification of gear. 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
-DZAI_gradeChances0 = [0.85,0.15,0.00,0.00];					//equipType = 0 - most AI will have basic pistols or rifles, and occasionally common military weapons.
-DZAI_gradeChances1 = [0.55,0.40,0.04,0.01];					//equipType = 1 - most AI will have common rifles, many will have common military weapons. Very rarely, AI will spawn with high-grade military or helicrash weapons.
-DZAI_gradeChances2 = [0.30,0.55,0.11,0.04];					//equipType = 2 - most AI carry military weapons, and occasionally high-grade military weapons.
-DZAI_gradeChances3 = [0.00,0.60,0.33,0.07];					//equipType = 3 - All AI will carry at least a military-grade weapon. Many will be carrying high-grade military weapons.
+DZAI_gradeChances = [0.30,0.55,0.11,0.04];					//Probabilities of generating each weapongrade (0,1,2,3).
 
 //NOTHING TO EDIT BEYOND THIS POINT.
 

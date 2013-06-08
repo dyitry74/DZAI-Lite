@@ -3,7 +3,7 @@
 	
 	Description: Handles startup process for DZAI Lite. Does not contain any values intended for modification.
 	
-	Last updated: 5:56 PM 6/6/2013
+	Last updated: 12:23 AM 6/8/2013
 */
 
 diag_log "[DZAI] Initializing DZAI Lite addon. Reading dzai_variables.sqf.";
@@ -22,7 +22,8 @@ EAST setFriend [resistance, 1];
 WEST setFriend [EAST, 0];									//West (Player side) is hostile to all.
 WEST setFriend [resistance, 0];
 
-	waituntil {!isnil "bis_fnc_init"};
+	//waituntil {!isnil "bis_fnc_init"};
+	//waituntil {!isnil "BIS_fnc_selectRandom"};
 	diag_log "[DZAI] Compiling DZAI functions.";
 	// [] call BIS_fnc_help;
 	//Compile general functions.
@@ -35,7 +36,7 @@ WEST setFriend [resistance, 0];
 	fnc_selectRandomWeighted = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_selectRandomWeighted.sqf";
 	fnc_createAI_NR = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_createAI_NR.sqf";
 	fnc_damageAI = 					compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_damageHandlerAI.sqf";
-	fnc_getGradeChances =			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_getGradeChances.sqf";
+	//fnc_getGradeChances =			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_getGradeChances.sqf";
 	fnc_initTrigger = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_initTrigger.sqf";
 	fnc_BIN_taskPatrol = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\BIN_taskPatrol.sqf";
 	if (DZAI_debugMarkers < 1) then {	fnc_aiBrain = compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\aiBrain.sqf";} else {
@@ -48,7 +49,7 @@ WEST setFriend [resistance, 0];
 	
 //Load default DZAI loot tables. These tables include weapons and other items that can be added to an AI unit's inventory.
 //Do not delete this file, as it is required for DZAI to work.
-#include "base_classname_configs\default_classnames.sqf"
+#include "base_classname_configs\base_classnames.sqf"
 
 private["_worldname"];
 _worldname=toLower format ["%1",worldName];
@@ -141,7 +142,7 @@ switch (_worldname) do {
     };
 };
 
-if (DZAI_verifyTables) then {["DZAI_RiflesDefault0","DZAI_RiflesDefault1","DZAI_RiflesDefault2","DZAI_RiflesDefault3","DZAI_Backpacks0","DZAI_Backpacks1","DZAI_Backpacks2","DZAI_Backpacks3","DZAI_BanditTypesDefault"] execVM "\z\addons\dayz_server\DZAI\scripts\verifyTables.sqf";};
-if (DZAI_dynTriggersMax > 0) then {[DZAI_dynTriggersMax,DZAI_dynEquipType] execVM '\z\addons\dayz_server\DZAI\scripts\spawnTriggers_random.sqf';};
+if (DZAI_verifyTables) then {["DZAI_Rifles0","DZAI_Rifles1","DZAI_Rifles2","DZAI_Rifles3","DZAI_Backpacks0","DZAI_Backpacks1","DZAI_Backpacks2","DZAI_Backpacks3","DZAI_BanditTypes"] execVM "\z\addons\dayz_server\DZAI\scripts\verifyTables.sqf";};
+if (DZAI_dynTriggersMax > 0) then {[DZAI_dynTriggersMax] execVM '\z\addons\dayz_server\DZAI\scripts\spawnTriggers_random.sqf';};
 if (DZAI_monitor) then {[] execVM '\z\addons\dayz_server\DZAI\scripts\dzai_monitor.sqf';};
 if (DZAI_debugLevel > 0) then {diag_log "[DZAI] DZAI Lite loading complete.";};

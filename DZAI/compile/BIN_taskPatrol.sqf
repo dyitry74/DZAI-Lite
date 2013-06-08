@@ -156,12 +156,8 @@ if (isServer) then
 		if (_debug > 0) then {
 			//_markername = str(_wp_array select _i);
 			_markername = format["%1_%2",_grp,_i];
+			//diag_log format ["DEBUG :: Created waypoint marker %1.",_markername];
 			_marker = createMarker[_markername,[_cur_pos select 0,_cur_pos select 1]];
-			//_marker setMarkerShape "ICON";
-			//_markername setMarkerType "DOT";
-			//_markername setMarkerType "WAYPOINT";
-			//_markername setMarkerBrush "SOLID";
-			//_markername setMarkerColor "ColorBlue";
 			_marker setMarkerShape "ELLIPSE";
 			_marker setMarkerType "Dot";
 			_marker setMarkerColor "ColorBlue";

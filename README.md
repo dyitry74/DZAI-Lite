@@ -31,3 +31,10 @@ Version 0.0.1:
 
 - Initial release of DZAI Lite based on DZAI version 0.9.5
 - Changes in equipType/weapongrade tiered system are planned.
+
+Version 0.0.2:
+
+- [FIXED] Debug markers for patrol waypoints are now properly removed when AI units are despawned.
+- [FIXED] Dynamic triggers no longer remain active due to player presence if all AI units in the area have been killed. Despawn process is forced 2 minutes after the last AI unit in the area is killed.
+- [REMOVED] Removed fn_getGradeChances.sqf with the removal of the equipType classification system.
+- [MODIFIED] DZAI_gradeChances0-1 tables have been simplified into a single DZAI_gradeChances table.

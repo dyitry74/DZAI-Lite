@@ -6,15 +6,14 @@
 	
 	Last updated: 4:08 PM 6/7/2013
 */
-private ["_numTriggers","_equipType","_trigOnAct","_retryCount","_triggerRadius"];
+private ["_numTriggers","_trigOnAct","_retryCount","_triggerRadius"];
 if (!isServer) exitWith {};
 
 _numTriggers = _this select 0;							//Number of triggers to create
-_equipType = if ((count _this) > 1) then {_this select 1} else {1};
 
 if (_numTriggers == 0) exitWith {};						// Exit script if there is nothing to spawn
 
-_trigOnAct = format["[%1,%2,%3,thisTrigger,thisList,%4] call fnc_spawnBandits_random_NR",DZAI_dynAIMin,DZAI_dynAIAdd,300,_equipType];
+_trigOnAct = format["[%1,%2,%3,thisTrigger,thisList] call fnc_spawnBandits_random_NR",DZAI_dynAIMin,DZAI_dynAIAdd,300];
 
 if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Spawning %1 dynamic trigger spawns in 60 seconds (spawnTriggers_random).",_numTriggers];};
 
@@ -55,5 +54,5 @@ for "_i" from 1 to _numTriggers do {
 
 if (_retryCount > 0) then {
 	diag_log format ["DEBUG :: Retrying %1 dynamic trigger spawns.",_retryCount];
-	[_retryCount,DZAI_dynEquipType] execVM '\z\addons\dayz_server\DZAI\scripts\spawnTriggers_random.sqf';
+	[_retryCount] execVM '\z\addons\dayz_server\DZAI\scripts\spawnTriggers_random.sqf';
 };

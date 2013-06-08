@@ -3,9 +3,9 @@
 		
 		Description: Adds loot to AI corpse if killed by a player, reveals the killer to the victim's group.
 		
-        Usage: [_unit,_weapongrade] spawn fnc_banditAIKilled;
+        Usage:
 		
-		Last updated: 6/3/2013
+		Last updated: 12:23 AM 6/8/2013
 */
 
 private["_weapongrade","_victim","_killer","_killerDist","_removeNVG","_trigger","_gradeChances"];

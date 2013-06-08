@@ -1,21 +1,24 @@
 /*
 	despawnBandits_NR
-	
-	Usage: Called by a dynamic trigger when all players have left the trigger area.
-	
+
 	Description: Deletes all AI units spawned by a trigger once all players leave the trigger area, then moves the trigger to a random location. Adapted from Sarge AI.
 	
-	Last updated: 4:30 PM 6/7/2013
+	Usage: Called by a dynamic trigger when all players have left the trigger area.
+
+	Last updated: 1:26 PM 6/8/2013
 	
 */
-private ["_trigger","_grpArray","_isCleaning","_grpCount","_waitTime","_spawnCount","_newPos","_nearbyPlayer","_retries"];
+private ["_trigger","_grpArray","_isCleaning","_grpCount","_waitTime","_spawnCount","_newPos","_deadGroups","_allDead"];
 if (!isServer) exitWith {};							//Execute script only on server.
 
 _trigger = _this select 0;							//Get the trigger object
 
 _grpArray = _trigger getVariable ["GroupArray",[]];	//Find the groups spawned by the trigger. Or set an empty group array if none are found.
 _isCleaning = _trigger getVariable ["isCleaning",nil];	//Find whether or not the trigger has been marked for cleanup, otherwise assume a cleanup has already happened.
+_forceDespawn = _trigger getVariable ["forceDespawn",false];	//Check whether to run despawn script even if players are present in the trigger area.
+
 _grpCount = count _grpArray;
+
 //diag_log format ["DEBUG:: _grpCount is %1. _isCleaning is %2.",_grpCount,_isCleaning];
 if (isNil "_isCleaning") exitWith {if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: Trigger's isCleaning variable is nil. Exiting despawn script.";};};
 if ((_grpCount == 0) || (_isCleaning)) exitWith {if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: Trigger's group array is empty, or a despawn script is already running. Exiting despawn script.";};};				//Exit script if the trigger hasn't spawned any AI units, or if a despawn script is already running for the trigger.
@@ -24,7 +27,7 @@ _trigger setVariable["isCleaning",true,false];		//Mark the trigger as being in a
 if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: No players remain in trigger area. Deleting spawned AI in %1 seconds.",DZAI_despawnWait];};
 sleep DZAI_despawnWait;									//Wait some time before deleting units. (amount of time to allow units to exist when the trigger area has no players)
 
-if (triggerActivated _trigger) exitWith {
+if ((triggerActivated _trigger) && (!_forceDespawn)) exitWith {
 	if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: A player has entered the trigger area. Cancelling despawn script.";}; //Exit script if trigger has been reactivated since _waitTime seconds has passed.
 	_trigger setVariable ["isCleaning",false,false];	//Allow next despawn request.
 };			
@@ -36,7 +39,7 @@ if (triggerActivated _trigger) exitWith {
 		//diag_log format ["DEBUG :: Estimating %1 waypoints for group %2.",_markerCount,_x];
 		for "_i" from 1 to (count (waypoints _x) - 3) do {
 			_markerName = format ["%1_%2",_x,_i];
-			//diag_log format ["DEBUG :: Deleting marker: %1_%2.",_x,_i];
+			//diag_log format ["DEBUG :: Deleting marker: %1_%2. (Actual: %3)",_x,_i,_markerName];
 			deleteMarker _markerName;
 		};
 		sleep 0.2;
@@ -59,6 +62,7 @@ _trigger setVariable ["isCleaning",nil,false];
 _trigger setVariable ["patrolDist",nil,false];
 _trigger setVariable ["gradeChances",nil,false];
 _trigger setVariable ["spawnCount",nil,false];
+_trigger setVariable ["forceDespawn",nil,false];
 
 _newPos = [(getMarkerPos 'DZAI_centerMarker'),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
 _trigger setPos _newPos;

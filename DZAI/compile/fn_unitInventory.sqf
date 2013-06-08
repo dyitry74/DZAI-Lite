@@ -5,7 +5,7 @@
 	
 	Usage: [_unit,_weapongrade] call fnc_unitInventory;
 	
-	Last updated: 6/2/2013
+	Last updated: 12:24 AM 6/8/2013
 */
     private ["_unit","_bag","_weapongrade","_bags","_gadgetsArray"];
     _unit = _this select 0;

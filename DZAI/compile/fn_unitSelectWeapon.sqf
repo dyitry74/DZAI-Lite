@@ -5,7 +5,7 @@
 	
 	Usage: [_unit, _weapongrade] call fnc_unitSelectRifle;
 	
-	Last updated: 6/2/2013
+	Last updated: 12:23 AM 6/8/2013
 */
 	private ["_unit","_rifle","_rifles","_weapongrade","_magazine"];
 	_unit = _this select 0;
@@ -13,16 +13,16 @@
 	
 	switch (_weapongrade) do {
 	  case 0: {		//Farm / Residential / Supermarket
-		_rifles = DZAI_RiflesDefault0;
+		_rifles = DZAI_Rifles0;
 	  };
 	  case 1: {		//Military
-		_rifles = DZAI_RiflesDefault1;
+		_rifles = DZAI_Rifles1;
 	  };
 	  case 2: {		//Military Special
-		_rifles = DZAI_RiflesDefault2;
+		_rifles = DZAI_Rifles2;
 	};
 	  case 3: {		//HeliCrash
-		_rifles = DZAI_RiflesDefault3;
+		_rifles = DZAI_Rifles3;
 	 };
 	  default {		//Default - Give a Winchester if weapongrade is not within 0-3 or not declared.
 	    _rifles = ["Winchester1866"];
