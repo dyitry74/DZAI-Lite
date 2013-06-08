@@ -33,7 +33,6 @@ DZAI_despawnWait = 120;										//Time to allow AI to remain in seconds before 
 //Dynamic Trigger Settings
 //DZAI automatically determines the settings for dynamic triggers. To manually change a value, replace "auto" with a value for the setting.
 DZAI_dynSpawnDelay = 20;									//Time to wait between creating each randomly-placed trigger (seconds). (Default: 20)
-DZAI_dynEquipType = 2;										//Equipment Type of randomly-spawned AI. (Value Range: 0-3). 0: Lowest grade weaponry. 3: Highest grade weaponry. (Default: 2)
 DZAI_dynAIMin = 2;											//Minimum number of AI to spawn per randomly-spawned trigger.  (Default: 2)
 DZAI_dynAIAdd = 3;											//Maximum number of additional AI to spawn per randomly-spawned trigger.	(Maximum Total AI/Trigger =  DZAI_dynAIMin + (0 to DZAI_dynAIAdd))  (Default: 3)
 
