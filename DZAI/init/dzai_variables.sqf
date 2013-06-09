@@ -27,14 +27,11 @@ DZAI_zDetectRange = 200;									//Maximum distance for AI to detect zombies. (D
 
 //AI Spawning Variables
 DZAI_maxAIUnits = 65535;									//Limit of total AI spawned by DZAI (0: Disables AI spawning completely)
-DZAI_delDeadTime = 300;										//Time to allow AI corpse to remain (in seconds) before deleting it.
 DZAI_despawnWait = 120;										//Time to allow AI to remain in seconds before being removed when all players have left a trigger area. (Default: 120)
 
 //Dynamic Trigger Settings
-//DZAI automatically determines the settings for dynamic triggers. To manually change a value, replace "auto" with a value for the setting.
+//DZAI automatically determines the settings for dynamic triggers. Below are settings that can be manually adjusted.
 DZAI_dynSpawnDelay = 20;									//Time to wait between creating each randomly-placed trigger (seconds). (Default: 20)
-DZAI_dynAIMin = 2;											//Minimum number of AI to spawn per randomly-spawned trigger.  (Default: 2)
-DZAI_dynAIAdd = 3;											//Maximum number of additional AI to spawn per randomly-spawned trigger.	(Maximum Total AI/Trigger =  DZAI_dynAIMin + (0 to DZAI_dynAIAdd))  (Default: 3)
 
 //Extra AI Settings
 DZAI_findKiller = false;									//Enable AI to become aware of who killed an AI group member. If alive, AI group leader will investigate last known position of killer. Players with radios are able to evade detection (Default: false)
@@ -42,7 +39,7 @@ DZAI_tempNVGs = false;										//If normal probability check for spawning NVGs 
 
 //AI loot Configuration										(Edible and Medical items, Miscellaneous items, Skin packs)
 DZAI_weaponGrades = [0,1,2,3];								//All possible weapon grades. A "weapon grade" is a tiered classification of gear. 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
-DZAI_gradeChances = [0.30,0.55,0.11,0.04];					//Probabilities of generating each weapongrade (0,1,2,3).
+DZAI_gradeChances = [0.30,0.56,0.10,0.04];					//Probabilities of generating each weapongrade (0,1,2,3).
 
 //NOTHING TO EDIT BEYOND THIS POINT.
 

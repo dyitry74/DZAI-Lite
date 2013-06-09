@@ -7,7 +7,7 @@
 	
 	Last updated: 4:28 PM 6/7/2013
 */
-private ["_minAI","_addAI","_patrolDist","_trigger","_unitGroupArray","_triggerPos","_totalAI","_maxDist","_unitGroup","_pos","_nearbyPlayers","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_formation","_wp"];
+private ["_minAI","_addAI","_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount"];
 if (!isServer) exitWith {};
 
 //Check if there are too many AI units in the game.
@@ -22,17 +22,21 @@ _unitArray = _this select 4;
 _unitGroupArray = _trigger getVariable ["GroupArray",[]];			
 if (count _unitGroupArray > 0) exitWith {if (DZAI_debugLevel > 0) then {diag_log "DZAI Debug: Active groups found. Exiting spawn script (spawnBandits_random_NR)";};};						
 
-_totalAI = (_minAI + round(random _addAI));					
-if (_totalAI == 0) exitWith {};								
-
 _playerArray = [];
 {
 	if (isPlayer _x) then {
 		_playerArray set [(count _playerArray),_x];	//build list of player units within trigger area.
 	};
 } forEach _unitArray;
-diag_log format ["%1 units within trigger area. %2 are players.",(count _unitArray),(count _playerArray)];
+_playerCount = (count _playerArray);
+diag_log format ["%1 units within trigger area. %2 are players.",(count _unitArray),_playerCount];
 
+_totalAI = -1;
+if (_playerCount < 7) then {
+	_totalAI = (round(2.6*(ln _playerCount) + 2)) + round(random 1) - round(random 1);				//Calculate number of AI to spawn based on number of players nearby.
+} else {
+	_totalAI = (6 + round(random 1) - round(random 1));												//Set AI upper limit.
+};
 _targetPlayer = _playerArray call BIS_fnc_selectRandom; 	//select random player to use as reference point for spawning.
 _playerPos = getPosATL _targetPlayer;
 

@@ -1,34 +1,15 @@
 /*
 	fnc_unitInventory
-       
-	Description: Adds a random backpack to AI unit, and a chance to add binoculars/NVGoggles. If unit has weapongrade 2 or higher, assigns temporary unlootable NVGs if not previously given one and DZAI_tempNVGs is set to true.
+	
+	Description: Adds binoculars/NVGoggles to AI unit. If unit has weapongrade 2 or higher, assigns temporary unlootable NVGs if not previously given one and DZAI_tempNVGs is set to true.
 	
 	Usage: [_unit,_weapongrade] call fnc_unitInventory;
 	
-	Last updated: 12:24 AM 6/8/2013
+	Last updated: 6:11 PM 6/8/2013
 */
-    private ["_unit","_bag","_weapongrade","_bags","_gadgetsArray"];
+    private ["_unit","_weapongrade","_gadgetsArray"];
     _unit = _this select 0;
 	_weapongrade = _this select 1;
-	
-	//Generate random backpack based on weapongrade
-	switch (_weapongrade) do {
-	  case 0: {		//Beginner backpacks
-		_bags = DZAI_Backpacks0;
-	  };
-	  case 1: {		//Residential/Supermarket/Military-grade backpacks
-		_bags = DZAI_Backpacks1;
-	  };
-	  case 2: {		//Military-Grade Backpacks
-		_bags = DZAI_Backpacks2;
-	};
-	  case 3: {		//Coyote Backpack
-		_bags = DZAI_Backpacks3;
-	 };
-	  default {		//Default
-	    _bags = ["DZ_Patrol_Pack_EP1"];
-	  };
-	};
 	
 	_gadgetsArray = [];
 	if (_weapongrade < 2) then {
@@ -36,10 +17,6 @@
 	} else {
 		_gadgetsArray = DZAI_gadgets1;
 	};
-	
-	_bag = _bags call BIS_fnc_selectRandom;
-	_unit addBackpack _bag;
-	if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: Generated Backpack: %1 for AI.",_bag];};
 
 	private ["_chance","_gadget"];
 	//diag_log format ["DEBUG :: Counted %1 tools in _gadgetsArray.",(count _gadgetsArray)];

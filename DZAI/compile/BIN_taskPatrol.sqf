@@ -149,12 +149,14 @@ if (isServer) then
 		_wp = _grp addWaypoint [_cur_pos, 0];
 		_wp setWaypointType "MOVE";
 		_wp setWaypointCompletionRadius (5 + _slack);
-		[_grp,_j+i] setWaypointTimeout [0, 2, 16];
+		[_grp,_j+_i] setWaypointTimeout [0, 2, 16];
 		// When completing waypoint have 33% chance to choose a random next wp
-		[_grp,_j+i] setWaypointStatements ["true", "if ((random 3) > 2) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
+		[_grp,_j+_i] setWaypointStatements ["true", "if ((random 3) > 2) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
 		
 		if (_debug > 0) then {
+			//_markername = str(_wp_array select _i);
 			_markername = format["%1_%2",_grp,_i];
+			//diag_log format ["DEBUG :: Created waypoint marker %1.",_markername];
 			_marker = createMarker[_markername,[_cur_pos select 0,_cur_pos select 1]];
 			_marker setMarkerShape "ELLIPSE";
 			_marker setMarkerType "Dot";

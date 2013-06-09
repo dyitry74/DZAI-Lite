@@ -1,4 +1,4 @@
-DZAI Lite 0.0.2 - AI Addon for DayZ
+DZAI Lite 0.0.3 - AI Addon for DayZ
 ============
 
 
@@ -38,3 +38,10 @@ Latest Updates:
 - [FIXED] Dynamic triggers no longer remain active due to player presence if all AI units in the area have been killed. Despawn process is forced 2 minutes after the last AI unit in the area is killed.
 - [REMOVED] Removed fn_getGradeChances.sqf with the removal of the equipType classification system.
 - [MODIFIED] DZAI_gradeChances0-3 tables have been simplified into a single DZAI_gradeChances table.
+
+0.0.3 update:
+
+- [NEW] Number of AI spawned per trigger is now dependent on the number of players present in the trigger instead of being configured. (minimum of 2 to maximum of 6, +/- 1)
+- [REMOVED] AI no longer carry backpacks.
+- [MODIFIED] Lowered chance of generating NVGs in high tier tools table from 25% to 20%.
+- [MODIFIED] Dynamic trigger activation timings changed from 5/7/10 seconds to 5/10/15 seconds.
