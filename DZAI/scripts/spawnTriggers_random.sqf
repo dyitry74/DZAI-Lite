@@ -30,7 +30,7 @@ for "_i" from 1 to _numTriggers do {
 	_trigger = createTrigger ["EmptyDetector",_trigPos];
 	_trigger setTriggerArea [_triggerRadius, _triggerRadius, 0, false];
 	_trigger setTriggerActivation ["ANY", "PRESENT", true];
-	_trigger setTriggerTimeout [5, 10, 15, true];
+	_trigger setTriggerTimeout [5, 10, 30, true];
 	_trigger setTriggerStatements ["{isPlayer _x} count thisList > 0;",_trigOnAct, "[thisTrigger] spawn fnc_despawnBandits_NR;"];
 	if (DZAI_debugMarkers == 1) then {													//Adjust to debugLevel > 1
 		private ["_markername","_marker"];
