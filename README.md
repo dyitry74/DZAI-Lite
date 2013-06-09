@@ -1,4 +1,4 @@
-DZAI Lite 0.0.3 - AI Addon for DayZ
+DZAI Lite 0.0.4 - AI Addon for DayZ
 ============
 
 
@@ -45,3 +45,10 @@ Latest Updates:
 - [REMOVED] AI no longer carry backpacks.
 - [MODIFIED] Lowered chance of generating NVGs in high tier tools table from 25% to 20%.
 - [MODIFIED] Dynamic trigger activation timings changed from 5/7/10 seconds to 5/10/15 seconds.
+
+0.0.4 update:
+
+- [FIXED] Removed all remaining variables relating to minimum/additional AI to spawn for dynamic triggers.
+- [REMOVED] Dynamic trigger spawning script no longer avoids player positions.
+- [MODIFIED] Chernarus: adjusted spawning range of dynamic triggers from 5250m to 6000m. Increased number of dynamic triggers from 20 to 22.
+- [MODIFIED] Spawning range of AI from dynamic triggers increased from 125m (+125m max) to 125m (+175m max).
