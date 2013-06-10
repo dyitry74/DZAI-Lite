@@ -23,10 +23,8 @@ if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Spawning %1 dynamic 
 sleep 60;
 
 for "_i" from 1 to _numTriggers do {
-	private ["_trigger","_trigPos","_nearbyPlayer"];
-	_nearbyPlayer = false;
+	private ["_trigger","_trigPos"];
 	_trigPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
-	_nearbyPlayer = ({isPlayer _x} count (_trigPos nearEntities [["AllVehicles","CAManBase"],_triggerRadius]) > 0);
 	_trigger = createTrigger ["EmptyDetector",_trigPos];
 	_trigger setTriggerArea [_triggerRadius, _triggerRadius, 0, false];
 	_trigger setTriggerActivation ["ANY", "PRESENT", true];
