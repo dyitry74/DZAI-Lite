@@ -11,6 +11,6 @@ sleep 60;
 
 while {true} do {
 	if ((isNil "DZAI_numAIUnits") || (DZAI_numAIUnits < 0)) then {DZAI_numAIUnits = 0; diag_log "DEBUG :: Active AI count has been force reset to zero.";};
-	diag_log format ["DZAI Monitor :: %1/%2 (cur/max) active AI units. %3/%4 (active/total) dynamic triggers.",DZAI_numAIUnits,DZAI_maxAIUnits,DZAI_actDynTrigs,DZAI_curDynTrigs];
+	diag_log format ["DZAI Monitor :: %1 active AI units. %2/%3 (active/total) dynamic triggers.",DZAI_numAIUnits,DZAI_actDynTrigs,DZAI_curDynTrigs];
 	sleep DZAI_monitorRate;
 };

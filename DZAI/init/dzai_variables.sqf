@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 8:24 PM 6/9/2013
+	Last updated: 2:26 AM 6/10/2013
 */
 private["_worldname"];
 
@@ -26,12 +26,11 @@ DZAI_refreshRate = 15;										//Amount of time in seconds between AI ammo and 
 DZAI_zDetectRange = 200;									//Maximum distance for AI to detect zombies. (Default: 200)
 
 //AI Spawning Variables
-DZAI_maxAIUnits = 65535;									//Limit of total AI spawned by DZAI (0: Disables AI spawning completely)
 DZAI_despawnWait = 120;										//Time to allow AI to remain in seconds before being removed when all players have left a trigger area. (Default: 120)
 
-//Dynamic Trigger Settings
-//DZAI automatically determines the settings for dynamic triggers. Below are settings that can be manually adjusted.
-DZAI_dynSpawnDelay = 5;									//Time to wait between creating each randomly-placed trigger (seconds). (Default: 5)
+//Dynamic Trigger Settings - DZAI automatically determines the settings for dynamic triggers. Below are settings that can be manually adjusted.
+DZAI_dynSpawnDelay = 5;										//Time to wait between creating each randomly-placed trigger (seconds). (Default: 5)
+DZAI_dynSpawnChance = 0.75;									//Probability of spawning AI when a dynamic trigger is activated. If probability check fails, the trigger is relocated. (Default: 0.75)
 
 //Extra AI Settings
 DZAI_findKiller = false;									//Enable AI to become aware of who killed an AI group member. If alive, AI group leader will investigate last known position of killer. Players with radios are able to evade detection (Default: false)

@@ -5,7 +5,7 @@ DZAI Lite 0.0.5 - AI Addon for DayZ
 Introduction
 ============
 
-DZAI Lite is a simplified version of the DZAI addon that retains the dynamic spawn trigger system while removing all static triggers and any unnecessary functions.
+DZAI Lite is a simplified version of the DZAI addon (https://github.com/dayzai/DayZBanditAI) that retains the dynamic spawn trigger system while removing all static triggers and any unnecessary functions.
 
 Summary of simplifications made in DZAI Lite:
 

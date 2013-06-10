@@ -10,15 +10,24 @@
 private ["_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount"];
 if (!isServer) exitWith {};
 
-//Check if there are too many AI units in the game.
-if (DZAI_numAIUnits >= DZAI_maxAIUnits) exitWith {diag_log format["DZAI Warning: Maximum number of AI reached! (%1)",DZAI_numAIUnits];};
-
 _patrolDist = _this select 0;
 _trigger = _this select 1;
 _unitArray = _this select 2;
 
 _unitGroupArray = _trigger getVariable ["GroupArray",[]];			
 if (count _unitGroupArray > 0) exitWith {if (DZAI_debugLevel > 0) then {diag_log "DZAI Debug: Active groups found. Exiting spawn script (spawnBandits_random_NR)";};};						
+
+if ((random 1) > DZAI_dynSpawnChance) exitWith {
+	private["_newPos"];
+	_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
+	_trigger setPos _newPos;
+	diag_log format ["DEBUG :: Probability check for dynamic AI spawn failed, relocating trigger to position %1.",_newPos];
+	if (DZAI_debugMarkers > 0) then {
+		private["_marker"];
+		_marker = format["trigger_%1",_trigger];
+		_marker setMarkerPos _newPos;
+	};
+};
 
 _playerArray = [];
 {
