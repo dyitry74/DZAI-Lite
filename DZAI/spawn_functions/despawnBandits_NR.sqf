@@ -5,10 +5,10 @@
 	
 	Usage: Called by a dynamic trigger when all players have left the trigger area.
 
-	Last updated: 1:26 PM 6/8/2013
+	Last updated: 8:18 PM 6/9/2013
 	
 */
-private ["_trigger","_grpArray","_isCleaning","_grpCount","_waitTime","_spawnCount","_newPos","_deadGroups","_allDead"];
+private ["_trigger","_grpArray","_isCleaning","_grpCount","_waitTime","_spawnCount","_newPos","_forceDespawn"];
 if (!isServer) exitWith {};							//Execute script only on server.
 
 _trigger = _this select 0;							//Get the trigger object
@@ -25,11 +25,23 @@ if ((_grpCount == 0) || (_isCleaning)) exitWith {if (DZAI_debugLevel > 1) then {
 
 _trigger setVariable["isCleaning",true,false];		//Mark the trigger as being in a cleanup state so that subsequent requests to despawn for the same trigger will not run.
 if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: No players remain in trigger area. Deleting spawned AI in %1 seconds.",DZAI_despawnWait];};
+if (DZAI_debugMarkers > 0) then {
+	private["_marker"];
+	_marker = format["trigger_%1",_trigger];
+	_marker setMarkerColor "ColorGreenAlpha";
+	_marker setMarkerAlpha 0.3;							//Light green: Active trigger awaiting despawn.
+};
 sleep DZAI_despawnWait;									//Wait some time before deleting units. (amount of time to allow units to exist when the trigger area has no players)
 
 if ((triggerActivated _trigger) && (!_forceDespawn)) exitWith {
 	if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: A player has entered the trigger area. Cancelling despawn script.";}; //Exit script if trigger has been reactivated since _waitTime seconds has passed.
 	_trigger setVariable ["isCleaning",false,false];	//Allow next despawn request.
+	if (DZAI_debugMarkers > 0) then {
+		private["_marker"];
+		_marker = format["trigger_%1",_trigger];
+		_marker setMarkerColor "ColorOrange";
+		_marker setMarkerAlpha 0.9;						//Reset trigger indicator color to Active.
+	};
 };			
 
 {
@@ -45,7 +57,7 @@ if ((triggerActivated _trigger) && (!_forceDespawn)) exitWith {
 		sleep 0.2;
 	};
 	{deleteVehicle _x} forEach (units _x);			//Delete all units of each group.
-	sleep 0.2;
+	sleep 0.5;
 	deleteGroup _x;									//Delete the group after its units are deleted.
 } forEach _grpArray;
 
@@ -71,7 +83,8 @@ if (DZAI_debugMarkers > 0) then {
 	private["_marker"];
 	_marker = format["trigger_%1",_trigger];
 	_marker setMarkerPos _newPos;
-	_marker setMarkerColor "ColorOrange";
+	_marker setMarkerColor "ColorYellow";			//Reset trigger indicator to Ready.
+	_marker setMarkerAlpha 0.8;
 };
 
 DZAI_actDynTrigs = (DZAI_actDynTrigs - 1);

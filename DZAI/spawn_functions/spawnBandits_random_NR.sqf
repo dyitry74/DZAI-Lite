@@ -5,7 +5,7 @@
 	
 	Description: Spawns a group of AI units some distance from a dynamically-spawned trigger. These units do not respawn after death.
 	
-	Last updated: 4:28 PM 6/7/2013
+	Last updated: 8:18 PM 6/9/2013
 */
 private ["_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount"];
 if (!isServer) exitWith {};
@@ -37,6 +37,15 @@ if (_playerCount < 7) then {
 };
 _targetPlayer = _playerArray call BIS_fnc_selectRandom; 	//select random player to use as reference point for spawning.
 _playerPos = getPosATL _targetPlayer;
+_trigger setPos _playerPos;									//Move trigger and marker to player's position.
+
+if (DZAI_debugMarkers > 0) then {
+	private["_marker"];
+	_marker = format["trigger_%1",_trigger];
+	_marker setMarkerPos _playerPos;
+	_marker setMarkerColor "ColorOrange";
+	_marker setMarkerAlpha 0.9;				//Dark orange: Activated trigger
+};
 
 _minDist = 125;
 _maxDist = (_minDist + random(175));
@@ -63,6 +72,7 @@ _unitGroup allowFleeing 0;
 {
 	_unitGroup reveal [_x,4];
 } forEach _playerArray;
+(leader _unitGroup) glanceAt _playerPos;
 
 _unitGroupArray set [count _unitGroupArray,_unitGroup];
 //diag_log format ["DEBUG :: _trigger %1, groupArray %2, _total AI %3.",_trigger,_unitGroupArray,_totalAI];

@@ -30,7 +30,7 @@ if (DZAI_findKiller && (_killerDist < 300)) then {
 	_unitGroup reveal [_killer,4];
 	if (alive _groupLeader) then {
 		_killerPos = getPos _killer;
-		_groupLeader doMove _killerPos;	_groupLeader moveTo _killerPos;
+		_groupLeader glanceAt _killer; _groupLeader doMove _killerPos;	_groupLeader moveTo _killerPos;
 		//diag_log "DEBUG :: Moving group leader to killer's last known position.";
 	} else {
 		//diag_log "DEBUG :: Group leader is dead.";

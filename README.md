@@ -1,4 +1,4 @@
-DZAI Lite 0.0.4 - AI Addon for DayZ
+DZAI Lite 0.0.5 - AI Addon for DayZ
 ============
 
 
@@ -9,10 +9,11 @@ DZAI Lite is a simplified version of the DZAI addon that retains the dynamic spa
 
 Summary of simplifications made in DZAI Lite:
 
-- AI do not carry any "extra" equipment (ie: pistols, consumable items). AI units will only carry a primary weapon, single magazine, backpack, and possibly Binoculars or NVGs.
+- AI do not carry any "extra" equipment (ie: pistols, consumable items). AI units will only carry a primary weapon, single magazine, and possibly Binoculars or NVGs.
 - No extra configuration files used for each map - DZAI Lite uses a single universal config file. To ensure compatibility with all maps, the classname verification option has been enabled by default.
-- No static AI spawns - gameplay in cities and towns is uninterrupted by AI.
-- Heavily reduced file size (DZAI: 440KB vs DZAI Lite: 76.7KB)
+- No static AI spawns - gameplay in cities and towns is mostly uninterrupted by AI.
+- Heavily reduced file size (DZAI: 440KB vs DZAI Lite: 75KB approx.)
+- Less settings to manually configure, many settings are automatically handled. Simply install and run.
 
 Installation Instructions:
 ============
@@ -53,3 +54,11 @@ Latest Updates:
 - [MODIFIED] Chernarus: adjusted spawning range of dynamic triggers from 5250m to 6000m. Increased number of dynamic triggers from 20 to 22.
 - [MODIFIED] Spawning range of AI from dynamic triggers increased from 125m (+125m max) to 125m (+175m max).
 - [MODIFIED] Dynamic trigger activation timings changed from 5/10/15 seconds to 5/10/30 seconds.
+
+0.0.5 update:
+
+- [NEW] Debug markers: Added color-coding for activation state of dynamic triggers. Yellow (Ready Trigger), Green (Awaiting Despawn), Orange (Activated Trigger).
+- [NEW] Dynamic triggers now relocate to center around a random player in the trigger area when activated. (Prevents player from quickly leaving the trigger area after entering).
+- [MODIFIED] Addition of glanceAt command for AI group leader to help locate player unit.
+- [MODIFIED] Modification of dynamic trigger amounts for each map.
+- [MODIFIED] Time delay in between each dynamic trigger spawn reduced from 20 seconds to 5 seconds.

@@ -4,7 +4,7 @@
 	Usage: 
 	Description: 
 	
-	Last updated: 4:08 PM 6/7/2013
+	Last updated: 8:20 PM 6/9/2013
 */
 private ["_numTriggers","_trigOnAct","_triggerRadius","_patrolRadius"];
 if (!isServer) exitWith {};
@@ -41,6 +41,7 @@ for "_i" from 1 to _numTriggers do {
 		_marker setMarkerBrush "SOLID";
 		_marker setMarkerSize [_triggerRadius, _triggerRadius];
 		_marker setMarkerColor "ColorYellow";
+		_marker setMarkerAlpha 0.8;		//Dark yellow = Trigger in ready state.
 	};
 	if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Dynamic trigger %1 of %2 spawned at %3 (spawnTriggers_random). Next trigger spawning in %4 seconds.",_i,_numTriggers,_trigPos,DZAI_dynSpawnDelay];};
 	DZAI_curDynTrigs = DZAI_curDynTrigs + 1;

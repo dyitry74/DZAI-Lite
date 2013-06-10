@@ -3,7 +3,7 @@
 	
 	Description: Handles startup process for DZAI Lite. Does not contain any values intended for modification.
 	
-	Last updated: 12:23 AM 6/8/2013
+	Last updated: 8:24 PM 6/9/2013
 */
 
 diag_log "[DZAI] Initializing DZAI Lite addon. Reading dzai_variables.sqf.";
@@ -66,73 +66,73 @@ switch (_worldname) do {
 	{
 		DZAI_centerMarker setMarkerPos [7953.9854, 7399.4653];
 		DZAI_centerSize = 6000;
-		DZAI_dynTriggersMax = 22;
+		DZAI_dynTriggersMax = 19;
 	};
 	case "utes":
 	{
 		DZAI_centerMarker setMarkerPos [3594.1797, 3726.0903];
 		DZAI_centerSize = 1250;
-		DZAI_dynTriggersMax = 6;
+		DZAI_dynTriggersMax = 4;
 	};
 	case "zargabad":
 	{
 		DZAI_centerMarker setMarkerPos [4181.522, 4087.2085];
 		DZAI_centerSize = 2750;
-		DZAI_dynTriggersMax = 11;
+		DZAI_dynTriggersMax = 9;
 	};
 	case "fallujah":
 	{
 		DZAI_centerMarker setMarkerPos [4865.4653, 4530.5254, 0];
 		DZAI_centerSize = 4500;
-		DZAI_dynTriggersMax = 17;
+		DZAI_dynTriggersMax = 14;
 	};
 	case "takistan":
 	{
 		DZAI_centerMarker setMarkerPos [7027.8721, 6796.8696];
 		DZAI_centerSize = 5750;
-		DZAI_dynTriggersMax = 21;
+		DZAI_dynTriggersMax = 18;
 	};
     case "tavi":
     {
 		DZAI_centerMarker setMarkerPos [11100.776, 11298.289, 1.5322094];
 		DZAI_centerSize = 8000;
-		DZAI_dynTriggersMax = 29;
+		DZAI_dynTriggersMax = 26;
     };
 	 case "lingor":
     {
 		DZAI_centerMarker setMarkerPos [3832.7305, 4662.5327];
 		DZAI_centerSize = 4000;
-		DZAI_dynTriggersMax = 15;
+		DZAI_dynTriggersMax = 13;
     };
     case "namalsk":
     {
 		DZAI_centerMarker setMarkerPos [6007.2007, 8589.5469];
 		DZAI_centerSize = 3750;
-		DZAI_dynTriggersMax = 14;
+		DZAI_dynTriggersMax = 12;
     };
     case "mbg_celle2":
     {
 		DZAI_centerMarker setMarkerPos [6337.6265, 6088.0913];
 		DZAI_centerSize = 6000;
-		DZAI_dynTriggersMax = 22;
+		DZAI_dynTriggersMax = 19;
     };
 	case "oring":
     {
 		DZAI_centerMarker setMarkerPos [5138.3276, 5535.9248];
 		DZAI_centerSize = 4500;
-		DZAI_dynTriggersMax = 17;
+		DZAI_dynTriggersMax = 14;
     };
 	case "panthera2":
     {
 		DZAI_centerMarker setMarkerPos [5503.541, 4348.9707];
 		DZAI_centerSize = 3800;
-		DZAI_dynTriggersMax = 15;
+		DZAI_dynTriggersMax = 12;
     };
 	case "isladuala":
     {
 		DZAI_centerMarker setMarkerPos [5307.73, 5020.272];
 		DZAI_centerSize = 4500;
-		DZAI_dynTriggersMax = 17;
+		DZAI_dynTriggersMax = 14;
     };
 	case "sara":
 	{
