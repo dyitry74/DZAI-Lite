@@ -72,7 +72,7 @@ _unitGroup allowFleeing 0;
 {
 	_unitGroup reveal [_x,4];
 } forEach _playerArray;
-(leader _unitGroup) glanceAt _playerPos;
+(leader _unitGroup) glanceAt _targetPlayer;
 
 _unitGroupArray set [count _unitGroupArray,_unitGroup];
 //diag_log format ["DEBUG :: _trigger %1, groupArray %2, _total AI %3.",_trigger,_unitGroupArray,_totalAI];
