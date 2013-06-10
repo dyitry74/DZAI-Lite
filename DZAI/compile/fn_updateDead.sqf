@@ -1,5 +1,5 @@
 /*
-	fnc_deleteVicim
+	fnc_updateDead
 	
 	Description:
 	
@@ -18,8 +18,8 @@ _unitGroup = (group _victim);
 _unitsAlive = {alive _x} count (units _unitGroup);
 
 if (_unitsAlive == 0) then {	//Continue only when all units of the group have died.
-	//diag_log format ["DEBUG :: All units in group %1 are dead.",_unitGroup];
-	
+	if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: All units in group %1 are dead. (fn_updateDead).",_unitGroup];};
+
 	//Create temporary dummy unit, will be deleted during despawn process.
 	//diag_log format ["DEBUG :: Creating temporary dummy unit for Group %1.",_unitGroup];
 	_dummy = _unitGroup createUnit ["Survivor2_DZ",[0,0,0],[],0,"FORM"];
@@ -39,8 +39,13 @@ if (_unitsAlive == 0) then {	//Continue only when all units of the group have di
 	_grpCount = (count _grpArray);
 
 	if (_deadGroups >= _grpCount) then {	//Continue only when all groups of the trigger have died
-		//diag_log format ["DEBUG :: All groups in trigger %1 are dead. Starting force despawn.",_trigger];
+		if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: All groups spawned by trigger %1 are dead. Starting force respawn. (fn_updateDead).",_trigger];};
 		_trigger setVariable ["forceDespawn",true];
 		[_trigger] spawn fnc_despawnBandits_NR;	//force despawning even if players are present in trigger area.
 	};
 };
+
+if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: AI killed, deleting body in %1 seconds. (fn_updateDead).",DZAI_dynRemoveDeadWait];};
+sleep DZAI_dynRemoveDeadWait;
+
+deleteVehicle _victim;

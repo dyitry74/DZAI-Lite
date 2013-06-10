@@ -5,7 +5,7 @@
 	
 	Description: Spawns a group of AI units some distance from a dynamically-spawned trigger. These units do not respawn after death.
 	
-	Last updated: 8:18 PM 6/9/2013
+	Last updated: 2:28 AM 6/10/2013
 */
 private ["_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount"];
 if (!isServer) exitWith {};
@@ -21,7 +21,7 @@ if ((random 1) > DZAI_dynSpawnChance) exitWith {
 	private["_newPos"];
 	_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
 	_trigger setPos _newPos;
-	diag_log format ["DEBUG :: Probability check for dynamic AI spawn failed, relocating trigger to position %1.",_newPos];
+	diag_log format ["DEBUG :: Probability check for dynamic AI spawn failed, relocating trigger to position %1. (spawnBandits_random_NR)",_newPos];
 	if (DZAI_debugMarkers > 0) then {
 		private["_marker"];
 		_marker = format["trigger_%1",_trigger];
@@ -36,7 +36,7 @@ _playerArray = [];
 	};
 } forEach _unitArray;
 _playerCount = (count _playerArray);
-diag_log format ["%1 units within trigger area. %2 are players.",(count _unitArray),_playerCount];
+diag_log format ["%1 units within trigger area. %2 are players. (spawnBandits_random_NR)",(count _unitArray),_playerCount];
 
 _totalAI = -1;
 if (_playerCount < 7) then {

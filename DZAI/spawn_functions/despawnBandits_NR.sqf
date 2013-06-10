@@ -29,7 +29,7 @@ if (DZAI_debugMarkers > 0) then {
 	private["_marker"];
 	_marker = format["trigger_%1",_trigger];
 	_marker setMarkerColor "ColorGreenAlpha";
-	_marker setMarkerAlpha 0.3;							//Light green: Active trigger awaiting despawn.
+	_marker setMarkerAlpha 0.7;							//Light green: Active trigger awaiting despawn.
 };
 sleep DZAI_despawnWait;									//Wait some time before deleting units. (amount of time to allow units to exist when the trigger area has no players)
 
@@ -56,7 +56,10 @@ if ((triggerActivated _trigger) && (!_forceDespawn)) exitWith {
 		};
 		sleep 0.2;
 	};
-	{deleteVehicle _x} forEach (units _x);			//Delete all units of each group.
+	{
+		diag_log format ["DEBUG :: Deleting unit %1.",_x];
+		deleteVehicle _x;
+	} forEach (units _x);			//Delete all units of each group.
 	sleep 0.5;
 	deleteGroup _x;									//Delete the group after its units are deleted.
 } forEach _grpArray;

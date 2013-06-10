@@ -1,4 +1,4 @@
-DZAI Lite 0.0.5 - AI Addon for DayZ
+DZAI Lite 0.0.6 - AI Addon for DayZ
 ============
 
 
@@ -62,3 +62,11 @@ Latest Updates:
 - [MODIFIED] Addition of glanceAt command for AI group leader to help locate player unit.
 - [MODIFIED] Modification of dynamic trigger amounts for each map.
 - [MODIFIED] Time delay in between each dynamic trigger spawn reduced from 20 seconds to 5 seconds.
+
+0.0.6 update:
+
+- [NEW] Added Dynamic Trigger Mananger to periodically randomize the locations of inactive dynamic triggers. (Default interval: 5 minutes, Relocation probability: 75%).
+- [FIXED] Dynamic AI are now properly deleted after death.
+- [MODIFIED] fnc_deleteVictim renamed to fnc_updateDead.
+- [MODIFIED] Lowered probabilities of generating MilitarySpecial and HeliCrash weapons for AI.
+- [MODIFIED] Increased visibility of debug marker for trigger areas marked for despawning.
