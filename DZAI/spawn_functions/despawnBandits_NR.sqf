@@ -16,6 +16,7 @@ _trigger = _this select 0;							//Get the trigger object
 _grpArray = _trigger getVariable ["GroupArray",[]];	//Find the groups spawned by the trigger. Or set an empty group array if none are found.
 _isCleaning = _trigger getVariable ["isCleaning",nil];	//Find whether or not the trigger has been marked for cleanup, otherwise assume a cleanup has already happened.
 _forceDespawn = _trigger getVariable ["forceDespawn",false];	//Check whether to run despawn script even if players are present in the trigger area.
+if (isNil "_forceDespawn") then {_forceDespawn = false;};
 
 _grpCount = count _grpArray;
 
@@ -56,10 +57,7 @@ if ((triggerActivated _trigger) && (!_forceDespawn)) exitWith {
 		};
 		sleep 0.2;
 	};
-	{
-		diag_log format ["DEBUG :: Deleting unit %1.",_x];
-		deleteVehicle _x;
-	} forEach (units _x);			//Delete all units of each group.
+	{deleteVehicle _x} forEach (units _x);			//Delete all units of each group.
 	sleep 0.5;
 	deleteGroup _x;									//Delete the group after its units are deleted.
 } forEach _grpArray;

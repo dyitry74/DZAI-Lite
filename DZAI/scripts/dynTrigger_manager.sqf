@@ -1,9 +1,9 @@
 /*
 	DZAI Dynamic Trigger Manager
 	
-	Description: 
+	Description: Periodically selects a random dynamic trigger. If it is inactive and not marked for despawn, a probability check determines whether or not to move the trigger to a randomized location.
 	
-	Last updated: 6/10/2013
+	Last updated: 5:49 PM 6/11/2013
 */
 
 diag_log "Starting DZAI Dynamic Trigger Manager in 60 seconds.";
@@ -30,7 +30,7 @@ while {true} do {
 			};
 		};
 	} else {
-		if (DZAI_debugLevel > 0) then {diag_log "DZAI Debug: Probability check failed, selecting random dyanamic trigger in next cycle. (dynTrigger_manager)";};
+		if (DZAI_debugLevel > 0) then {diag_log "DZAI Debug: Probability check failed, selecting random dynamic trigger in next cycle. (dynTrigger_manager)";};
 	 };
 	sleep DZAI_dynManagerRate;
 };

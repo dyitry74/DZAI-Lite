@@ -1,4 +1,4 @@
-DZAI Lite 0.0.6 - AI Addon for DayZ
+DZAI Lite 0.0.7 - AI Addon for DayZ
 ============
 
 
@@ -70,3 +70,9 @@ Latest Updates:
 - [MODIFIED] fnc_deleteVictim renamed to fnc_updateDead.
 - [MODIFIED] Lowered probabilities of generating MilitarySpecial and HeliCrash weapons for AI.
 - [MODIFIED] Increased visibility of debug marker for trigger areas marked for despawning.
+
+0.0.7 update:
+
+- [NEW] DZAI now dynamically generates weapon classname tables instead of reading them from a config file. This should greatly improve DZAI's compatibility with all current/future DayZ mods. <b>NOTE</b>: By default, AI may carry any lootable weapon. To "ban" specific weapons from DZAI classname tables, add them to DZAI_banAIWeapons in dzai_variables.sqf. For example, to ban the M107 and AS50: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"];
+- [FIXED] Fixed undefined variable error in despawning script for dynamic triggers.
+- [MODIFIED] Lowered probability of generating NVGs for AI with weapongrade 2-3 from 20% to 15%. 	

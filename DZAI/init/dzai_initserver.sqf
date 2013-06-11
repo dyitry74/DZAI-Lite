@@ -3,7 +3,7 @@
 	
 	Description: Handles startup process for DZAI Lite. Does not contain any values intended for modification.
 	
-	Last updated: 8:24 PM 6/9/2013
+	Last updated: 5:25 PM 6/11/2013
 */
 
 diag_log "[DZAI] Initializing DZAI Lite addon. Reading dzai_variables.sqf.";
@@ -22,8 +22,7 @@ EAST setFriend [resistance, 1];
 WEST setFriend [EAST, 0];									//West (Player side) is hostile to all.
 WEST setFriend [resistance, 0];
 
-	//waituntil {!isnil "bis_fnc_init"};
-	//waituntil {!isnil "BIS_fnc_selectRandom"};
+	waituntil {!isnil "bis_fnc_init"};
 	diag_log "[DZAI] Compiling DZAI functions.";
 	// [] call BIS_fnc_help;
 	//Compile general functions.
@@ -47,20 +46,23 @@ WEST setFriend [resistance, 0];
 	fnc_despawnBandits_NR = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\spawn_functions\despawnBandits_NR.sqf";
 	
 	
-//Load default DZAI loot tables. These tables include weapons and other items that can be added to an AI unit's inventory.
-//Do not delete this file, as it is required for DZAI to work.
+//Load DZAI Lite classname tables.
 #include "base_classname_configs\base_classnames.sqf"
 
-private["_worldname"];
-_worldname=toLower format ["%1",worldName];
+//Build DZAI Lite weapon classname tables from CfgBuildingLoot data.
+[[["Residential","Farm","Supermarket"],["Military"],["MilitarySpecial"],["HeliCrash"]],DZAI_banAIWeapons] execVM '\z\addons\dayz_server\DZAI\scripts\buildRifleArrays.sqf';
 
+//Create reference marker for dynamic trigger spawning.
 _this = createMarker ["DZAI_centerMarker", (getMarkerPos 'center')];
 _this setMarkerType "Empty";
 _this setMarkerBrush "Solid";
 DZAI_centerMarker = _this;
 DZAI_centerSize = 4500;
 DZAI_dynTriggersMax = 15;
-		
+
+private["_worldname"];
+_worldname=toLower format ["%1",worldName];
+
 switch (_worldname) do {
 	case "chernarus":
 	{

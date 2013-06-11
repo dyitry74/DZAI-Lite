@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 6:25 PM 6/10/2013
+	Last updated: 5:25 PM 6/11/2013
 */
 private["_worldname"];
 
@@ -40,6 +40,7 @@ DZAI_tempNVGs = false;										//If normal probability check for spawning NVGs 
 //AI loot Configuration
 DZAI_weaponGrades = [0,1,2,3];								//All possible weapon grades. A "weapon grade" is a tiered classification of gear. 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
 DZAI_gradeChances = [0.35,0.60,0.04,0.01];					//Probabilities of generating each weapongrade (0,1,2,3).
+DZAI_banAIWeapons = [];										//List of weapons that AI should never use. By default, AI may carry any lootable weapon. Example: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"]; will remove the M107 and AS50 from AI weapon tables.
 
 //NOTHING TO EDIT BEYOND THIS POINT.
 

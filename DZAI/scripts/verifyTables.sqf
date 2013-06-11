@@ -9,8 +9,8 @@
 
 private["_unverified","_verified","_errorFound","_weapChk","_vehChk","_magCheck","_stringArray"];
 
+waitUntil {sleep 0.1; !isNil "DZAI_weaponsInitialized"};	//Wait for DZAI to finish building weapon classname arrays.
 _stringArray = _this;
-//_stringArray = ["DZAI_RiflesDefault0","DZAI_RiflesDefault1","DZAI_RiflesDefault2","DZAI_RiflesDefault3","DZAI_Backpacks0","DZAI_Backpacks1","DZAI_Backpacks2","DZAI_Backpacks3","DZAI_BanditTypesDefault"];
 _unverified = [];
 _verified = [];
 _errorFound = false;
@@ -51,4 +51,5 @@ if (_errorFound) then {
 } else {
 	diag_log "All tables have been verified. No invalid entries found.";
 };
+
 diag_log "Table verification complete.";
