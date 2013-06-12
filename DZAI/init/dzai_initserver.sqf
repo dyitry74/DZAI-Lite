@@ -50,7 +50,7 @@ WEST setFriend [resistance, 0];
 #include "base_classname_configs\base_classnames.sqf"
 
 //Build DZAI Lite weapon classname tables from CfgBuildingLoot data.
-[[["Residential","Farm","Supermarket"],["Military"],["MilitarySpecial"],["HeliCrash"]],DZAI_banAIWeapons] execVM '\z\addons\dayz_server\DZAI\scripts\buildRifleArrays.sqf';
+if (DZAI_dynamicWeaponList) then {[[["Residential","Farm","Supermarket"],["Military"],["MilitarySpecial"],["HeliCrash"]],DZAI_banAIWeapons] execVM '\z\addons\dayz_server\DZAI\scripts\buildRifleArrays.sqf';};
 
 //Create reference marker for dynamic trigger spawning.
 _this = createMarker ["DZAI_centerMarker", (getMarkerPos 'center')];
@@ -144,6 +144,7 @@ switch (_worldname) do {
     };
 };
 
+waitUntil {sleep 0.05; !isNil "DZAI_weaponsInitialized"};	//Wait for DZAI to finish building weapon classname arrays.
 if (DZAI_verifyTables) then {["DZAI_Rifles0","DZAI_Rifles1","DZAI_Rifles2","DZAI_Rifles3","DZAI_BanditTypes"] execVM "\z\addons\dayz_server\DZAI\scripts\verifyTables.sqf";};
 if (DZAI_dynTriggersMax > 0) then {[DZAI_dynTriggersMax] execVM '\z\addons\dayz_server\DZAI\scripts\spawnTriggers_random.sqf';};
 if (DZAI_monitor) then {[] execVM '\z\addons\dayz_server\DZAI\scripts\dzai_monitor.sqf';};

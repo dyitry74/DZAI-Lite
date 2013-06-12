@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 5:25 PM 6/11/2013
+	Last updated: 12:13 AM 6/12/2013
 */
 private["_worldname"];
 
@@ -37,14 +37,17 @@ DZAI_dynRemoveDeadWait = 300;								//Time to wait before deleting dead AI corp
 DZAI_findKiller = false;									//Enable AI to become aware of who killed an AI group member. If alive, AI group leader will investigate last known position of killer. Players with radios are able to evade detection (Default: false)
 DZAI_tempNVGs = false;										//If normal probability check for spawning NVGs fails, then give AI temporary NVGs only if they are spawned with weapongrade 2 or 3. Temporary NVGs are unlootable and will be removed at death (Default: false).
 
-//AI loot Configuration
-DZAI_weaponGrades = [0,1,2,3];								//All possible weapon grades. A "weapon grade" is a tiered classification of gear. 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
-DZAI_gradeChances = [0.35,0.60,0.04,0.01];					//Probabilities of generating each weapongrade (0,1,2,3).
-DZAI_banAIWeapons = [];										//List of weapons that AI should never use. By default, AI may carry any lootable weapon. Example: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"]; will remove the M107 and AS50 from AI weapon tables.
+//AI weapon configuration
+DZAI_dynamicWeaponList = true;								//True: Dynamically generate AI weapon list from CfgBuildingLoot. False: Use preset weapon list (DayZ 1.7.6.1). Highly recommended to enable DZAI_verifyTables if this option is set to false. (Default: true).
+DZAI_banAIWeapons = [];										//(Only if DZAI_dynamicWeaponList = true) List of weapons that AI should never use. By default, AI may carry any lootable weapon. Example: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"]; will remove the M107 and AS50 from AI weapon tables  if dynamic weapon list is enabled.
+
+//AI loot probabilities
+DZAI_gradeChances = [0.35,0.60,0.04,0.01];					//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
 
 //NOTHING TO EDIT BEYOND THIS POINT.
 
 //Internal Use Variables: DO NOT EDIT THESE
+DZAI_weaponGrades = [0,1,2,3];								//All possible weapon grades. A "weapon grade" is a tiered classification of gear. 
 DZAI_numAIUnits = 0;										//Keep track of currently active AI units, including dead units waiting for respawn.
 DZAI_actDynTrigs = 0;										//Keep track of current number of active dynamically-spawned triggers
 DZAI_curDynTrigs = 0;										//Keep track of current total of inactive dynamically-spawned triggers.

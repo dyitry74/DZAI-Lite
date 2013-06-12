@@ -9,7 +9,6 @@
 
 private["_unverified","_verified","_errorFound","_weapChk","_vehChk","_magCheck","_stringArray"];
 
-waitUntil {sleep 0.1; !isNil "DZAI_weaponsInitialized"};	//Wait for DZAI to finish building weapon classname arrays.
 _stringArray = _this;
 _unverified = [];
 _verified = [];
@@ -37,6 +36,7 @@ diag_log "DZAI is verifying all tables for banned or invalid classnames...";
 			//diag_log format ["Entry %1 is valid.",_x];
 		};
 	} forEach _x;
+	sleep 0.1;
 	if ((count _removeArray) > 0) then {
 		diag_log format ["Removing entries: %1",_removeArray];
 		_x = _x - _removeArray;				//Remove invalid classnames

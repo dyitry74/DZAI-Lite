@@ -1,4 +1,4 @@
-DZAI Lite 0.0.7 - AI Addon for DayZ
+DZAI Lite 0.0.8 - AI Addon for DayZ
 ============
 
 
@@ -76,3 +76,8 @@ Latest Updates:
 - [NEW] DZAI now dynamically generates weapon classname tables instead of reading them from a config file. This should greatly improve DZAI's compatibility with all current/future DayZ mods. <b>NOTE</b>: By default, AI may carry any lootable weapon. To "ban" specific weapons from DZAI classname tables, add them to DZAI_banAIWeapons in dzai_variables.sqf. For example, to ban the M107 and AS50: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"];
 - [FIXED] Fixed undefined variable error in despawning script for dynamic triggers.
 - [MODIFIED] Lowered probability of generating NVGs for AI with weapongrade 2-3 from 20% to 15%. 	
+
+0.0.8 update:
+
+- [NEW] Added option to switch between dynamic weapon list generation and preset list for generating AI weapons. By default, dynamic list generation is enabled. Dynamic generation ensures compatibility with all DayZ mods but slightly delays loading of DZAI at server start. Using the preset list is faster, but problems may arise from incompatible classnames.
+- [MODIFIED] Re-added preset weapon classname list using weapons from standard DayZ 1.7.6.1.

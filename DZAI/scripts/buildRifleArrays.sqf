@@ -50,6 +50,7 @@ for "_i" from 0 to (count _bldgClasses - 1) do {					//_i = weapongrade
 				};
 			};
 		};
+		sleep 0.1;
 	};
 };
 
