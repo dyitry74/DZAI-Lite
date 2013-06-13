@@ -1,4 +1,4 @@
-DZAI Lite 0.0.8 - AI Addon for DayZ
+DZAI Lite 0.0.9 - AI Addon for DayZ
 ============
 
 
@@ -81,3 +81,10 @@ Latest Updates:
 
 - [NEW] Added option to switch between dynamic weapon list generation and preset list for generating AI weapons. By default, dynamic list generation is enabled. Dynamic generation ensures compatibility with all DayZ mods but slightly delays loading of DZAI at server start. Using the preset list is faster, but problems may arise from incompatible classnames.
 - [MODIFIED] Re-added preset weapon classname list using weapons from standard DayZ 1.7.6.1.
+
+0.0.9 update:
+
+- [MODIFIED] Dynamic triggers only relocate to a random nearby player's position on activation if the player is not over water (to avoid having a trigger move on top of water). Otherwise, the trigger's position is used as the reference point.
+- [MODIFIED] Adjusted spawning distance of dynamic triggers for almost all maps, along with adjustments to spawn amounts to match.
+- [MODIFIED] DZAI no longer reads from Supermarket loot tables to collect weapon data since most entries are shared with Residential. This will slightly reduce the amount of time required to collect data.
+- [MODIFIED] On startup, debug data now also reports whether or not dynamic weapon list generation is enabled.

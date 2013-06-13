@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 12:13 AM 6/12/2013
+	Last updated: 11:28 PM 6/12/2013
 */
 private["_worldname"];
 
@@ -17,7 +17,7 @@ DZAI_debugLevel = 0;										//Enable or disable event logging to arma2oaserver
 DZAI_debugMarkers = 0;										//Enable or disable debug markers. Track AI position, locate patrol waypoints, locate dynamically-spawned triggers. (Default: 0)
 DZAI_monitor = true;										//Enable or disable server monitor. Keeps track of number of max/current AI units and dynamically spawned triggers. (Default: true)
 DZAI_monitorRate = 180;										//Frequency of server monitor update to RPT log in seconds. (Default: 180)								
-DZAI_verifyTables = true;									//Enable verification of standard DZAI classname tables. Since DZAI Lite does not configure its classname tables depending on the detected map, it is recommended to leave this option 'true'. (Default: true)
+DZAI_verifyTables = true;									//Set 'true' to have DZAI check all classname tables for banned or invalid classnames. (Default: true)
 
 //AI Unit Variables						
 DZAI_dmgFactors1 =[1.0,1.0,1.0,1.0,1.0];					//Multipliers for bullet-type damage done to different body parts of AI units: Structural, Head, Body, Hands, Legs. Example: to make AI take 50% reduced damage to a body part, set the appropriate value to 0.50.
@@ -54,4 +54,4 @@ DZAI_curDynTrigs = 0;										//Keep track of current total of inactive dynamic
 DZAI_actTrigs = 0;											//Keep track of active static triggers.	
 DZAI_dynTriggerArray = [];									//List of current dynamic triggers.		
 
-if (DZAI_debugLevel > 0) then {diag_log format["[DZAI] DZAI Variables loaded. Debug Level: %1. DebugMarkers: %2. VerifyTables: %3.",DZAI_debugLevel,DZAI_debugMarkers,DZAI_verifyTables];};
+if (DZAI_debugLevel > 0) then {diag_log format["[DZAI] DZAI Variables loaded. Debug Level: %1. DebugMarkers: %2. DZAI_dynamicWeaponList: %3. VerifyTables: %4.",DZAI_debugLevel,DZAI_debugMarkers,DZAI_dynamicWeaponList,DZAI_verifyTables];};

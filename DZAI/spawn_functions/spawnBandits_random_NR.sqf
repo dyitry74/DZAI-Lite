@@ -5,9 +5,9 @@
 	
 	Description: Spawns a group of AI units some distance from a dynamically-spawned trigger. These units do not respawn after death.
 	
-	Last updated: 2:28 AM 6/10/2013
+	Last updated: 11:28 PM 6/12/2013
 */
-private ["_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount"];
+private ["_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount","_spawnPos"];
 if (!isServer) exitWith {};
 
 _patrolDist = _this select 0;
@@ -46,7 +46,14 @@ if (_playerCount < 7) then {
 };
 _targetPlayer = _playerArray call BIS_fnc_selectRandom; 	//select random player to use as reference point for spawning.
 _playerPos = getPosATL _targetPlayer;
-_trigger setPos _playerPos;									//Move trigger and marker to player's position.
+
+_spawnPos = [0,0,0];
+if !(surfaceIsWater [_playerPos select 0,_playerPos select 1]) then {
+	_trigger setPosATL _playerPos;									//Move trigger and marker to player's position, only if player is not over water.
+	_spawnPos = _playerPos;
+} else {
+	_spawnPos = getPosATL _trigger;
+};
 
 if (DZAI_debugMarkers > 0) then {
 	private["_marker"];
@@ -58,7 +65,7 @@ if (DZAI_debugMarkers > 0) then {
 
 _minDist = 125;
 _maxDist = (_minDist + random(175));
-_pos = [_playerPos,_minDist,_maxDist,5,0,2000,0] call BIS_fnc_findSafePos;
+_pos = [_spawnPos,_minDist,_maxDist,5,0,2000,0] call BIS_fnc_findSafePos;
 
 if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: %1 AI spawns triggered (spawnBandits_random_NR).",_totalAI];};
 
