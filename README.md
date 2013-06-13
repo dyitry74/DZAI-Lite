@@ -42,12 +42,17 @@ Troubleshooting Instructions:
 DZAI Lite is designed with maximum compatibility in mind, but unforseen problems may occur.
 
 Q1: How can I check if DZAI Lite is generating AI spawn points, or verify that AI are properly spawning?
+
 A1: Open dzai_variables.sqf - it is located in \DZAI\init. Set DZAI_debugMarkers to true. In your ingame map, you will see circular markers indicating the trigger areas. If you enter these trigger areas, the circular marker will change from yellow to orange to show that the trigger is active. Small red dots will indicate positions of AI units, and blue dots will indicate their waypoints.
 
+
 Q2: The AI aren't carrying any weapons!
+
 A2: This may happen if the DayZ mod uses non-standard names for their loot tables, or if DayZ's loot table structure has changed. In this case, set DZAI_dynamicWeaponList to false to have DZAI use backup weapon lists instead. Also, make sure you set DZAI_verifyTables to true to ensure all classnames are compatible with your DayZ mod.
 
+
 Q3: A new DayZ map has been released, will DZAI Lite support it?
+
 A3: DZAI reads DayZ's loot tables to find weapon classnames, followed by a verification procedure to make sure they are not banned or invalid. This method allows DZAI to adapt itself to any DayZ map. 
 	DZAI will also use DayZ's 'center' marker as a reference point to generate dynamic triggers to spawn AI if an unrecognized map is used.
 
