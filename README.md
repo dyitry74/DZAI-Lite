@@ -15,8 +15,19 @@ Summary of simplifications made in DZAI Lite:
 - Heavily reduced file size (DZAI: 440KB vs DZAI Lite: 75KB approx.)
 - Less settings to manually configure, many settings are automatically handled. Simply install and run.
 
+Features
+============
+
+- Installed to your server's dayz_server.pbo - nothing is downloaded or run on clients.
+- Automatically builds a list of weapons that AI can use by reading DayZ's CfgBuildingLoot. This means that AI units may carry any lootable weapon.
+- AI spawning is completely dynamic and automatically generated - there is no need to manually add spawn points.
+- AI spawn points with no players nearby will periodically relocate themselves around the map area, so there is no predicting where AI will show up next.
+- The number of AI spawned is dependent on the number of players within the trigger area, so the difficulty is self-adjusting. The more populated the area is, the more AI that will spawn in. (Minimum of 2±1 to a maximum of 6±1)
+- The AI despawn when there are no players in the area, or some time after they are killed.
+
 Installation Instructions:
 ============
+
 - Unpack your <b>dayz_server.pbo</b>
 - Copy the new DZAI folder inside your unpacked dayz_server folder. (You should also see config.cpp in the same level.)
 - Edit your <b>server_monitor.sqf</b>. It is located within \dayz_server\system. 
@@ -24,6 +35,21 @@ Installation Instructions:
 - Underneath this line, insert the following (If reading this in a text editor, ignore the code tags!): <code>call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";</code>. Refer to the provided example server_monitor.sqf (named server_monitor_example.sqf)
 - Repack your dayz_server.pbo.
 - You are now ready to start your server.
+
+Troubleshooting Instructions:
+============
+
+DZAI Lite is designed with maximum compatibility in mind, but unforseen problems may occur.
+
+Q1: How can I check if DZAI Lite is generating AI spawn points, or verify that AI are properly spawning?
+A1: Open dzai_variables.sqf - it is located in \DZAI\init. Set DZAI_debugMarkers = 1. In your ingame map, you will see circular markers indicating the trigger areas. If you enter these trigger areas, the circular marker will change from yellow to orange to show that the trigger is active. Small red dots will indicate positions of AI units, and blue dots will indicate their waypoints.
+
+Q2: The AI aren't carrying any weapons!
+A2: This may happen if the DayZ mod uses non-standard names for their loot tables, or if DayZ's loot table structure has changed. In this case, set DZAI_dynamicWeaponList = false to have DZAI use backup weapon lists instead. Also, make sure you set DZAI_verifyTables = true to ensure all classnames are compatible with your DayZ mod.
+
+Q3: A new DayZ map has been released, will DZAI Lite support it?
+A3: DZAI reads DayZ's loot tables to find weapon classnames, followed by a verification procedure to make sure they are not banned or invalid. This method allows DZAI to adapt itself to any DayZ map. 
+	DZAI will also use DayZ's 'center' marker as a reference point to generate dynamic triggers to spawn AI if an unrecognized map is used.
 
 Latest Updates:
 ============
