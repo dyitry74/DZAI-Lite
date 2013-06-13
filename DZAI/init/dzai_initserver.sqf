@@ -3,7 +3,7 @@
 	
 	Description: Handles startup process for DZAI Lite. Does not contain any values intended for modification.
 	
-	Last updated: 11:28 PM 6/12/2013
+	Last updated: 11:29 PM 6/12/2013
 */
 
 diag_log "[DZAI] Initializing DZAI Lite addon. Reading dzai_variables.sqf.";
@@ -57,7 +57,7 @@ _this = createMarker ["DZAI_centerMarker", (getMarkerPos 'center')];
 _this setMarkerType "Empty";
 _this setMarkerBrush "Solid";
 DZAI_centerMarker = _this;
-DZAI_centerSize = 4500;
+DZAI_centerSize = 5000;
 DZAI_dynTriggersMax = 15;
 
 private["_worldname"];

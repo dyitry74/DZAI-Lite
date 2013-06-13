@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 11:28 PM 6/12/2013
+	Last updated: 2:09 PM 6/13/2013
 */
 private["_worldname"];
 

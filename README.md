@@ -1,4 +1,4 @@
-DZAI Lite 0.0.9 - AI Addon for DayZ
+DZAI Lite 0.0.9.1 - AI Addon for DayZ
 ============
 
 
@@ -88,3 +88,7 @@ Latest Updates:
 - [MODIFIED] Adjusted spawning distance of dynamic triggers for almost all maps, along with adjustments to spawn amounts to match.
 - [MODIFIED] DZAI no longer reads from Supermarket loot tables to collect weapon data since most entries are shared with Residential. This will slightly reduce the amount of time required to collect data.
 - [MODIFIED] On startup, debug data now also reports whether or not dynamic weapon list generation is enabled.
+
+0.0.9.1 hotfix:
+
+- [FIXED] Added fixes to dynamic weapon list feature to ensure compatibility with DayZ 1.7.7 as well as previous versions.
