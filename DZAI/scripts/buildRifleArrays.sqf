@@ -6,33 +6,43 @@
 	Last updated: 2:09 PM 6/13/2013
 */
 
-private ["_bldgClasses","_weapons","_lootItem","_DZAI_bannedWeapons","_unwantedWeapons","_versionDZ","_lootList"];
+private ["_bldgClasses","_weapons","_lootItem","_DZAI_bannedWeapons","_unwantedWeapons","_lootList","_cfgBuildingLoot","_lootListCheck"];
 
 diag_log "Building DZAI weapon arrays using CfgBuildingLoot data.";
 
-//Determine version of DayZ being used.
-_versionDZ = getText (configFile >> "CfgMods" >> "DayZ" >> "version");
-//diag_log format ["DEBUG :: Detected DayZ version %1.",_versionDZ];
+_bldgClasses = _this select 0;			//Building types to extract weapon classnames
+_unwantedWeapons = _this select 1;		//User-specified weapon banlist.
+
+_aiWeaponBanList = ["Crossbow_DZ","Crossbow","MeleeBaseBallBat","MeleeMachete"];
+
+//Add user-specified banned weapons to DZAI weapon banlist.
+if ((count _unwantedWeapons) > 0) then {
+	for "_i" from 0 to ((count _unwantedWeapons) - 1) do {
+		_aiWeaponBanList set [(count _aiWeaponBanList),(_unwantedWeapons select _i)];
+	};
+};
+//diag_log format ["DEBUG :: List of weapons to be removed from DZAI classname tables: %1",_aiWeaponBanList];
+
+//Compatibility with Namalsk's selectable loot table feature.
+_cfgBuildingLoot = "";
+if (isNil "dayzNam_buildingLoot") then {
+	_cfgBuildingLoot = "cfgBuildingLoot";
+} else {
+	_cfgBuildingLoot = dayzNam_buildingLoot;
+	(_bldgClasses select 3) set [((_bldgClasses select 3) find "HeliCrash"),"HeliCrashNamalsk"];
+};
+
+//diag_log format ["DEBUG :: _cfgBuildingLoot: %1",_cfgBuildingLoot];
+
+//Fix for CfgBuildingLoot structure change in DayZ 1.7.7
+_lootListCheck = isArray (configFile >> _cfgBuildingLoot >> "Default" >> "lootType");
+//diag_log format ["DEBUG :: _lootListCheck: %1",_lootListCheck];
 _lootList = "";
-if (_versionDZ == "1.7.7") then {
+if (_lootListCheck) then {
 	_lootList = "lootType";
 } else {
 	_lootList = "itemType";
 };
-
-//_bldgClasses = [["Residential","Farm","Supermarket"],["Military"],["MilitarySpecial"],["HeliCrash"]];	//[[(weapongrade 0)],[(weapongrade 1)],[(weapongrade 2)],[(weapongrade 3)]]
-_DZAI_bannedWeapons = ["Crossbow_DZ","Crossbow"];
-
-_bldgClasses = _this select 0;
-_unwantedWeapons = _this select 1;
-
-//Add DZAI-banned weapons to unwanted weapons list.
-for "_i" from 0 to ((count _DZAI_bannedWeapons) -1) do {
-	if !((_DZAI_bannedWeapons select _i) in _unwantedWeapons) then {
-		_unwantedWeapons set [(count _unwantedWeapons),(_DZAI_bannedWeapons select _i)];
-	};
-};
-diag_log format ["List of weapons to be removed from DZAI classname tables: %1",_unwantedWeapons];
 
 //Declare weapon arrays
 DZAI_Rifles0 = [];
@@ -60,7 +70,6 @@ for "_i" from 0 to (count _bldgClasses - 1) do {					//_i = weapongrade
 				};
 			};
 		};
-		sleep 0.1;
 	};
 };
 
