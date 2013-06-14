@@ -43,7 +43,7 @@ DZAI Lite is designed with maximum compatibility in mind, but unforseen problems
 
 Q1: How can I check if DZAI Lite is generating AI spawn points, or verify that AI are properly spawning?
 
-A1: Open dzai_variables.sqf - it is located in \DZAI\init. Set DZAI_debugMarkers to true. In your ingame map, you will see circular markers indicating the trigger areas. If you enter these trigger areas, the circular marker will change from yellow to orange to show that the trigger is active. Small red dots will indicate positions of AI units, and blue dots will indicate their waypoints.
+A1: Open dzai_variables.sqf - it is located in \DZAI\init. Set DZAI_debugMarkers to 1. In your ingame map, you will see circular markers indicating the trigger areas. If you enter these trigger areas, the circular marker will change from yellow to orange to show that the trigger is active. Small red dots will indicate positions of AI units, and blue dots will indicate their waypoints. Setting DZAI_debugLevel to 1 or 2 will also allow DZAI to output relevant details into your RPT log.
 
 
 Q2: The AI aren't carrying any weapons!
