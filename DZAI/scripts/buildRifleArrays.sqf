@@ -16,10 +16,8 @@ _unwantedWeapons = _this select 1;		//User-specified weapon banlist.
 _aiWeaponBanList = ["Crossbow_DZ","Crossbow","MeleeBaseBallBat","MeleeMachete"];
 
 //Add user-specified banned weapons to DZAI weapon banlist.
-if ((count _unwantedWeapons) > 0) then {
-	for "_i" from 0 to ((count _unwantedWeapons) - 1) do {
-		_aiWeaponBanList set [(count _aiWeaponBanList),(_unwantedWeapons select _i)];
-	};
+for "_i" from 0 to ((count _unwantedWeapons) - 1) do {
+	_aiWeaponBanList set [(count _aiWeaponBanList),(_unwantedWeapons select _i)];
 };
 //diag_log format ["DEBUG :: List of weapons to be removed from DZAI classname tables: %1",_aiWeaponBanList];
 
@@ -62,7 +60,7 @@ for "_i" from 0 to (count _bldgClasses - 1) do {					//_i = weapongrade
 				_weaponItem = _lootItem select 0;
 				_weaponMags = count (getArray (configFile >> "cfgWeapons" >> _weaponItem >> "magazines"));
 				if (_weaponMags > 0) then {							//Consider an item as a "weapon" if it has at least one magazine type.
-					if !(_weaponItem in _unwantedWeapons) then {
+					if !(_weaponItem in _aiWeaponBanList) then {
 						if ((getNumber (configFile >> "CfgWeapons" >> _weaponItem >> "type")) == 1) then {
 							call compile format ["DZAI_Rifles%1 set [(count DZAI_Rifles%1),'%2'];",_i,_weaponItem];
 						};
