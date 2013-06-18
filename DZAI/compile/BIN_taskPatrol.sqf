@@ -50,16 +50,11 @@ if (isServer) then
 	_debug = if ((count _this) > 3) then {_this select 3} else {0};
 	_blacklist = if ((count _this) > 4) then {_blacklist = _this select 4} else {[]};
 
-	_mode = ["YELLOW", "RED"] call BIS_fnc_selectRandom;
-	_formation = ["STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "DIAMOND"] call BIS_fnc_selectRandom;
-	_dzai_behavior = ["AWARE","COMBAT"] call BIS_fnc_selectRandom;
-	_dzai_speedmode =  ["LIMITED","NORMAL"] call BIS_fnc_selectRandom;
-	
-	_grp setBehaviour _dzai_behavior;
-	//_grp setBehaviour "AWARE";
-	_grp setSpeedMode _dzai_speedmode;
-	_grp setCombatMode _mode;
-	_grp setFormation _formation;
+	//_grp setBehaviour _dzai_behavior;
+	_grp setBehaviour "AWARE";
+	_grp setSpeedMode (["FULL","NORMAL"] call BIS_fnc_selectRandom);
+	_grp setCombatMode (["YELLOW", "RED"] call BIS_fnc_selectRandom);
+	_grp setFormation (["STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "DIAMOND"] call BIS_fnc_selectRandom);
 
 	_center_x = (_pos) select 0;
 	_center_y = (_pos) select 1;
@@ -154,9 +149,8 @@ if (isServer) then
 		[_grp,_j+_i] setWaypointStatements ["true", "if ((random 3) > 2) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
 		
 		if (_debug > 0) then {
-			//_markername = str(_wp_array select _i);
 			_markername = format["%1_%2",_grp,_i];
-			//diag_log format ["DEBUG :: Created waypoint marker %1.",_markername];
+			//diag_log format ["DEBUG :: Created patrol waypoint %1.",_markername];
 			_marker = createMarker[_markername,[_cur_pos select 0,_cur_pos select 1]];
 			_marker setMarkerShape "ELLIPSE";
 			_marker setMarkerType "Dot";

@@ -5,7 +5,9 @@
 	
 	Last updated: 11:29 PM 6/12/2013
 */
+private ["_startTime"];
 
+_startTime = diag_tickTime;
 diag_log "[DZAI] Initializing DZAI Lite addon. Reading dzai_variables.sqf.";
 
 //Load DZAI variables
@@ -13,7 +15,6 @@ call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_var
 call compile preprocessFile "\z\addons\dayz_server\DZAI\SHK_pos\shk_pos_init.sqf";
 
 createcenter east;											//Create centers for all sides
-createcenter west;
 createcenter resistance;
 resistance setFriend [east, 1];								//Resistance (AI) is hostile to West (Player), but friendly to East (AI).
 resistance setFriend [west, 0];	
@@ -50,7 +51,7 @@ WEST setFriend [resistance, 0];
 #include "base_classname_configs\base_classnames.sqf"
 
 //Build DZAI Lite weapon classname tables from CfgBuildingLoot data.
-if (DZAI_dynamicWeaponList) then {[[["Residential","Farm"],["Military"],["MilitarySpecial"],["HeliCrash"]],DZAI_banAIWeapons] execVM '\z\addons\dayz_server\DZAI\scripts\buildRifleArrays.sqf';};
+if (DZAI_dynamicWeaponList) then {[DZAI_banAIWeapons] execVM '\z\addons\dayz_server\DZAI\scripts\buildRifleArrays.sqf';};
 
 //Create reference marker for dynamic trigger spawning.
 _this = createMarker ["DZAI_centerMarker", (getMarkerPos 'center')];
@@ -144,8 +145,7 @@ switch (_worldname) do {
     };
 };
 
-waitUntil {sleep 0.1; !isNil "DZAI_weaponsInitialized"};	//Wait for DZAI to finish building weapon classname arrays.
 if (DZAI_verifyTables) then {["DZAI_Rifles0","DZAI_Rifles1","DZAI_Rifles2","DZAI_Rifles3","DZAI_BanditTypes"] execVM "\z\addons\dayz_server\DZAI\scripts\verifyTables.sqf";};
 if (DZAI_dynTriggersMax > 0) then {[DZAI_dynTriggersMax] execVM '\z\addons\dayz_server\DZAI\scripts\spawnTriggers_random.sqf';};
 if (DZAI_monitor) then {[] execVM '\z\addons\dayz_server\DZAI\scripts\dzai_monitor.sqf';};
-if (DZAI_debugLevel > 0) then {diag_log "[DZAI] DZAI Lite loading complete.";};
+diag_log format ["[DZAI] DZAI loading completed in %1 seconds.",(diag_tickTime - _startTime)];

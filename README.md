@@ -1,4 +1,4 @@
-DZAI Lite 0.0.9.2 - AI Addon for DayZ
+DZAI Lite 0.1.0 - AI Addon for DayZ
 ============
 
 
@@ -131,3 +131,19 @@ Latest Updates:
 - [MODIFIED] Namalsk: DZAI will now also read from the HeliCrashNamalsk table instead of HeliCrash.
 - [MODIFIED] Added MeleeBaseBallBat and MeleeMachete to AI weapon banlist.
 - [MODIFIED] User-specified weapon banlist is now added to the default weapon banlist, instead of the other way around.
+
+0.1.0 Update:
+
+- [NEW] Execution time is now reported into RPT log for DZAI initialization, dynamic weapon list generation, and classname verification.
+- [NEW] Overlapping activated dynamic triggers now spawn a reduced number of AI units.
+- [REMOVED] Removed M107 and AS50 from preset weapon classname table.
+- [MODIFIED] Server no longer waits for DZAI to finish initializing before continuing startup process.
+- [MODIFIED] Dynamic triggers are generated only after dynamic weapon list and classname verification (if enabled) are completed. This avoids possible cases where AI spawn with invalid items before the weapon list and verification steps are completed.
+- [MODIFIED] AI units will now always spawn in an "AWARE" state. When a member if an AI group is killed, the group's state is changed to "COMBAT". When all members of the group have been killed, the group's state will return to "AWARE" with the first respawning unit.
+- [MODIFIED] AI units will no longer move with "LIMITED" speed. Possible movement modes are "NORMAL" (move in formation) or "FULL" (move without regard to maintaining formation).
+- [MODIFIED] Building positions are now calculated directly instead of using interior positions (less complicated calculations).
+- [MODIFIED] AI skill parameters are now more consistent for each weapongrade value. Base values increased, bonus values decreased.
+- [MODIFIED] Frequency of dynamic trigger manager script increased to every 3 minutes from 5 minutes.
+- [MODIFIED] Increased probabilities of randomizing dynamic trigger location and activation chance.
+- [MODIFIED] Delay between each dynamic trigger spawn now fixed at 5 seconds.
+- [MODIFIED] Increased probability of generating Military-grade weapons for dynamic AI.

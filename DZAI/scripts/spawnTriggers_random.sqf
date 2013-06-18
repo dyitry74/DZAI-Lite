@@ -13,6 +13,12 @@ _numTriggers = _this select 0;							//Number of triggers to create
 
 if (_numTriggers == 0) exitWith {};						// Exit script if there is nothing to spawn
 
+if (DZAI_verifyTables) then {
+	waitUntil {sleep 0.1; !isNil "DZAI_classnamesVerified"};	//Wait for DZAI to finish verifying classname arrays.
+} else {
+	waitUntil {sleep 0.1; !isNil "DZAI_weaponsInitialized"};	//Wait for DZAI to finish building weapon classname arrays.
+};
+
 _triggerRadius = 600;
 _patrolRadius = 300;
 
@@ -30,7 +36,7 @@ for "_i" from 1 to _numTriggers do {
 	_trigger setTriggerActivation ["ANY", "PRESENT", true];
 	_trigger setTriggerTimeout [5, 10, 30, true];
 	_trigger setTriggerStatements ["{isPlayer _x} count thisList > 0;",_trigOnAct, "[thisTrigger] spawn fnc_despawnBandits_NR;"];
-	if (DZAI_debugMarkers == 1) then {													//Adjust to debugLevel > 1
+	if (DZAI_debugMarkers == 1) then {
 		private ["_markername","_marker"];
 		_markername = format["trigger_%1",_trigger];
 		_marker = createMarker[_markername,_trigPos];
@@ -41,10 +47,10 @@ for "_i" from 1 to _numTriggers do {
 		_marker setMarkerColor "ColorYellow";
 		_marker setMarkerAlpha 0.8;		//Dark yellow = Trigger in ready state.
 	};
-	if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Dynamic trigger %1 of %2 spawned at %3 (spawnTriggers_random). Next trigger spawning in %4 seconds.",_i,_numTriggers,_trigPos,DZAI_dynSpawnDelay];};
+	if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Dynamic trigger %1 of %2 spawned at %3 (spawnTriggers_random). Next trigger spawning in 5 seconds.",_i,_numTriggers,_trigPos];};
 	DZAI_curDynTrigs = DZAI_curDynTrigs + 1;
 	DZAI_dynTriggerArray set [(count DZAI_dynTriggerArray),_trigger];
 	//diag_log format ["DEBUG :: Contents of DZAI_dynTriggerArray: %1.",DZAI_dynTriggerArray];
-	sleep DZAI_dynSpawnDelay;
+	sleep 5;
 };
 [] execVM '\z\addons\dayz_server\DZAI\scripts\dynTrigger_manager.sqf';

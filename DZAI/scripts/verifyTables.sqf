@@ -9,6 +9,10 @@
 
 private["_unverified","_verified","_errorFound","_weapChk","_vehChk","_magCheck","_stringArray"];
 
+waitUntil {!isNil "DZAI_weaponsInitialized"};	//Wait for DZAI to finish building weapon classname arrays.
+
+_startTime = diag_tickTime;
+
 _stringArray = _this;
 _unverified = [];
 _verified = [];
@@ -52,4 +56,7 @@ if (_errorFound) then {
 	diag_log "All tables have been verified. No invalid entries found.";
 };
 
-diag_log "Table verification complete.";
+diag_log format ["Table verification completed in %1 seconds.",(diag_tickTime - _startTime)];
+
+DZAI_classnamesVerified = true;
+

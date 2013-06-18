@@ -23,13 +23,6 @@ _type = DZAI_BanditTypes call BIS_fnc_selectRandom;									// Select skin of AI
 _unit = _unitGroup createUnit [_type, _spawnPos, [], 0, "FORM"];					// Spawn the AI unit
 [_unit] joinSilent _unitGroup;														// Add AI unit to group
 
-_unit enableAI "TARGET";
-_unit enableAI "AUTOTARGET";
-_unit enableAI "MOVE";
-_unit enableAI "ANIM";
-_unit enableAI "FSM";
-_unit allowDammage true;
-
 _unit setVariable["gethit",[0,0,0,0]];												// Set unit's initial health statistics. (Structural, Body, Hands, Legs)
 _unit setVariable["trigger",_trigger];
 
@@ -46,6 +39,14 @@ _weapongrade = [DZAI_weaponGrades,DZAI_gradeChances] call fnc_selectRandomWeight
 [_unit, _weapongrade] call fnc_unitSelectWeapon;									// Add rifle
 [_unit, _weapongrade] call fnc_unitInventory;										// Add backpack and chance of binoculars
 [_unit, _weapongrade] call fnc_setSkills;											// Set AI skill
+
+_unit enableAI "TARGET";
+_unit enableAI "AUTOTARGET";
+_unit enableAI "MOVE";
+_unit enableAI "ANIM";
+_unit enableAI "FSM";
+_unit allowDammage true;
+
 processInitCommands;
 if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: Spawned AI Type %1 with weapongrade %2 (fn_createAI).",_type,_weapongrade];};
 

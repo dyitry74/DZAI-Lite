@@ -6,13 +6,17 @@
 	Last updated: 2:09 PM 6/13/2013
 */
 
-private ["_bldgClasses","_weapons","_lootItem","_DZAI_bannedWeapons","_unwantedWeapons","_lootList","_cfgBuildingLoot","_lootListCheck"];
+private ["_bldgClasses","_weapons","_lootItem","_DZAI_bannedWeapons","_unwantedWeapons","_lootList","_cfgBuildingLoot","_lootListCheck","_startTime"];
+
+if !(isNil "DZAI_weaponsInitialized") exitWith {};
+
+_startTime = diag_tickTime;
 
 diag_log "Building DZAI weapon arrays using CfgBuildingLoot data.";
 
-_bldgClasses = _this select 0;			//Building types to extract weapon classnames
-_unwantedWeapons = _this select 1;		//User-specified weapon banlist.
+_unwantedWeapons = _this select 0;		//User-specified weapon banlist.
 
+_bldgClasses = [["Residential","Farm"],["Military"],["MilitarySpecial"],["HeliCrash"]];
 _aiWeaponBanList = ["Crossbow_DZ","Crossbow","MeleeBaseBallBat","MeleeMachete"];
 
 //Add user-specified banned weapons to DZAI weapon banlist.
@@ -21,24 +25,25 @@ for "_i" from 0 to ((count _unwantedWeapons) - 1) do {
 };
 //diag_log format ["DEBUG :: List of weapons to be removed from DZAI classname tables: %1",_aiWeaponBanList];
 
-//Compatibility with Namalsk's selectable loot table feature.
-_cfgBuildingLoot = "";
-if (isNil "dayzNam_buildingLoot") then {
-	_cfgBuildingLoot = "cfgBuildingLoot";
-} else {
+_cfgBuildingLoot = "cfgBuildingLoot";
+if !(isNil "dayzNam_buildingLoot") then {
+	//Compatibility with Namalsk's selectable loot table feature.
 	_cfgBuildingLoot = dayzNam_buildingLoot;
 	(_bldgClasses select 3) set [((_bldgClasses select 3) find "HeliCrash"),"HeliCrashNamalsk"];
 };
-
 //diag_log format ["DEBUG :: _cfgBuildingLoot: %1",_cfgBuildingLoot];
+
+//Compatibility with DayZ 1.7.7's new HeliCrash tables
+if ((isClass (configFile >> _cfgBuildingLoot >> "HeliCrashWEST")) && (isClass (configFile >> _cfgBuildingLoot >> "HeliCrashEAST"))) then {
+	_bldgClasses set [3,["HeliCrashWEST","HeliCrashEAST"]];
+	//diag_log format ["DEBUG :: HeliCrash tables modified: %1",(_bldgClasses select 3)];
+};
 
 //Fix for CfgBuildingLoot structure change in DayZ 1.7.7
 _lootListCheck = isArray (configFile >> _cfgBuildingLoot >> "Default" >> "lootType");
 //diag_log format ["DEBUG :: _lootListCheck: %1",_lootListCheck];
-_lootList = "";
-if (_lootListCheck) then {
-	_lootList = "lootType";
-} else {
+_lootList = "lootType";
+if !(_lootListCheck) then {
 	_lootList = "itemType";
 };
 
@@ -52,18 +57,16 @@ DZAI_Rifles3 = [];
 for "_i" from 0 to (count _bldgClasses - 1) do {					//_i = weapongrade
 	for "_j" from 0 to (count (_bldgClasses select _i) - 1) do {	//If each weapongrade has more than 1 building class, investigate them all
 		private["_bldgLoot"];
-		_bldgLoot = [] + getArray (configFile >> "cfgBuildingLoot" >> ((_bldgClasses select _i) select _j) >> _lootList);
+		_bldgLoot = [] + getArray (configFile >> _cfgBuildingLoot >> ((_bldgClasses select _i) select _j) >> _lootList);
 		for "_k" from 0 to (count _bldgLoot - 1) do {				
 			_lootItem = _bldgLoot select _k;
 			if ((_lootItem select 1) == "weapon") then {			//Build an array of "weapons", then categorize them as rifles or pistols, then sort them into the correct weapon grade.
 				private ["_weaponItem","_weaponMags"];
 				_weaponItem = _lootItem select 0;
 				_weaponMags = count (getArray (configFile >> "cfgWeapons" >> _weaponItem >> "magazines"));
-				if (_weaponMags > 0) then {							//Consider an item as a "weapon" if it has at least one magazine type.
-					if !(_weaponItem in _aiWeaponBanList) then {
-						if ((getNumber (configFile >> "CfgWeapons" >> _weaponItem >> "type")) == 1) then {
-							call compile format ["DZAI_Rifles%1 set [(count DZAI_Rifles%1),'%2'];",_i,_weaponItem];
-						};
+				if ((_weaponMags > 0) && !(_weaponItem in _aiWeaponBanList)) then {							//Consider an item as a "weapon" if it has at least one magazine type.
+					if ((getNumber (configFile >> "CfgWeapons" >> _weaponItem >> "type")) == 1) then {
+						call compile format ["DZAI_Rifles%1 set [(count DZAI_Rifles%1),'%2'];",_i,_weaponItem];
 					};
 				};
 			};
@@ -84,5 +87,7 @@ if (DZAI_debugLevel > 0) then {
 	diag_log format ["Contents of DZAI_Rifles2: %1",DZAI_Rifles2];
 	diag_log format ["Contents of DZAI_Rifles3: %1",DZAI_Rifles3];
 };
+
+diag_log format ["DZAI weapon classname tables created in %1 seconds.",(diag_tickTime - _startTime)];
 
 DZAI_weaponsInitialized = true;
