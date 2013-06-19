@@ -58,8 +58,8 @@ _this = createMarker ["DZAI_centerMarker", (getMarkerPos 'center')];
 _this setMarkerType "Empty";
 _this setMarkerBrush "Solid";
 DZAI_centerMarker = _this;
-DZAI_centerSize = 5000;
-DZAI_dynTriggersMax = 15;
+DZAI_dynTriggerRadius = 600;
+DZAI_dynOverlap = 0.1;
 
 private["_worldname"];
 _worldname=toLower format ["%1",worldName];
@@ -143,6 +143,11 @@ switch (_worldname) do {
 		DZAI_centerSize = 6250;
 		DZAI_dynTriggersMax = 20;
     };
+	case default
+	{
+		DZAI_centerSize = 5000;
+		DZAI_dynTriggersMax = 15;
+	};
 };
 
 if (DZAI_verifyTables) then {["DZAI_Rifles0","DZAI_Rifles1","DZAI_Rifles2","DZAI_Rifles3","DZAI_BanditTypes"] execVM "\z\addons\dayz_server\DZAI\scripts\verifyTables.sqf";};

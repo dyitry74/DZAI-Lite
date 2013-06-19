@@ -3,7 +3,7 @@
 	
 	Description: Periodically selects a random dynamic trigger. If it is inactive and not marked for despawn, a probability check determines whether or not to move the trigger to a randomized location.
 	
-	Last updated: 5:49 PM 6/11/2013
+	Last updated: 8:45 PM 6/18/2013
 */
 
 diag_log "Starting DZAI Dynamic Trigger Manager in 60 seconds.";
@@ -17,9 +17,16 @@ while {true} do {
 		_trigger = DZAI_dynTriggerArray call BIS_fnc_selectRandom;
 		_isCleaning = _trigger getVariable ["isCleaning",false];
 		if ((!triggerActivated _trigger) && (!_isCleaning)) then {
-		private ["_newPos"];
+		private ["_newPos","_attempts"];
+			_attempts = 0;
 			_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
-			_trigger setPos _newPos;
+			while {(({([_newPos select 0,_newPos select 1] distance _x) < (2*DZAI_dynTriggerRadius - 2*DZAI_dynTriggerRadius*DZAI_dynOverlap)} count DZAI_dynTriggerArray) > 0)&&(_attempts < 3)} do {
+				sleep 0.5;
+				_attempts = _attempts +1;
+				_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
+				diag_log format ["DEBUG :: Calculated trigger position intersects with at least 1 other trigger (attempt %1/3).",_attempts];
+			};
+			_trigger setPos [_newPos select 0,_newPos select 1];
 			if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: A dynamic trigger has been relocated to %1. (dynTrigger_manager)",_newPos];};
 			if (DZAI_debugMarkers > 0) then {
 				private["_marker"];

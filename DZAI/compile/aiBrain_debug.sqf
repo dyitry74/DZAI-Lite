@@ -5,7 +5,7 @@
 	
 	Description: Handles AI ammo reload and zombie hostility. Called by fnc_createAI upon AI unit creation.
 	
-	Last updated: 4:08 PM 6/7/2013
+	Last updated: 1:16 AM 6/19/2013
 */
 private["_unit","_currentWeapon","_weaponMagazine","_needsReload","_nearbyZeds","_marker","_markername"];
 if (!isServer) exitWith {};
@@ -44,6 +44,9 @@ while {alive _unit} do {							//Run script for as long as unit is alive
 		_unit removeMagazines _weaponMagazine;
 		_unit addMagazine _weaponMagazine;
 		if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI ammo depleted, added one magazine to AI unit.";};
+	};
+	if ((getDammage _unit > 0.05)&&(getDammage _unit < 1)) then {
+		_unit setDamage ((getDammage _unit) - 0.05);			//AI heals 5% of their health periodically
 	};
 	sleep DZAI_refreshRate;										//Check again in x seconds.
 };

@@ -1,4 +1,4 @@
-DZAI Lite 0.1.0 - AI Addon for DayZ
+DZAI Lite 0.1.1 - AI Addon for DayZ
 ============
 
 
@@ -147,3 +147,10 @@ Latest Updates:
 - [MODIFIED] Increased probabilities of randomizing dynamic trigger location and activation chance.
 - [MODIFIED] Delay between each dynamic trigger spawn now fixed at 5 seconds.
 - [MODIFIED] Increased probability of generating Military-grade weapons for dynamic AI.
+
+0.1.1 Update:
+
+- [FIXED] Fixed error in dynamic trigger area overlap detection.
+- [NEW] Injured AI units now slowly heal themselves in 5% increments.
+- [NEW] Dynamic trigger area overlap for dynamic triggers now limited to 10% area overlap (Up to 3 locations are generated per trigger to help ensure that no two triggers overlap).
+- [MODIFIED] Dynamic trigger activation timings changed to 5/7/20 seconds from 5/10/30 seconds.

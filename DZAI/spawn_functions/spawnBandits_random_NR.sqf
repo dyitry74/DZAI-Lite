@@ -5,7 +5,7 @@
 	
 	Description: Spawns a group of AI units some distance from a dynamically-spawned trigger. These units do not respawn after death.
 	
-	Last updated: 12:04 AM 6/18/2013
+	Last updated: 8:46 PM 6/18/2013
 */
 private ["_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount","_spawnPos","_nearbyTriggers"];
 if (!isServer) exitWith {};
@@ -20,7 +20,7 @@ if (count _unitGroupArray > 0) exitWith {if (DZAI_debugLevel > 0) then {diag_log
 if ((random 1) > DZAI_dynSpawnChance) exitWith {
 	private["_newPos"];
 	_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
-	_trigger setPos _newPos;
+	_trigger setPos [_newPos select 0,_newPos select 1];
 	if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Probability check for dynamic AI spawn failed, relocating trigger to position %1. (spawnBandits_random_NR)",_newPos];};
 	if (DZAI_debugMarkers > 0) then {
 		private["_marker"];
@@ -55,7 +55,7 @@ _pos = [_spawnPos,_minDist,_maxDist,5,0,2000,0] call BIS_fnc_findSafePos;
 if ((_pos distance _spawnPos) > 500) exitWith {
 	private["_newPos"];
 	_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
-	_trigger setPos _newPos;
+	_trigger setPos [_newPos select 0,_newPos select 1];
 	if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Could not find suitable location to spawn AI units, relocating trigger to position %1. (spawnBandits_random_NR)",_newPos];};
 	if (DZAI_debugMarkers > 0) then {
 		private["_marker"];
@@ -72,10 +72,10 @@ if (_playerCount < 7) then {
 	_totalAI = (6 + round(random 1) - round(random 1));												//Set AI upper limit.
 };
 //Reduce number of AI spawned if trigger area intersects another activated trigger to avoid overwhelming AI spawns.
-_nearbyTriggers = {((_trigger distance _x) < ((triggerArea _trigger) select 0))&&(triggerActivated _x)} count DZAI_dynTriggerArray;
+_nearbyTriggers = ({((_trigger distance _x) < ((triggerArea _trigger) select 0))&&(triggerActivated _x)} count DZAI_dynTriggerArray) - 1;
 if (_nearbyTriggers > 0) then {
 	_totalAI = round(_totalAI/(_nearbyTriggers + 1));
-	diag_log format ["DEBUG :: Counted %1 other triggers within %2 meters. Number of AI to spawn reduced to %3.",_nearbyTriggers,((triggerArea _trigger) select 0),_totalAI];
+	if (DZAI_debugLevel > 0) then {diag_log format ["DEBUG :: Counted %1 other triggers within %2 meters. Number of AI to spawn reduced to %3.",_nearbyTriggers,((triggerArea _trigger) select 0),_totalAI];};
 };
 
 //No more exitWith statements, so trigger is committed to spawning at this point.
