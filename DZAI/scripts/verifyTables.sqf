@@ -4,10 +4,13 @@
 
 /*
 	verifyTables script written for DZAI
-	Checks an array of arrays for classnames banned by DayZ or non-existent classnames. If any banned/invalid classnames are found, they are removed and reported into the RPT log.
+	
+	Description: Checks an array of arrays for classnames banned by DayZ or non-existent classnames. If any banned/invalid classnames are found, they are removed and reported into the RPT log.
+	
+	Last updated: 12:12 AM 6/27/2013
 */
 
-private["_unverified","_verified","_errorFound","_weapChk","_vehChk","_magCheck","_stringArray"];
+private["_unverified","_verified","_errorFound","_weapChk","_vehChk","_magCheck","_stringArray","_startTime"];
 
 waitUntil {!isNil "DZAI_weaponsInitialized"};	//Wait for DZAI to finish building weapon classname arrays.
 
@@ -28,16 +31,19 @@ diag_log "DZAI is verifying all tables for banned or invalid classnames...";
 	private["_removeArray"];
 	_removeArray = [];	//Will contain all invalid classnames. Is reset for each element of _unverified cleaned.
 	{
-		private["_inheritsString"];
 		_weapChk = format["%1",inheritsFrom (configFile >> "CfgWeapons" >> _x)];
 		_vehChk = format["%1",inheritsFrom (configFile >> "CfgVehicles" >> _x)];
 		_magCheck = format["%1",inheritsFrom (configFile >> "CfgMagazines" >> _x)];
-		if (((_weapChk == WEAPON_BANNED_STRING) || (_vehChk == VEHICLE_BANNED_STRING) || (_magCheck == MAGAZINE_BANNED_STRING))||((_weapChk == "") && (_vehChk == "") && (_magCheck == ""))) then {	//Check if classname is banned or non-existent
-			diag_log format ["WARNING :: Entry %1 is banned or nonexistent. Removing entry.",_x];
+		if ((_weapChk == "") && (_vehChk == "") && (_magCheck == "")) then {	//Check if classname does not exist
+			diag_log format ["WARNING :: Classname %1 is invalid. Removing entry.",_x];
 			_removeArray set [(count _removeArray),_x];		//Build array of invalid classnames
 			if (!_errorFound) then {_errorFound = true;};
 		} else {
-			//diag_log format ["Entry %1 is valid.",_x];
+			if ((_weapChk == WEAPON_BANNED_STRING) || (_vehChk == VEHICLE_BANNED_STRING) || (_magCheck == MAGAZINE_BANNED_STRING)) then {	//If classname exists, check if it is banned
+				diag_log format ["WARNING :: Classname %1 is banned. Removing entry.",_x];
+				_removeArray set [(count _removeArray),_x];		//Build array of banned classnames
+				if (!_errorFound) then {_errorFound = true;};
+			};
 		};
 	} forEach _x;
 	sleep 0.1;
@@ -48,15 +54,13 @@ diag_log "DZAI is verifying all tables for banned or invalid classnames...";
 	_verified set [(count _verified),_x];	//Build array of verified classnames
 } forEach _unverified;
 
-if (_errorFound) then {
+if (_errorFound) then { //If a classname table requires editing, perform the required edits then report their final states.
 	for "_i" from 0 to ((count _unverified) - 1) do {
 		if ((count (_unverified select _i)) != (count (_verified select _i))) then {call compile format ["%1 = %2;",(_stringArray select _i),(_verified select _i)];	diag_log format ["Contents of %1: %2.",(_stringArray select _i),(call compile (_stringArray select _i))];};
 	};
 } else {
 	diag_log "All tables have been verified. No invalid entries found.";
 };
-
 diag_log format ["Table verification completed in %1 seconds.",(diag_tickTime - _startTime)];
 
 DZAI_classnamesVerified = true;
-

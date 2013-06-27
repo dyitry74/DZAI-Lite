@@ -159,19 +159,22 @@ Latest Updates:
 
 0.1.2 Update:
 
+- [NEW] AI spawned from dynamic triggers now seek out the player's position at the time of trigger activation, then begin patrolling the area.
+- [NEW] AI groups now actively pursue player responsible for killing a group member for up to 120 seconds if DZAI_findKiller is enabled. AI death will be detected if player is within 250-450m (randomized) of the killed AI. Pursuit distance is randomized between 500-700m of killed AI unit's location.
 - [NEW] Dynamic AI now spawn in a "Pursuit" state where they follow the randomly-selected player for a distance of 100m from (calculated from the player's position at time of trigger activation). Player's position is updated every 30 seconds.
-- [MODIFIED] Updated preset default weapon tables to DayZ 1.7.7.1 version.
-- [MODIFIED] Dynamic triggers now despawn after 120 seconds if all players have left the trigger area, or after 300 seconds after all spawned AI units have been killed (previously, timer was 120 seconds for both conditions).
-- [MODIFIED] Dynamic trigger intersection warnings now appear in the RPT log if DZAI_debugLevel is set to 1 or higher. (Note: After 3 attempts, triggers are placed on the map regardless of whether or not there is overlapping with other triggers).
-- [MODIFIED] Chernarus: dynamic trigger area reduced from 6000m radius to 5500m, max. triggers reduced to 18 from 19, and trigger moved slightly NW to avoid coastal areas.
+- [UPDATED] findKiller feature: Chase distance decreased to 400-600m from 500-700m. Time limit is unchanged.
+- [UPDATED] findKiller feature: AI will not pursue players in vehicles, and will exit pursuit state if player enters a vehicle (since AI do not use vehicles).
+- [UPDATED] findKiller feature: Player's position is now updated every 15 seconds.
+- [UPDATED] Updated preset default classname tables to DayZ 1.7.7.1 version.
+- [MODIFIED] Large AI skill parameter increases for AI. Highest-skilled AI may now potentially reach maximum skill levels for all skills except Accuracy and AimingShake.
+- [MODIFIED] AI counts are now updated when an AI group is spawned, killed entirely, or despawned.
 - [MODIFIED] Increased rate of healing for injured AI from 5% health/15 seconds to 10% health/15 seconds. (rate determined by DZAI_refreshRate)
-- [MODIFIED] findKiller feature: Chase distance decreased to 400-600m from 500-700m. Time limit is unchanged.
-- [MODIFIED] findKiller feature: AI will not pursue players in vehicles, and will exit pursuit state if player enters a vehicle (since AI do not use vehicles).
-- [MODIFIED] findKiller feature: Player's position is now updated every 15 seconds.
+- [MODIFIED] Temporary NVG feature can only be in effect (if enabled) during night time.
+- [MODIFIED] Dynamic trigger manager now relocates 25% of existing dynamic triggers every 15 minutes instead of relocating 1 trigger every 3 minutes. (5 triggers/15 minutes for Chernarus).
+- [MODIFIED] Classname verification script no longer checks if nonexistant classnames are banned.
 - [MODIFIED] AI units revert to an "AWARE" state from "COMBAT" after pursuit state ends if DZAI_findKiller is enabled. If not enabled, AI will remain in "COMBAT" mode until the entire group is killed (this is intended).
-- [MODIFIED] Updated preset default classname tables to DayZ 1.7.7.1 version.
 - [MODIFIED] Dynamic triggers no longer activate for players in Air vehicles. Note: Trigger will activate if players exit the air vehicle, but will not deactivate if players re-enter. AI stop actively tracking targeted player's position but will continue to the last known position.
 - [MODIFIED] Dynamic triggers now despawn after 120 seconds if all players have left the trigger area, or after 300 seconds after all spawned AI units have been killed (previously, timer was 120 seconds for both conditions).
 - [MODIFIED] Dynamic trigger intersection warnings now appear in the RPT log if DZAI_debugLevel is set to 1 or higher. (Note: After 3 attempts, triggers are placed on the map regardless of whether or not there is overlapping with other triggers).
 - [MODIFIED] Chernarus: dynamic trigger area reduced from 6000m radius to 5500m, max. triggers reduced to 15 from 16, and trigger moved slightly NW to avoid coastal areas.
-- [MODIFIED] Large AI skill parameter increases for AI. Highest-skilled AI may now potentially reach maximum skill levels for all skills except Accuracy and AimingShake.
+
