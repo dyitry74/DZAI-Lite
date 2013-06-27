@@ -1,4 +1,4 @@
-DZAI Lite 0.1.1 - AI Addon for DayZ
+DZAI Lite 0.1.2 - AI Addon for DayZ
 ============
 
 
