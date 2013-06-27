@@ -31,10 +31,12 @@ Installation Instructions:
 - Unpack your <b>dayz_server.pbo</b>
 - Copy the new DZAI folder inside your unpacked dayz_server folder. (You should also see config.cpp in the same level.)
 - Edit your <b>server_monitor.sqf</b>. It is located within \dayz_server\system. 
-- Locate the line that reads: <code>waituntil{isNil "sm_done"}; // prevent server_monitor be called twice (bug during login of the first player)</code> (Located near line 202. Exact location depends on your DayZ server software).
+- Locate the line that reads: <code>waituntil{isNil "sm_done"}; // prevent server_monitor be called twice (bug during login of the first player)</code> (located near line 200). If this line can't be located, find the one that reads: <code>// # END OF STREAMING #</code> (Located near line 174).
 - Underneath this line, insert the following (If reading this in a text editor, ignore the code tags!): <code>call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";</code>. Refer to the provided example server_monitor.sqf (named server_monitor_example.sqf)
-- Repack your dayz_server.pbo.
+- Repack your dayz_server.pbo (it should be about 400KB larger).
 - You are now ready to start your server.
+
+Note: DZAI Lite's settings file can be found in DZAI\init\dzai_variables.sqf
 
 Troubleshooting Instructions:
 ============
@@ -154,3 +156,22 @@ Latest Updates:
 - [NEW] Injured AI units now slowly heal themselves in 5% increments.
 - [NEW] Dynamic trigger area overlap for dynamic triggers now limited to 10% area overlap (Up to 3 locations are generated per trigger to help ensure that no two triggers overlap).
 - [MODIFIED] Dynamic trigger activation timings changed to 5/7/20 seconds from 5/10/30 seconds.
+
+0.1.2 Update:
+
+- [NEW] Dynamic AI now spawn in a "Pursuit" state where they follow the randomly-selected player for a distance of 100m from (calculated from the player's position at time of trigger activation). Player's position is updated every 30 seconds.
+- [MODIFIED] Updated preset default weapon tables to DayZ 1.7.7.1 version.
+- [MODIFIED] Dynamic triggers now despawn after 120 seconds if all players have left the trigger area, or after 300 seconds after all spawned AI units have been killed (previously, timer was 120 seconds for both conditions).
+- [MODIFIED] Dynamic trigger intersection warnings now appear in the RPT log if DZAI_debugLevel is set to 1 or higher. (Note: After 3 attempts, triggers are placed on the map regardless of whether or not there is overlapping with other triggers).
+- [MODIFIED] Chernarus: dynamic trigger area reduced from 6000m radius to 5500m, max. triggers reduced to 18 from 19, and trigger moved slightly NW to avoid coastal areas.
+- [MODIFIED] Increased rate of healing for injured AI from 5% health/15 seconds to 10% health/15 seconds. (rate determined by DZAI_refreshRate)
+- [MODIFIED] findKiller feature: Chase distance decreased to 400-600m from 500-700m. Time limit is unchanged.
+- [MODIFIED] findKiller feature: AI will not pursue players in vehicles, and will exit pursuit state if player enters a vehicle (since AI do not use vehicles).
+- [MODIFIED] findKiller feature: Player's position is now updated every 15 seconds.
+- [MODIFIED] AI units revert to an "AWARE" state from "COMBAT" after pursuit state ends if DZAI_findKiller is enabled. If not enabled, AI will remain in "COMBAT" mode until the entire group is killed (this is intended).
+- [MODIFIED] Updated preset default classname tables to DayZ 1.7.7.1 version.
+- [MODIFIED] Dynamic triggers no longer activate for players in Air vehicles. Note: Trigger will activate if players exit the air vehicle, but will not deactivate if players re-enter. AI stop actively tracking targeted player's position but will continue to the last known position.
+- [MODIFIED] Dynamic triggers now despawn after 120 seconds if all players have left the trigger area, or after 300 seconds after all spawned AI units have been killed (previously, timer was 120 seconds for both conditions).
+- [MODIFIED] Dynamic trigger intersection warnings now appear in the RPT log if DZAI_debugLevel is set to 1 or higher. (Note: After 3 attempts, triggers are placed on the map regardless of whether or not there is overlapping with other triggers).
+- [MODIFIED] Chernarus: dynamic trigger area reduced from 6000m radius to 5500m, max. triggers reduced to 15 from 16, and trigger moved slightly NW to avoid coastal areas.
+- [MODIFIED] Large AI skill parameter increases for AI. Highest-skilled AI may now potentially reach maximum skill levels for all skills except Accuracy and AimingShake.

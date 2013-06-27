@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 11:29 PM 6/12/2013
+	Last updated: 7:39 PM 6/21/2013
 */
 private["_worldname"];
 
@@ -26,14 +26,12 @@ DZAI_refreshRate = 15;										//Amount of time in seconds between AI ammo and 
 DZAI_zDetectRange = 200;									//Maximum distance for AI to detect zombies. (Default: 200)
 
 //Dynamic Trigger Settings - DZAI automatically determines the settings for dynamic triggers. Below are settings that can be manually adjusted.
-DZAI_dynManagerRate = 180;									//Frequency of dynamic trigger manager in seconds. The manager periodically relocates a randomly selected dynamic trigger(Default: 300)
-DZAI_dynRandomizeRate = 0.80;								//Probability of randomizing location of an inactive dynamic trigger. (Default: 0.80)
-DZAI_dynSpawnChance = 0.90;									//Probability of spawning AI when a dynamic trigger is activated. If probability check fails, the trigger is relocated. (Default: 0.90)
-DZAI_despawnWait = 120;										//Time to allow AI to remain in seconds before being removed when all players have left a trigger area. (Default: 120)
-DZAI_dynRemoveDeadWait = 300;								//Time to wait before deleting dead AI corpse. (Default: 300)
+DZAI_dynManagerRate = 900;									//Frequency of dynamic trigger manager in seconds. The manager periodically relocates a percentage of inactive dynamic triggers (Default: 900)
+DZAI_dynRemoveDeadWait = 300;								//Time to wait before deleting dead AI corpses. Timer starts when all units in a group have been killed.(Default: 300)
+DZAI_dynDespawnWait = 120;									//Time to allow AI to remain in seconds before being removed when all players have left a trigger area. (Default: 120)
 
 //Extra AI Settings
-DZAI_findKiller = false;									//Enable AI to become aware of who killed an AI group member. If alive, AI group leader will investigate last known position of killer. Players with radios are able to evade detection (Default: false)
+DZAI_findKiller = false;									//If enabled, AI group will attempt to track down player responsible for killing a group member. Players with radios will be given text warnings if they are being pursued (Default: false).
 DZAI_tempNVGs = false;										//If normal probability check for spawning NVGs fails, then give AI temporary NVGs only if they are spawned with weapongrade 2 or 3. Temporary NVGs are unlootable and will be removed at death (Default: false).
 
 //AI weapon configuration
@@ -41,7 +39,7 @@ DZAI_dynamicWeaponList = true;								//True: Dynamically generate AI weapon lis
 DZAI_banAIWeapons = [];										//(Only if DZAI_dynamicWeaponList = true) List of weapons that AI should never use. By default, AI may carry any lootable weapon. Example: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"]; will remove the M107 and AS50 from AI weapon tables  if dynamic weapon list is enabled.
 
 //AI loot probabilities
-DZAI_gradeChances = [0.30,0.65,0.04,0.01];					//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
+DZAI_gradeChancesDyn = [0.30,0.65,0.04,0.01];				//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
 
 //NOTHING TO EDIT BEYOND THIS POINT.
 

@@ -1,34 +1,28 @@
 /*
-	spawnBandits_random_NR
+	spawnBandits_dynamic
 
 	Usage: Called by an activated dynamic trigger when a player unit enters the trigger area.
 	
 	Description: Spawns a group of AI units some distance from a dynamically-spawned trigger. These units do not respawn after death.
 	
-	Last updated: 8:46 PM 6/18/2013
+	Last updated: 12:23 AM 6/25/2013
 */
-private ["_patrolDist","_trigger","_unitGroupArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount","_spawnPos","_nearbyTriggers"];
+#include "\z\addons\dayz_server\DZAI\init\dyn_trigger_defs.hpp"
+
+private ["_patrolDist","_trigger","_grpArray","_totalAI","_maxDist","_unitGroup","_pos","_targetPlayer","_unitArray","_playerArray","_playerPos","_minDist","_playerCount","_spawnPos","_nearbyTriggers","_findPlayer","_startTime"];
 if (!isServer) exitWith {};
+
+//Check if there are too many AI units in the game.
+if (DZAI_numAIUnits >= DZAI_maxAIUnits) exitWith {diag_log format["DZAI Warning: Maximum number of AI reached! (%1)",DZAI_numAIUnits];};
 
 _patrolDist = _this select 0;
 _trigger = _this select 1;
 _unitArray = _this select 2;
 
-_unitGroupArray = _trigger getVariable ["GroupArray",[]];			
-if (count _unitGroupArray > 0) exitWith {if (DZAI_debugLevel > 0) then {diag_log "DZAI Debug: Active groups found. Exiting spawn script (spawnBandits_random_NR)";};};						
+_startTime = diag_tickTime;
 
-if ((random 1) > DZAI_dynSpawnChance) exitWith {
-	private["_newPos"];
-	_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
-	_trigger setPos [_newPos select 0,_newPos select 1];
-	if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Probability check for dynamic AI spawn failed, relocating trigger to position %1. (spawnBandits_random_NR)",_newPos];};
-	if (DZAI_debugMarkers > 0) then {
-		private["_marker"];
-		_marker = format["trigger_%1",_trigger];
-		_marker setMarkerPos _newPos;
-	};
-};
-
+_grpArray = _trigger getVariable ["GroupArray",[]];			
+						
 //Build list of player units within trigger area. A player is randomly chosen from the array. If the player is not over water, then the trigger is moved to surround them and their position is used as a reference point for spawning AI.
 _playerArray = [];
 {
@@ -37,16 +31,26 @@ _playerArray = [];
 	};
 } forEach _unitArray;
 _playerCount = (count _playerArray);
-if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: %1 units within trigger area. %2 are players. (spawnBandits_random_NR)",(count _unitArray),_playerCount];};
+
+if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: %1 units within trigger area. %2 are players. (spawnBandits_dynamic)",(count _unitArray),_playerCount];};
 
 _targetPlayer = _playerArray call BIS_fnc_selectRandom;
 _playerPos = getPosATL _targetPlayer;
 _spawnPos = [0,0,0];
+_findPlayer = true;
 if !(surfaceIsWater [_playerPos select 0,_playerPos select 1]) then {
 	_trigger setPosATL _playerPos;									
 	_spawnPos = _playerPos;
+	//Don't hunt player if they are in a vehicle
+	if !(_targetPlayer isKindOf "Man") then {
+		_findPlayer = false;
+		//diag_log format ["DEBUG :: Target player %1 is in a vehicle.",_targetPlayer];
+	};
 } else {
+	//Don't hunt player if they are over water
 	_spawnPos = getPosATL _trigger;
+	_findPlayer = false;
+	//diag_log "DEBUG :: Target player is over water.";
 };
 _minDist = 125;
 _maxDist = (_minDist + random(175));
@@ -55,8 +59,15 @@ _pos = [_spawnPos,_minDist,_maxDist,5,0,2000,0] call BIS_fnc_findSafePos;
 if ((_pos distance _spawnPos) > 500) exitWith {
 	private["_newPos"];
 	_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
+	_attempts = 0;
+	while {(({([_newPos select 0,_newPos select 1] distance _x) < (2*DZAI_dynTriggerRadius - 2*DZAI_dynTriggerRadius*DZAI_dynOverlap)} count DZAI_dynTriggerArray) > 0)&&(_attempts < 3)} do {
+		sleep 0.5;
+		_attempts = _attempts +1;
+		_newPos = [(getMarkerPos DZAI_centerMarker),random(DZAI_centerSize),random(360),false,[1,500]] call SHK_pos;
+		if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Calculated trigger position intersects with at least 1 other trigger (attempt %1/3).",_attempts];};
+	};
 	_trigger setPos [_newPos select 0,_newPos select 1];
-	if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Could not find suitable location to spawn AI units, relocating trigger to position %1. (spawnBandits_random_NR)",_newPos];};
+	if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Could not find suitable location to spawn AI units, relocating trigger to position %1. (spawnBandits_dynamic)",_newPos];};
 	if (DZAI_debugMarkers > 0) then {
 		private["_marker"];
 		_marker = format["trigger_%1",_trigger];
@@ -87,31 +98,12 @@ if (DZAI_debugMarkers > 0) then {
 	_marker setMarkerAlpha 0.9;				//Dark orange: Activated trigger
 };
 
-if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: %1 AI spawns triggered (spawnBandits_random_NR).",_totalAI];};
+if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Processed static trigger spawn data in %1 seconds (spawnBandits_dynamic).",(diag_tickTime - _startTime)];};
 
-_unitGroup = grpNull;
-if ((random 1) < 0.5) then {				//50% chance to choose East or Resistance as AI side to avoid reaching 140 group/side limit.
-	_unitGroup = createGroup east;
-} else {
-	_unitGroup = createGroup resistance;
-};
-for "_i" from 1 to _totalAI do {
-	private ["_unit"];
-	_unit = [_unitGroup,_pos,_trigger] call fnc_createAI_NR;
-	if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: AI %1 of %2 spawned (spawnBandits_random_NR).",_i,_totalAI];};
-};
-_unitGroup selectLeader ((units _unitGroup) select 0);
-_unitGroup allowFleeing 0;
-
-0 = [_unitGroup,_spawnPos,_patrolDist,DZAI_debugMarkers] spawn fnc_BIN_taskPatrol;
-
-{
-	_unitGroup reveal [_x,4];
-} forEach _playerArray;
-(leader _unitGroup) glanceAt _targetPlayer;
-
-_unitGroupArray set [count _unitGroupArray,_unitGroup];
-//diag_log format ["DEBUG :: _trigger %1, groupArray %2, _total AI %3.",_trigger,_unitGroupArray,_totalAI];
-0 = [_trigger,_unitGroupArray,_totalAI] spawn fnc_initTrigger;
+_grpArray = [_totalAI,_patrolDist,_spawnPos,_pos,_trigger,_findPlayer,_targetPlayer] call fnc_createGroups_dyn;
+//diag_log format ["DEBUG :: _trigger %1, groupArray %2, _total AI %3.",_trigger,_grpArray,_totalAI];
+0 = [_trigger,_grpArray] spawn fnc_initTrigger;
+//Prevent player(s) from causing despawn by entering an air vehicle.
+_trigger setTriggerStatements [DYNTRIG_STATEMENTS_ACTIVE];
 
 true

@@ -5,7 +5,7 @@
 	
 	Description: Handles AI ammo reload and zombie hostility. Called by fnc_createAI upon AI unit creation.
 	
-	Last updated: 1:16 AM 6/19/2013
+	Last updated: 3:46 PM 6/20/2013
 */
 private["_unit","_currentWeapon","_weaponMagazine","_needsReload","_nearbyZeds","_marker","_markername"];
 if (!isServer) exitWith {};
@@ -13,9 +13,9 @@ if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI brain active.";
 
 _unit = _this select 0;								//Unit to monitor/reload ammo
 _currentWeapon = currentWeapon _unit;				//Retrieve unit's current weapon
-waitUntil {sleep 0.005; !isNil "_currentWeapon"};
+waitUntil {sleep 0.001; !isNil "_currentWeapon"};
 _weaponMagazine = getArray (configFile >> "CfgWeapons" >> _currentWeapon >> "magazines") select 0;	//Retrieve ammo used by unit's current weapon
-waitUntil {sleep 0.005; !isNil "_weaponMagazine"};
+waitUntil {sleep 0.001; !isNil "_weaponMagazine"};
 
 while {alive _unit} do {							//Run script for as long as unit is alive
 	if (DZAI_zombieEnemy) then {	//Run only if both zombie hostility and zombie spawns are enabled.
@@ -36,8 +36,8 @@ while {alive _unit} do {							//Run script for as long as unit is alive
 		_unit addMagazine _weaponMagazine;
 		if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI ammo depleted, added one magazine to AI unit.";};
 	};
-	if ((getDammage _unit > 0.05)&&(getDammage _unit < 1)) then {
-		_unit setDamage ((getDammage _unit) - 0.05);			//AI heals 5% of their health periodically
+	if ((getDammage _unit > 0.10)&&(getDammage _unit < 1)) then {
+		_unit setDamage ((getDammage _unit) - 0.10);			//AI heals periodically
 	};
 	sleep DZAI_refreshRate;										//Check again in x seconds.
 };
