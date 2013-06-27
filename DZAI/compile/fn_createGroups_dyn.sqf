@@ -24,8 +24,6 @@ if ((random 1) < 0.5) then {				//50% chance to choose East or Resistance as AI 
 } else {
 	_unitGroup = createGroup resistance;
 };
-if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: AI group %1 created (spawnBandits_dynamic).",_unitGroup];};
-
 for "_i" from 1 to _totalAI do {
 	[_unitGroup,_pos,_trigger] call fnc_createUnit;
 	if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: AI %1 of %2 spawned (spawnBandits_dynamic).",_i,_totalAI];};
@@ -37,6 +35,7 @@ _unitGroup allowFleeing 0;
 //Update AI count
 _unitGroup setVariable ["groupSize",_totalAI];
 DZAI_numAIUnits = DZAI_numAIUnits + _totalAI;
+if (DZAI_debugLevel > 1) then {diag_log format ["DZAI Extended Debug: Group %1 has group size %2.",_unitGroup,_totalAI];};
 
 if (_findPlayer) then {
 	//Travel to player's position, then begin patrol.

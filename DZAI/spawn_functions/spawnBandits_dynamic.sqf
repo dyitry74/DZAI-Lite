@@ -98,7 +98,7 @@ if (DZAI_debugMarkers > 0) then {
 	_marker setMarkerAlpha 0.9;				//Dark orange: Activated trigger
 };
 
-if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Processed static trigger spawn data in %1 seconds (spawnBandits_dynamic).",(diag_tickTime - _startTime)];};
+if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Processed dynamic trigger spawn data in %1 seconds (spawnBandits_dynamic).",(diag_tickTime - _startTime)];};
 
 _grpArray = [_totalAI,_patrolDist,_spawnPos,_pos,_trigger,_findPlayer,_targetPlayer] call fnc_createGroups_dyn;
 //diag_log format ["DEBUG :: _trigger %1, groupArray %2, _total AI %3.",_trigger,_grpArray,_totalAI];

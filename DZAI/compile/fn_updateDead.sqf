@@ -23,7 +23,6 @@ _unitsAlive = {alive _x} count (units _unitGroup);
 
 //If all units in the group have died, create dummy AI unit to preserve group, then begin force despawn process.
 if (_unitsAlive == 0) then {
-	private["_groupSize"];
 	if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: All units in group %1 are dead. Spawning temporary dummy unit for group. (fn_updateDead).",_unitGroup];};
 
 	_dummy = _unitGroup createUnit ["Survivor2_DZ",[0,0,0],[],0,"FORM"];
@@ -37,10 +36,6 @@ if (_unitsAlive == 0) then {
 	
 	_unitGroup setVariable ["groupKIA",true];
 
-	_groupSize = _unitGroup getVariable "groupSize";
-	DZAI_numAIUnits = DZAI_numAIUnits - _groupSize;
-	_unitGroup setVariable ["groupSize",0];
-	
 	if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: All groups spawned by trigger %1 are dead. Starting force respawn. (fn_updateDead).",_trigger];};
 	_trigger setVariable ["forceDespawn",true];
 	[_trigger] spawn fnc_despawnBandits_dynamic;	//force despawning even if players are present in trigger area.

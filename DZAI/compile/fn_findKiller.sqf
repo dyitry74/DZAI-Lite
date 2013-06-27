@@ -3,7 +3,7 @@
 	
 	Description: If an AI unit is killed, surviving members of their group will aggressively pursue the killer for a set amount of time. After this amount of time has passed, the group will return to their patrol state.
 	
-	Last updated: 3:03 PM 6/26/2013
+	Last updated: 3:03 PM 5:33 PM 6/27/2013
 */
 private ["_killerPos","_unitGroup","_victim","_killer","_inPursuit","_groupKIA","_trigger","_detectRange","_chaseDist"];
 
@@ -20,15 +20,16 @@ _inPursuit = _unitGroup getVariable ["inPursuit",false];
 if (_inPursuit) exitWith {if (DZAI_debugLevel > 0) then {diag_log "DZAI Debug: Group is already in pursuit of a target. (fn_findKiller)";};};
 
 //Calculate detection range.
-_detectRange = (350 + (random 100) - (random 100));
+_detectRange = (350 + (random 100) - (random 100)); //Min: 250, Max: 450
 
 if (((_victim distance _killer) < _detectRange) && (_killer isKindOf "Man")) then {
+	private["_endTime"];
 	if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Group %1 has entered pursuit state. Target: %2. (fn_findKiller)",_unitGroup,_killer];};
 	_unitGroup setVariable ["inPursuit",true];
 	_unitGroup reveal [_killer,4];
 	
 	//Calculate maximum pursuit range, using victim's location as origin.
-	_chaseDist = (500 + (random 100) - (random 100));
+	_chaseDist = (500 + (random 100)); //Min: 500, Max: 600
 	
 	//Temporarily cancel patrol state.
 	_unitGroup lockWP true;

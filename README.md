@@ -1,4 +1,4 @@
-DZAI Lite 0.1.2 - AI Addon for DayZ
+DZAI Lite 0.1.3 - AI Addon for DayZ
 ============
 
 
@@ -178,3 +178,9 @@ Latest Updates:
 - [MODIFIED] Dynamic trigger intersection warnings now appear in the RPT log if DZAI_debugLevel is set to 1 or higher. (Note: After 3 attempts, triggers are placed on the map regardless of whether or not there is overlapping with other triggers).
 - [MODIFIED] Chernarus: dynamic trigger area reduced to 5500m from 6000m, max. triggers reduced to 18 from 19, and trigger moved slightly NW to avoid coastal areas.
 
+0.1.3 Update:
+
+- [FIXED] Fixed active AI counter. Active AI counter is decreased for each AI unit killed, despawned, instead of being updated when the entire group is killed.
+- [FIXED] findKiller: Minimum pursuit distance increased from 400m to 500m to better match maximum detection distance (450m).
+- [FIXED] Despawn script now checks if the group exists before attempting despawn.
+- [REMOVED] Removed unnecessary default pistol classnames tables.
