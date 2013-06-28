@@ -32,12 +32,5 @@ if (!isPlayer _killer) exitWith {};
 _unitGroup setBehaviour "COMBAT";
 
 _trigger = _victim getVariable "trigger";
-//_gradeChances = _trigger getVariable ["gradeChances",DZAI_gradeChances2];
 
 if (DZAI_findKiller) then {0 = [_victim,_killer,_unitGroup] spawn fnc_findKiller;};
-
-//_weapongrade = [DZAI_weaponGrades,_gradeChances] call fnc_selectRandomWeighted;
-//if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: AI killed by player. Generating loot with weapongrade %1 (fn_banditAIKilled).",_weapongrade];};
-//0 = [_victim, _weapongrade] spawn fnc_unitSelectPistol;				// Add sidearm
-//0 = [_victim] spawn fnc_unitConsumables;							// Add food, medical, misc, skin
-//0 = [_victim, _weapongrade] spawn fnc_unitTools;					// Add tools and gadget

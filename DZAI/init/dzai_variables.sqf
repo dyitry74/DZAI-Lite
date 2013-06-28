@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 7:39 PM 6/21/2013
+	Last updated: 2:12 AM 6/28/2013
 */
 private["_worldname"];
 
@@ -39,7 +39,7 @@ DZAI_dynamicWeaponList = true;								//True: Dynamically generate AI weapon lis
 DZAI_banAIWeapons = [];										//(Only if DZAI_dynamicWeaponList = true) List of weapons that AI should never use. By default, AI may carry any lootable weapon. Example: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"]; will remove the M107 and AS50 from AI weapon tables  if dynamic weapon list is enabled.
 
 //AI loot probabilities
-DZAI_gradeChancesDyn = [0.30,0.65,0.04,0.01];				//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
+DZAI_gradeChancesDyn = [0.30,0.60,0.08,0.02];				//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
 
 //NOTHING TO EDIT BEYOND THIS POINT.
 

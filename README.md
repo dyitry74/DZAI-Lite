@@ -1,4 +1,4 @@
-DZAI Lite 0.1.3 - AI Addon for DayZ
+DZAI Lite 0.1.4 - AI Addon for DayZ
 ============
 
 
@@ -60,67 +60,6 @@ A3: DZAI reads DayZ's loot tables to find weapon classnames, followed by a verif
 
 Latest Updates:
 ============
-
-0.0.1 (Initial release):
-
-- Initial release of DZAI Lite based on DZAI version 0.9.5
-- Changes in equipType/weapongrade tiered system are planned.
-
-0.0.2 update:
-
-- [FIXED] Debug markers for patrol waypoints are now properly removed when AI units are despawned.
-- [FIXED] Dynamic triggers no longer remain active due to player presence if all AI units in the area have been killed. Despawn process is forced 2 minutes after the last AI unit in the area is killed.
-- [REMOVED] Removed fn_getGradeChances.sqf with the removal of the equipType classification system.
-- [MODIFIED] DZAI_gradeChances0-3 tables have been simplified into a single DZAI_gradeChances table.
-
-0.0.3 update:
-
-- [NEW] Number of AI spawned per trigger is now dependent on the number of players present in the trigger instead of being configured. (minimum of 2 to maximum of 6, +/- 1)
-- [REMOVED] AI no longer carry backpacks.
-- [MODIFIED] Lowered chance of generating NVGs in high tier tools table from 25% to 20%.
-- [MODIFIED] Dynamic trigger activation timings changed from 5/7/10 seconds to 5/10/15 seconds.
-
-0.0.4 update:
-
-- [FIXED] Removed all remaining variables relating to minimum/additional AI to spawn for dynamic triggers.
-- [REMOVED] Dynamic trigger spawning script no longer avoids player positions.
-- [MODIFIED] Chernarus: adjusted spawning range of dynamic triggers from 5250m to 6000m. Increased number of dynamic triggers from 20 to 22.
-- [MODIFIED] Spawning range of AI from dynamic triggers increased from 125m (+125m max) to 125m (+175m max).
-- [MODIFIED] Dynamic trigger activation timings changed from 5/10/15 seconds to 5/10/30 seconds.
-
-0.0.5 update:
-
-- [NEW] Debug markers: Added color-coding for activation state of dynamic triggers. Yellow (Ready Trigger), Green (Awaiting Despawn), Orange (Activated Trigger).
-- [NEW] Dynamic triggers now relocate to center around a random player in the trigger area when activated. (Prevents player from quickly leaving the trigger area after entering).
-- [MODIFIED] Addition of glanceAt command for AI group leader to help locate player unit.
-- [MODIFIED] Modification of dynamic trigger amounts for each map.
-- [MODIFIED] Time delay in between each dynamic trigger spawn reduced from 20 seconds to 5 seconds.
-
-0.0.6 update:
-
-- [NEW] Added Dynamic Trigger Mananger to periodically randomize the locations of inactive dynamic triggers. (Default interval: 5 minutes, Relocation probability: 75%).
-- [FIXED] Dynamic AI are now properly deleted after death.
-- [MODIFIED] fnc_deleteVictim renamed to fnc_updateDead.
-- [MODIFIED] Lowered probabilities of generating MilitarySpecial and HeliCrash weapons for AI.
-- [MODIFIED] Increased visibility of debug marker for trigger areas marked for despawning.
-
-0.0.7 update:
-
-- [NEW] DZAI now dynamically generates weapon classname tables instead of reading them from a config file. This should greatly improve DZAI's compatibility with all current/future DayZ mods. <b>NOTE</b>: By default, AI may carry any lootable weapon. To "ban" specific weapons from DZAI classname tables, add them to DZAI_banAIWeapons in dzai_variables.sqf. For example, to ban the M107 and AS50: DZAI_banAIWeapons = ["M107_DZ","BAF_AS50_scoped"];
-- [FIXED] Fixed undefined variable error in despawning script for dynamic triggers.
-- [MODIFIED] Lowered probability of generating NVGs for AI with weapongrade 2-3 from 20% to 15%. 	
-
-0.0.8 update:
-
-- [NEW] Added option to switch between dynamic weapon list generation and preset list for generating AI weapons. By default, dynamic list generation is enabled. Dynamic generation ensures compatibility with all DayZ mods but slightly delays loading of DZAI at server start. Using the preset list is faster, but problems may arise from incompatible classnames.
-- [MODIFIED] Re-added preset weapon classname list using weapons from standard DayZ 1.7.6.1.
-
-0.0.9 update:
-
-- [MODIFIED] Dynamic triggers only relocate to a random nearby player's position on activation if the player is not over water (to avoid having a trigger move on top of water). Otherwise, the trigger's position is used as the reference point.
-- [MODIFIED] Adjusted spawning distance of dynamic triggers for almost all maps, along with adjustments to spawn amounts to match.
-- [MODIFIED] DZAI no longer reads from Supermarket loot tables to collect weapon data since most entries are shared with Residential. This will slightly reduce the amount of time required to collect data.
-- [MODIFIED] On startup, debug data now also reports whether or not dynamic weapon list generation is enabled.
 
 0.0.9.1 hotfix (DayZ 1.7.7 compatibility):
 
@@ -184,3 +123,14 @@ Latest Updates:
 - [FIXED] findKiller: Minimum pursuit distance increased from 400m to 500m to better match maximum detection distance (450m).
 - [FIXED] Despawn script now checks if the group exists before attempting despawn.
 - [REMOVED] Removed unnecessary default pistol classnames tables.
+
+0.1.4 Update:
+
+- [FIXED] Changed the way groups are randomly assigned to a side to prevent null groups from being created.
+- [UPDATED] Additional dynamic AI are generated if there are additional players within 100m of targeted player. Previously, all players in the trigger area (600m radius) were counted.
+- [MODIFIED] Decreased completion radius of tracking waypoint for dynamic AI from 40m to 30m (AI search accuracy increased).
+- [MODIFIED] Dynamic AI tracking range increased to 200m from 100m.
+- [MODIFIED] Increased Accuracy and AimingShake rating for all AI skill tiers.
+- [MODIFIED] Shifted Chernarus center marker further south (encompasses Cherno, but not Elektro).
+
+Note: Older updates are archived in changelog.txt

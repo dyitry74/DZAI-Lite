@@ -30,12 +30,19 @@ _playerArray = [];
 		_playerArray set [(count _playerArray),_x];	
 	};
 } forEach _unitArray;
-_playerCount = (count _playerArray);
+//_playerCount = (count _playerArray);
 
-if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: %1 units within trigger area. %2 are players. (spawnBandits_dynamic)",(count _unitArray),_playerCount];};
+//if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: %1 units within trigger area. %2 are players. (spawnBandits_dynamic)",(count _unitArray),_playerCount];};
 
 _targetPlayer = _playerArray call BIS_fnc_selectRandom;
 _playerPos = getPosATL _targetPlayer;
+
+//Count number of players close to the targeted player.
+_playerCount = {isPlayer _x} count (_playerPos nearEntities [["AllVehicles","CAManBase"],100]);
+//_playerCount = ({(_isPlayer _x) && ((_x distance _targetPlayer) < 100)} count _unitArray) -1;
+
+if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Counted %1 players within 100m of target player (spawnBandits_dynamic)",_playerCount];};
+
 _spawnPos = [0,0,0];
 _findPlayer = true;
 if !(surfaceIsWater [_playerPos select 0,_playerPos select 1]) then {

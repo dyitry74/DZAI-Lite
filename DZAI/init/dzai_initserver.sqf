@@ -69,7 +69,7 @@ _worldname=toLower format ["%1",worldName];
 switch (_worldname) do {
 	case "chernarus":
 	{
-		DZAI_centerMarker setMarkerPos [7130.0073, 8155.2944];
+		DZAI_centerMarker setMarkerPos [7130.0073, 7826.3501];
 		DZAI_centerSize = 5500;
 		DZAI_dynTriggersMax = 18;
 	};

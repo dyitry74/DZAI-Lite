@@ -18,12 +18,16 @@ _startTime = diag_tickTime;
 
 _grpArray = [];
 
-_unitGroup = grpNull;
+/*_unitGroup = grpNull;
 if ((random 1) < 0.5) then {				//50% chance to choose East or Resistance as AI side to avoid reaching 140 group/side limit.
 	_unitGroup = createGroup east;
 } else {
 	_unitGroup = createGroup resistance;
-};
+};*/
+_unitGroup = createGroup ([east,resistance] call BIS_fnc_selectRandom);
+
+if (DZAI_debugLevel > 1) then {diag_log format ["DZAI Extended Debug: Created group %1.",_unitGroup];};
+
 for "_i" from 1 to _totalAI do {
 	[_unitGroup,_pos,_trigger] call fnc_createUnit;
 	if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: AI %1 of %2 spawned (spawnBandits_dynamic).",_i,_totalAI];};

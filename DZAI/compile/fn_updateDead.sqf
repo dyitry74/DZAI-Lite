@@ -34,7 +34,7 @@ if (_unitsAlive == 0) then {
 	_dummy disableAI "TARGET";
 	_dummy disableAI "AUTOTARGET";
 	
-	_unitGroup setVariable ["groupKIA",true];
+	//_unitGroup setVariable ["groupKIA",true];
 
 	if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: All groups spawned by trigger %1 are dead. Starting force respawn. (fn_updateDead).",_trigger];};
 	_trigger setVariable ["forceDespawn",true];
