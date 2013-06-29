@@ -1,4 +1,4 @@
-DZAI Lite 0.1.4 - AI Addon for DayZ
+DZAI Lite 0.1.5 - AI Addon for DayZ
 ============
 
 
@@ -132,5 +132,9 @@ Latest Updates:
 - [MODIFIED] Dynamic AI tracking range increased to 200m from 100m.
 - [MODIFIED] Increased Accuracy and AimingShake rating for all AI skill tiers.
 - [MODIFIED] Shifted Chernarus center marker further south (encompasses Cherno, but not Elektro).
+
+0.1.5 Update:
+
+- [FIXED] Various fixes and reversions to fix null group creation.
 
 Note: Older updates are archived in changelog.txt

@@ -7,6 +7,8 @@
 */
 private ["_startTime"];
 
+if (!isServer) exitWith {};
+
 _startTime = diag_tickTime;
 diag_log "[DZAI] Initializing DZAI Lite addon. Reading dzai_variables.sqf.";
 
@@ -23,31 +25,7 @@ EAST setFriend [resistance, 1];
 WEST setFriend [EAST, 0];									//West (Player side) is hostile to all.
 WEST setFriend [resistance, 0];
 
-	waituntil {!isnil "bis_fnc_init"};
-	diag_log "[DZAI] Compiling DZAI functions.";
-	// [] call BIS_fnc_help;
-	//Compile general functions.
-	BIS_fnc_selectRandom = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_selectRandom.sqf";	//Altered version
-	fnc_setSkills = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_setSkills.sqf";
-	fnc_spawn_deathFlies = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_spawn_deathFlies.sqf";
-	fnc_unitInventory = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_unitInventory.sqf";
-	fnc_unitSelectWeapon = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_unitSelectWeapon.sqf";
-	fnc_banditAIKilled = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_banditAIKilled.sqf";
-	fnc_selectRandomWeighted = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_selectRandomWeighted.sqf";
-	fnc_createGroups_dyn = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_createGroups_dyn.sqf";
-	fnc_createUnit = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_createUnit.sqf";
-	fnc_damageAI = 					compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_damageHandlerAI.sqf";
-	fnc_initTrigger = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_initTrigger.sqf";
-	fnc_BIN_taskPatrol = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\BIN_taskPatrol.sqf";
-	if (DZAI_debugMarkers < 1) then {	fnc_aiBrain = compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\aiBrain.sqf";} else {
-		fnc_aiBrain = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\aiBrain_debug.sqf";};
-	fnc_updateDead = 				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_updateDead.sqf";
-	if (DZAI_findKiller) then {
-		fnc_findKiller = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_findKiller.sqf";};
-	fnc_seekPlayer =				compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\compile\fn_seekPlayer.sqf";
-	fnc_spawnBandits_dynamic = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\spawn_functions\spawnBandits_dynamic.sqf";
-	fnc_despawnBandits_dynamic = 	compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\spawn_functions\despawnBandits_dynamic.sqf";
-	
+#include "dzai_functions.sqf"
 	
 //Load DZAI Lite classname tables.
 #include "base_classname_configs\base_classnames.sqf"

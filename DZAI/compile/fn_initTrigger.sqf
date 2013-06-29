@@ -8,7 +8,7 @@
 	
 	Note: "_patrolDist" may also contain an array of markers for manual waypoint creation.
 	
-	Last updated: 6/2/2013
+	Last updated: 1:33 AM 6/29/2013
 */
 
 private["_trigger"];

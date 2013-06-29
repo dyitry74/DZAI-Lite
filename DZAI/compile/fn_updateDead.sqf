@@ -8,7 +8,7 @@
 	Last Updated: 3:05 PM 6/24/2013
 */
 
-private ["_victim","_unitsAlive","_trigger","_grpCount","_grpArray","_unitGroup","_dummy"];
+private ["_victim","_unitsAlive","_trigger","_unitGroup","_dummy"];
 
 _victim = _this select 0;
 _trigger = _victim getVariable "trigger";
