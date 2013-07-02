@@ -21,7 +21,8 @@ _unitArray = _this select 2;
 
 _startTime = diag_tickTime;
 
-_grpArray = _trigger getVariable ["GroupArray",[]];			
+_grpArray = _trigger getVariable ["GroupArray",[]];	
+if (count _grpArray > 0) exitWith {if (DZAI_debugLevel > 0) then {diag_log "DZAI Debug: Active groups found. Exiting spawn script (spawnBandits)";};};			
 						
 //Build list of player units within trigger area. A player is randomly chosen from the array. If the player is not over water, then the trigger is moved to surround them and their position is used as a reference point for spawning AI.
 _playerArray = [];
@@ -59,8 +60,8 @@ if !(surfaceIsWater [_playerPos select 0,_playerPos select 1]) then {
 	_findPlayer = false;
 	//diag_log "DEBUG :: Target player is over water.";
 };
-_minDist = 125;
-_maxDist = (_minDist + random(175));
+_minDist = 150;
+_maxDist = (_minDist + random(200));
 _pos = [_spawnPos,_minDist,_maxDist,5,0,2000,0] call BIS_fnc_findSafePos;
 //If BIS_fnc_findSafePos fails to find a safe location, then force respawn instead.
 if ((_pos distance _spawnPos) > 500) exitWith {

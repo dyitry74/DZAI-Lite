@@ -1,4 +1,4 @@
-DZAI Lite 0.1.5 - AI Addon for DayZ
+DZAI Lite 0.1.6 - AI Addon for DayZ
 ============
 
 
@@ -136,5 +136,9 @@ Latest Updates:
 0.1.5 Update:
 
 - [FIXED] Various fixes and reversions to fix null group creation.
+
+0.1.6 Hotfix:
+
+- [FIXED] Dynamic triggers should not spawn more AI units if they have not despawned previously created units.
 
 Note: Older updates are archived in changelog.txt
