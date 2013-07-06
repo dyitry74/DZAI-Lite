@@ -3,7 +3,7 @@
 	
 	Description: Contains all configurable settings of DZAI. Contains settings for debugging, customization of AI units, spawning, and loot.
 	
-	Last updated: 1:32 AM 6/29/2013
+	Last updated: 5:49 PM 7/6/2013
 */
 private["_worldname"];
 
@@ -20,8 +20,6 @@ DZAI_monitorRate = 180;										//Frequency of server monitor update to RPT log
 DZAI_verifyTables = true;									//Set 'true' to have DZAI check all classname tables for banned or invalid classnames. (Default: true)
 
 //AI Unit Variables						
-DZAI_dmgFactors1 =[1.0,1.0,1.0,1.0,1.0];					//Multipliers for bullet-type damage done to different body parts of AI units: Structural, Head, Body, Hands, Legs. Example: to make AI take 50% reduced damage to a body part, set the appropriate value to 0.50.
-DZAI_dmgFactors2 =[1.0,1.0,1.0,1.0,1.0];					//Multipliers for non-bullet-type (ie: explosions, collisions) damage done to different body parts: Structural, Head, Body, Hands, Legs.
 DZAI_refreshRate = 15;										//Amount of time in seconds between AI ammo and zombie check. (Default: 15)
 DZAI_zDetectRange = 200;									//Maximum distance for AI to detect zombies. (Default: 200)
 
@@ -49,6 +47,7 @@ DZAI_numAIUnits = 0;										//Keep track of currently active AI units, includi
 DZAI_actDynTrigs = 0;										//Keep track of current number of active dynamically-spawned triggers
 DZAI_curDynTrigs = 0;										//Keep track of current total of inactive dynamically-spawned triggers.
 DZAI_actTrigs = 0;											//Keep track of active static triggers.	
-DZAI_dynTriggerArray = [];									//List of current dynamic triggers.		
+DZAI_dynTriggerArray = [];									//List of current dynamic triggers.	
+DZAI_dmgFactors = [0.375,0.563,0.375,0,0.375];	
 
 if (DZAI_debugLevel > 0) then {diag_log format["[DZAI] DZAI Variables loaded. Debug Level: %1. DebugMarkers: %2. DZAI_dynamicWeaponList: %3. VerifyTables: %4.",DZAI_debugLevel,DZAI_debugMarkers,DZAI_dynamicWeaponList,DZAI_verifyTables];};

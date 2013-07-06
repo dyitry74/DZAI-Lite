@@ -1,4 +1,4 @@
-DZAI Lite 0.1.6 - AI Addon for DayZ
+DZAI Lite 0.1.7 - AI Addon for DayZ
 ============
 
 
@@ -140,5 +140,14 @@ Latest Updates:
 0.1.6 Hotfix:
 
 - [FIXED] Dynamic triggers should not spawn more AI units if they have not despawned previously created units.
+
+0.1.7 Update:
+
+- [NEW] AI units can now be stunned with Tasers. (DZAI will detect if Double Doppler's Taser Mod is installed).
+- [NEW] AI units now stop to heal when they reach 75% health. Healing process takes 3 seconds to complete and fully heals the unit, including broken legs. Each AI unit can heal up to 2 times with a 60 second cooldown in between.
+- [UPDATED] AI health increased. AI can now take damage equivalent to 12000 units of blood (headshots do 50% additional damage). AI hands modified to be immune from damage (aim cannot be impaired).
+- [MODIFIED] Only zombies close to AI group leaders will be marked as hostile, instead of any AI unit.
+- [MODIFIED] Combined AI damage reduction factors for bullet/non-bullet damage.
+- [MODIFIED] Adjusted AI skill ratings (Accuracy, AimingSpeed decreases).
 
 Note: Older updates are archived in changelog.txt

@@ -7,7 +7,7 @@
 	
 	Last updated: 3:46 PM 6/20/2013
 */
-private["_unit","_currentWeapon","_weaponMagazine","_needsReload","_nearbyZeds","_marker","_markername"];
+private["_unit","_currentWeapon","_weaponMagazine","_needsReload","_nearbyZeds","_marker","_markername","_lastBandage","_bandages","_unitGroup"];
 if (!isServer) exitWith {};
 if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI brain active.";};
 
@@ -16,6 +16,10 @@ _currentWeapon = currentWeapon _unit;				//Retrieve unit's current weapon
 waitUntil {sleep 0.001; !isNil "_currentWeapon"};
 _weaponMagazine = getArray (configFile >> "CfgWeapons" >> _currentWeapon >> "magazines") select 0;	//Retrieve ammo used by unit's current weapon
 waitUntil {sleep 0.001; !isNil "_weaponMagazine"};
+
+_lastBandage = 0;
+_bandages = 2;
+_unitGroup = (group _unit);
 
 _markername = format["AI_%1",_unit];
 _marker = createMarker[_markername,(getposATL _unit)];
@@ -28,7 +32,7 @@ _marker setMarkerSize [5, 5];
 //_timeToDie = time+40;
 while {alive _unit} do {							//Run script for as long as unit is alive
 	_marker setmarkerpos (getposATL _unit);
-	if (DZAI_zombieEnemy) then {	//Run only if both zombie hostility and zombie spawns are enabled.
+	if (DZAI_zombieEnemy && ((leader _unitGroup) == _unit)) then {	//Run only if both zombie hostility and zombie spawns are enabled.
 		_nearbyZeds = (position _unit) nearEntities ["zZombie_Base",DZAI_zDetectRange];
 		{
 			if(rating _x > -30000) then {
@@ -46,8 +50,19 @@ while {alive _unit} do {							//Run script for as long as unit is alive
 		_unit addMagazine _weaponMagazine;
 		if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI ammo depleted, added one magazine to AI unit.";};
 	};
-	if ((getDammage _unit > 0.10)&&(getDammage _unit < 1)) then {
-		_unit setDamage ((getDammage _unit) - 0.10);			//AI heals periodically
+	if (((getDammage _unit) > 0.25)&&(alive _unit)) then {
+		if ((_bandages > 0) && ((time - _lastBandage) > 60)) then {
+			if ((random 1) < 0.4) then {
+				sleep 0.5;
+				_bandages = _bandages - 1;
+				_unit disableAI "FSM";
+				_unit playActionNow "Medic";
+				sleep 3;
+				_unit enableAI "FSM";
+				_unit setDamage 0;
+				_lastBandage = time;
+			};
+		};
 	};
 	//Uncomment to debug death-related scripts.
 	/*if (time > _timeToDie) then {

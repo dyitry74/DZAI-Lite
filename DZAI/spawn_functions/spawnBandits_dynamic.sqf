@@ -62,7 +62,7 @@ if !(surfaceIsWater [_playerPos select 0,_playerPos select 1]) then {
 };
 _minDist = 150;
 _maxDist = (_minDist + random(200));
-_pos = [_spawnPos,_minDist,_maxDist,5,0,2000,0] call BIS_fnc_findSafePos;
+_pos = [_spawnPos,_minDist,_maxDist,10,0,2000,0] call BIS_fnc_findSafePos;
 //If BIS_fnc_findSafePos fails to find a safe location, then force respawn instead.
 if ((_pos distance _spawnPos) > 500) exitWith {
 	private["_newPos"];
