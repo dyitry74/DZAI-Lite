@@ -20,4 +20,4 @@
 	DZAI_gadgets0 = [["binocular",0.70],["NVGoggles",0.005]];	//Gadgets (and probabilities) for AI with weapongrade 0-1
 	DZAI_gadgets1 = [["binocular",0.95],["NVGoggles",0.15]];	//Gadgets (and probabilities) for AI with weapongrade 2-3
 	
-	diag_log "DZAI base classname tables loaded.";
+	diag_log "[DZAI] Base classname tables loaded.";

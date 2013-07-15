@@ -3,53 +3,55 @@
 	
 	Description: Handles startup process for DZAI Lite. Does not contain any values intended for modification.
 	
-	Last updated: 11:29 PM 6/12/2013
+	Last updated: 2:04 PM 7/14/2013
 */
 private ["_startTime"];
 
 if (!isServer) exitWith {};
 
 _startTime = diag_tickTime;
-diag_log "[DZAI] Initializing DZAI Lite addon. Reading dzai_variables.sqf.";
+#include "DZAI_version.hpp"
+diag_log format ["Initializing %1 version %2",DZAI_TYPE,DZAI_VERSION];
+
+createcenter east;							//Create centers for all sides
+createcenter resistance;
+east setFriend [resistance, 1];								//Resistance (AI) is hostile to West (Player), but friendly to East (AI).
+east setFriend [west, 0];	
+resistance setFriend [west, 0];								//East (AI) is hostile to West (Player), but friendly to Resistance (AI).
+resistance setFriend [east, 1];	
+west setFriend [resistance, 0];								//West (Player side) is hostile to all.
+west setFriend [east, 0];
 
 //Load DZAI variables
-call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_variables.sqf";
-call compile preprocessFile "\z\addons\dayz_server\DZAI\SHK_pos\shk_pos_init.sqf";
+#include "dzai_variables.sqf"
 
-createcenter east;											//Create centers for all sides
-createcenter resistance;
-resistance setFriend [east, 1];								//Resistance (AI) is hostile to West (Player), but friendly to East (AI).
-resistance setFriend [west, 0];	
-EAST setFriend [WEST, 0];									//East (AI) is hostile to West (Player), but friendly to Resistance (AI).
-EAST setFriend [resistance, 1];	
-WEST setFriend [EAST, 0];									//West (Player side) is hostile to all.
-WEST setFriend [resistance, 0];
-
+//Load DZAI functions
 #include "dzai_functions.sqf"
-	
-//Load DZAI Lite classname tables.
+
+//Load DZAI classname tables.
 #include "base_classname_configs\base_classnames.sqf"
 
 //Build DZAI Lite weapon classname tables from CfgBuildingLoot data.
 if (DZAI_dynamicWeaponList) then {[DZAI_banAIWeapons] execVM '\z\addons\dayz_server\DZAI\scripts\buildRifleArrays.sqf';};
 
-//Create reference marker for dynamic trigger spawning.
+//Create reference marker for dynamic triggers and set default values. These values are modified on a per-map basis in the switch-case block below.
 _this = createMarker ["DZAI_centerMarker", (getMarkerPos 'center')];
 _this setMarkerType "Empty";
 _this setMarkerBrush "Solid";
 DZAI_centerMarker = _this;
 DZAI_dynTriggerRadius = 600;
-DZAI_dynOverlap = 0.1;
+DZAI_dynOverlap = 0.15;
 
 private["_worldname"];
 _worldname=toLower format ["%1",worldName];
+diag_log format["[DZAI] Server is running map %1.",_worldname];
 
 switch (_worldname) do {
 	case "chernarus":
 	{
 		DZAI_centerMarker setMarkerPos [7130.0073, 7826.3501];
 		DZAI_centerSize = 5500;
-		DZAI_dynTriggersMax = 18;
+		DZAI_dynTriggersMax = 17;
 	};
 	case "utes":
 	{
@@ -67,25 +69,25 @@ switch (_worldname) do {
 	{
 		DZAI_centerMarker setMarkerPos [5139.8008, 4092.6797];
 		DZAI_centerSize = 4000;
-		DZAI_dynTriggersMax = 13;
+		DZAI_dynTriggersMax = 12;
 	};
 	case "takistan":
 	{
 		DZAI_centerMarker setMarkerPos [6368.2764, 6624.2744];
 		DZAI_centerSize = 6000;
-		DZAI_dynTriggersMax = 19;
+		DZAI_dynTriggersMax = 18;
 	};
     case "tavi":
     {
 		DZAI_centerMarker setMarkerPos [10864.419, 11084.657, 1.5322094];
 		DZAI_centerSize = 8000;
-		DZAI_dynTriggersMax = 19;
+		DZAI_dynTriggersMax = 18;
     };
 	 case "lingor":
     {
 		DZAI_centerMarker setMarkerPos [4247.3218, 4689.731];
 		DZAI_centerSize = 4000;
-		DZAI_dynTriggersMax = 13;
+		DZAI_dynTriggersMax = 12;
     };
     case "namalsk":
     {
@@ -97,7 +99,7 @@ switch (_worldname) do {
     {
 		DZAI_centerMarker setMarkerPos [6399.5469, 6583.6987];
 		DZAI_centerSize = 6250;
-		DZAI_dynTriggersMax = 20;
+		DZAI_dynTriggersMax = 19;
     };
 	case "oring":
     {
@@ -115,13 +117,13 @@ switch (_worldname) do {
     {
 		DZAI_centerMarker setMarkerPos [5133.2119, 5228.4541];
 		DZAI_centerSize = 5500;
-		DZAI_dynTriggersMax = 18;
+		DZAI_dynTriggersMax = 17;
     };
 	case "sara":
 	{
 		DZAI_centerMarker setMarkerPos [12011.185, 11251.99, 0.036790848];
 		DZAI_centerSize = 6250;
-		DZAI_dynTriggersMax = 20;
+		DZAI_dynTriggersMax = 19;
     };
 	case default
 	{
@@ -134,6 +136,8 @@ switch (_worldname) do {
 if (isNil "DDOPP_taser_handleHit") then {DZAI_taserAI = false;} else {DZAI_taserAI = true;diag_log "[DZAI] DDOPP Taser Mod detected.";};
 
 if (DZAI_verifyTables) then {["DZAI_Rifles0","DZAI_Rifles1","DZAI_Rifles2","DZAI_Rifles3","DZAI_BanditTypes"] execVM "\z\addons\dayz_server\DZAI\scripts\verifyTables.sqf";};
-if (DZAI_dynTriggersMax > 0) then {[DZAI_dynTriggersMax] execVM '\z\addons\dayz_server\DZAI\scripts\spawnTriggers_random.sqf';};
-if (DZAI_monitor) then {[] execVM '\z\addons\dayz_server\DZAI\scripts\dzai_monitor.sqf';};
+if (DZAI_dynAISpawns || DZAI_aiHeliPatrols) then {[] execVM '\z\addons\dayz_server\DZAI\scripts\DZAI_scheduler.sqf';};
+if (DZAI_monitor) then {[] execVM '\z\addons\dayz_server\DZAI\scripts\DZAI_monitor.sqf';};
+
 diag_log format ["[DZAI] DZAI loading completed in %1 seconds.",(diag_tickTime - _startTime)];
+diag_log format ["[DZAI] DZAI Variables loaded. Debug Level: %1. DebugMarkers: %2. DZAI_dynamicWeaponList: %3. VerifyTables: %4.",DZAI_debugLevel,DZAI_debugMarkers,DZAI_dynamicWeaponList,DZAI_verifyTables];

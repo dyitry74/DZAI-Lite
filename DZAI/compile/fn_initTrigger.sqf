@@ -8,7 +8,7 @@
 	
 	Note: "_patrolDist" may also contain an array of markers for manual waypoint creation.
 	
-	Last updated: 1:33 AM 6/29/2013
+	Last updated: 1:54 PM 7/14/2013
 */
 
 private["_trigger"];
@@ -23,8 +23,8 @@ if ((count _this) > 3) then {
 	_trigger setVariable ["spawnType",(_this select 5)];
 	_trigger setVariable ["maxUnits",(_this select 6)];
 	DZAI_actTrigs = DZAI_actTrigs + 1;
-	if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: Initialized static trigger %1. GroupArray: %2, PatrolDist: %3. GradeChances: %4. %LocationArray %5.",(_this select 0),(_this select 1),(_this select 2),(_this select 3),(_this select 4)];};
-} else {
+	if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: Initialized static trigger %1. GroupArray: %2, PatrolDist: %3. GradeChances: %4. %LocationArray %5, SpawnType %6, MaxUnits %7.",(_this select 0),(_this select 1),(_this select 2),(_this select 3),(_this select 4),(_this select 5),(_this select 6)];};
+	} else {
 	DZAI_actDynTrigs = DZAI_actDynTrigs + 1;
 	if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: Initialized dynamic trigger %1. GroupArray: %2.",(_this select 0),(_this select 1)];};
 };

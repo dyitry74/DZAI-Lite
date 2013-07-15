@@ -1,5 +1,5 @@
 /*
-	aiBrain (debugging version)
+	unit_resupply (debugging version)
 	
 	Credits:  Basic script concept adapted from Sarge AI.
 	
@@ -9,9 +9,10 @@
 */
 private["_unit","_currentWeapon","_weaponMagazine","_needsReload","_nearbyZeds","_marker","_markername","_lastBandage","_bandages","_unitGroup"];
 if (!isServer) exitWith {};
-if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI brain active.";};
+if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI resupply script active.";};
 
 _unit = _this select 0;								//Unit to monitor/reload ammo
+
 _currentWeapon = currentWeapon _unit;				//Retrieve unit's current weapon
 waitUntil {sleep 0.001; !isNil "_currentWeapon"};
 _weaponMagazine = getArray (configFile >> "CfgWeapons" >> _currentWeapon >> "magazines") select 0;	//Retrieve ammo used by unit's current weapon
@@ -29,6 +30,16 @@ _marker setMarkerColor "ColorRed";
 _marker setMarkerBrush "SolidBorder";
 _marker setMarkerSize [5, 5];
 
+if (DZAI_debugLevel > 1) then {
+	0 = [_unit] spawn {
+		private ["_unit"];
+		_unit = _this select 0;
+		sleep 5;
+		diag_log format ["DZAI ExtDebug (Unit Skills): %1, %2, %3, %4, %5, %6, %7, %8, %9, %10.",_unit skill "aimingAccuracy",_unit skill "aimingShake",_unit skill "aimingSpeed",_unit skill "endurance",_unit skill "spotDistance",_unit skill "spotTime",_unit skill "courage",_unit skill "reloadSpeed",_unit skill "commanding",_unit skill "general"];
+		true
+	};
+};
+
 //_timeToDie = time+40;
 while {alive _unit} do {							//Run script for as long as unit is alive
 	_marker setmarkerpos (getposATL _unit);
@@ -37,7 +48,6 @@ while {alive _unit} do {							//Run script for as long as unit is alive
 		{
 			if(rating _x > -30000) then {
                 _x addrating -30000;
-                //if(DZAI_debugLevel > 2) then {diag_log "DZAI Super Debug: AI brain recognizes an nearby zombie as enemy.";};
             };
 		} forEach _nearbyZeds;
 	};
@@ -72,4 +82,4 @@ while {alive _unit} do {							//Run script for as long as unit is alive
 	sleep DZAI_refreshRate;										//Check again in x seconds.
 };
 deleteMarker _marker;
-if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI killed, AI brain deactivated.";};
+if (DZAI_debugLevel > 1) then {diag_log "DZAI Extended Debug: AI killed/despawned, AI resupply script deactivated.";};

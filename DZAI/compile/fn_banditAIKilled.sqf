@@ -5,10 +5,10 @@
 		
         Usage: [_unit,_weapongrade] spawn fnc_banditAIKilled;
 		
-		Last updated: 5:27 PM 6/25/2013
+		Last updated: 2:12 PM 7/14/2013
 */
 
-private["_weapongrade","_victim","_killer","_trigger","_gradeChances","_unitGroup","_groupSize"];
+private["_weapongrade","_victim","_killer","_gradeChances","_unitGroup","_groupSize"];
 _victim = _this select 0;
 _killer = _this select 1;
 
@@ -31,6 +31,10 @@ if (!isPlayer _killer) exitWith {};
 
 _unitGroup setBehaviour "COMBAT";
 
-_trigger = _victim getVariable "trigger";
-
 if (DZAI_findKiller) then {0 = [_victim,_killer,_unitGroup] spawn fnc_findKiller;};
+
+if (DZAI_humanityGain > 0) then {
+	private ["_humanity"];
+	_humanity = _killer getVariable["humanity",0];
+	_killer setVariable ["humanity",(_humanity + DZAI_humanityGain),true];
+};
