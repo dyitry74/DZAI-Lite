@@ -43,17 +43,22 @@ Required Edits:
 ============
 
 <b>server_cleanup.fsm:</b>
-
 In order to use DZAI's AI helicopter patrols, you must first edit your server_cleanup.fsm located in dayz_server\system. Locate this line in server_cleanup.fsm:
-<code>"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n</code>
 
+
+	"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
+
+	
 If you <b>do not</b> have the Animated Helicopters addon installed, change the line to this :
 
-<code>"  	if  (!(vehicle _x in _safety) && ((typeOf vehicle _x) != ""ParachuteWest"") && (vehicle _x getVariable [""DZAI"",0] != 1) ) then {" \n</code>
- 
-- If you <b>do</b> have the Animated Helicopters addon installed, change the line to this:
 
-<code>"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"" && ((vehicle _x getVariable [""Sarge"",0] != 1) && (vehicle _x getVariable [""DZAI"",0] != 1))) then {" \n</code>
+	"  	if  (!(vehicle _x in _safety) && ((typeOf vehicle _x) != ""ParachuteWest"") && (vehicle _x getVariable [""DZAI"",0] != 1) ) then {" \n
+ 
+ 
+If you <b>do</b> have the Animated Helicopters addon installed, change the line to this:
+
+
+	"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"" && ((vehicle _x getVariable [""Sarge"",0] != 1) && (vehicle _x getVariable [""DZAI"",0] != 1))) then {" \n
 
 
 Troubleshooting Instructions:
