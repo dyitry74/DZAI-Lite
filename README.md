@@ -52,7 +52,7 @@ In order to use DZAI's AI helicopter patrols, you must first edit your server_cl
 If you <b>do not</b> have the Animated Helicopters addon installed, change the line to this :
 
 
-	"  	if  (!(vehicle _x in _safety) && ((typeOf vehicle _x) != ""ParachuteWest"") && (vehicle _x getVariable [""DZAI"",0] != 1) ) then {" \n
+	"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"" && (vehicle _x getVariable [""DZAI"",0] != 1)) then {" \n
  
  
 If you <b>do</b> have the Animated Helicopters addon installed, change the line to this:
