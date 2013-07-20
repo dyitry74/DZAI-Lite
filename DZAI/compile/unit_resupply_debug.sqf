@@ -70,6 +70,7 @@ while {alive _unit} do {							//Run script for as long as unit is alive
 				sleep 3;
 				_unit enableAI "FSM";
 				_unit setDamage 0;
+				_unit setVariable ["gethit",[0,0,0,0]];
 				_lastBandage = time;
 			};
 		};

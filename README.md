@@ -1,4 +1,4 @@
-DZAI Lite 0.1.8 - AI Addon for DayZ
+DZAI Lite 0.1.9 - AI Addon for DayZ
 ============
 
 
@@ -96,5 +96,14 @@ Latest Updates:
 - [MODIFIED] Locations of debug markers for dynamic triggers are now refreshed at an interval specified by DZAI_monitorRate.
 - [MODIFIED] Renamed several script files, some added directly into DZAI_functions.sqf
 - [MODIFIED] Maximum dynamic trigger area overlap tolerance increased to 15% from 10%.
+
+0.1.9 Update:
+
+- [FIXED] AI self-healing now heals damage properly.
+- [UPDATED] Added a check if DZAI is already running to prevent multiple instances of DZAI from starting.
+- [UPDATED] Increased AI helicopter crew skills.
+- [UPDATED] Increased AI health. Note: Due to the differences between how AI and player health is calculated, AI units may be more or less durable than player units.
+- [UPDATED] Setting debugMarkers = 2 will enable continuous refreshing of dynamic trigger locations. (Setting value to 1 will disable these markers but other debug marker functionalities remain).
+- [MODIFIED] Adjusted minimum AI helicopter flying height to 90m.
 
 Note: Older updates are archived in changelog.txt

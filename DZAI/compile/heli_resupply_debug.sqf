@@ -66,7 +66,7 @@ while {alive _helicopter} do {
 
 	//Periodically vary the helicopter's altitude
 	if ((random 1) < 0.3) then {
-		_helicopter flyInHeight (80 + (random 50));
+		_helicopter flyInHeight (90 + (random 40));
 	};
 	
 	//Uncomment to test despawn/respawn process. Destroys helicopter after ~60 seconds of flight

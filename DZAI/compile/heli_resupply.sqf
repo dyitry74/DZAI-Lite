@@ -37,7 +37,7 @@ while {alive _helicopter} do {
 	};
 
 	if ((random 1) < 0.3) then {
-		_helicopter flyInHeight (80 + (random 50));
+		_helicopter flyInHeight (90 + (random 40));
 	};
 	
 	sleep DZAI_refreshRate;

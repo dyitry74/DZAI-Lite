@@ -102,16 +102,16 @@ DZAI_skill3 = [
 ];
 DZAI_heliCrewSkills = [	
 	//AI skill settings level 4 (Skill, Minimum skill, Maximum bonus amount).
-	["aimingAccuracy",0.30,0.10],
-	["aimingShake",0.70,0.10],
-	["aimingSpeed",0.70,0.10],
+	["aimingAccuracy",0.50,0.10],
+	["aimingShake",0.75,0.10],
+	["aimingSpeed",0.80,0.10],
 	["endurance",0.60,0.20],
-	["spotDistance",0.80,0.20],
-	["spotTime",0.80,0.20],
-	["courage",0.80,0.20],
-	["reloadSpeed",0.80,0.20],
-	["commanding",0.80,0.20],
-	["general",0.80,0.20]
+	["spotDistance",0.90,0.10],
+	["spotTime",0.90,0.10],
+	["courage",0.90,0.10],
+	["reloadSpeed",0.90,0.10],
+	["commanding",0.90,0.10],
+	["general",0.90,0.10]
 ];
 
 //NOTHING TO EDIT BEYOND THIS POINT.
@@ -123,7 +123,7 @@ DZAI_actDynTrigs = 0;										//Keep track of current number of active dynamica
 DZAI_curDynTrigs = 0;										//Keep track of current total of inactive dynamically-spawned triggers.
 DZAI_actTrigs = 0;											//Keep track of active static triggers.	
 DZAI_dynTriggerArray = [];									//List of current dynamic triggers.	
-DZAI_dmgFactors = [0.375,0.563,0.375,0,0.375];				//AI health settings.
+DZAI_dmgFactors = [0.3,0.45,0.3,0,0.3];						//AI health settings.
 DZAI_curHeliPatrols = 0;									//Tracks current number of active AI heli patrols.
 DZAI_heliWaypoints = [];									//Current list of randomly-generated AI heli patrol waypoints.
 
