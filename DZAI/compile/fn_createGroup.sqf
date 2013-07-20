@@ -43,7 +43,7 @@ for "_i" from 1 to _totalAI do {
 	if (DZAI_zAggro) then {
 		_unit addEventHandler ["Fired", {_this spawn ai_fired;}];};						// Unit firing causes zombie aggro in the area, like player. Called only if zombies are enabled, and zombie hostility is enabled.
 	if (DZAI_taserAI) then {
-		_unit addEventHandler ["HandleDamage",{_this call fnc_damageAI;_this call DDOPP_taser_handleHit;}];
+		_unit addEventHandler ["HandleDamage",{_this call DDOPP_taser_handleHit;_this call fnc_damageAI;}];
 	} else {
 		_unit addEventHandler ["HandleDamage",{_this call fnc_damageAI;}];};					// Handle incoming damage. Note: AI durability can be modified in dayz_ai_variables.sqf
 	_unit addEventHandler ["Killed",{_this spawn DZAI_deathFlies;_this call fnc_banditAIKilled;[_this,"banditKills"] call local_eventKill;(_this select 0) setDamage 1;}];
