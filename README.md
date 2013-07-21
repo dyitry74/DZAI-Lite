@@ -101,13 +101,18 @@ Latest Updates:
 
 - [FIXED] AI self-healing now heals damage properly.
 - [UPDATED] Added a check if DZAI is already running to prevent multiple instances of DZAI from starting.
-- [UPDATED] Increased AI helicopter crew skills.
-- [UPDATED] Increased AI health. Note: Due to the differences between how AI and player health is calculated, AI units may be more or less durable than player units.
 - [UPDATED] Setting debugMarkers = 2 will enable continuous refreshing of dynamic trigger locations. (Setting value to 1 will disable these markers but other debug marker functionalities remain).
+- [MODIFIED] Increased AI helicopter crew skills.
+- [MODIFIED] Increased AI health. Note: Due to the differences between how AI and player health is calculated, AI units may be more or less durable than player units.
 - [MODIFIED] Adjusted minimum AI helicopter flying height to 90m.
 
 0.1.9.1 Hotfix:
 
 - [FIXED] Fixed AI HandleDamage eventhandler functionality with DDOPP Taser Mod. (AI units should have improved durability even with the Taser mod installed).
+
+0.1.9.2 Minor Update:
+
+- [UPDATED] Nearby zeds are revealed to AI groups to help reduce time required to recognize marked zeds as hostile.
+- [MODIFIED] Scaled back AI health increases slightly. (2 DMR body shots to body should kill an AI unit)
 
 Note: Older updates are archived in changelog.txt

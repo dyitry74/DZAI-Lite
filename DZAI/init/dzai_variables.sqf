@@ -123,7 +123,7 @@ DZAI_actDynTrigs = 0;										//Keep track of current number of active dynamica
 DZAI_curDynTrigs = 0;										//Keep track of current total of inactive dynamically-spawned triggers.
 DZAI_actTrigs = 0;											//Keep track of active static triggers.	
 DZAI_dynTriggerArray = [];									//List of current dynamic triggers.	
-DZAI_dmgFactors = [0.3,0.45,0.3,0,0.3];						//AI health settings.
+DZAI_dmgFactors = [0.3375,0.50625,0.3375,0,0.3375];			//AI health settings.
 DZAI_curHeliPatrols = 0;									//Tracks current number of active AI heli patrols.
 DZAI_heliWaypoints = [];									//Current list of randomly-generated AI heli patrol waypoints.
 

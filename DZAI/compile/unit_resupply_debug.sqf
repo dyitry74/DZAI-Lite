@@ -5,7 +5,7 @@
 	
 	Description: Handles AI ammo reload and zombie hostility. Called by fnc_createAI upon AI unit creation.
 	
-	Last updated: 3:46 PM 6/20/2013
+	Last updated: 10:22 PM 7/20/2013
 */
 private["_unit","_currentWeapon","_weaponMagazine","_needsReload","_nearbyZeds","_marker","_markername","_lastBandage","_bandages","_unitGroup"];
 if (!isServer) exitWith {};
@@ -48,6 +48,7 @@ while {alive _unit} do {							//Run script for as long as unit is alive
 		{
 			if(rating _x > -30000) then {
                 _x addrating -30000;
+				_unitGroup reveal [_x,1.5];
             };
 		} forEach _nearbyZeds;
 	};
