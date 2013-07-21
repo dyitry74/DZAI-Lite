@@ -113,6 +113,6 @@ Latest Updates:
 0.1.9.2 Minor Update:
 
 - [UPDATED] Nearby zeds are revealed to AI groups to help reduce time required to recognize marked zeds as hostile.
-- [MODIFIED] Scaled back AI health increases slightly. (2 DMR body shots to body should kill an AI unit)
+- [MODIFIED] Scaled back AI health increases slightly. (2 DMR body shots should kill an AI unit)
 
 Note: Older updates are archived in changelog.txt
