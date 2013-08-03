@@ -18,7 +18,6 @@ _trigger = _this select 0;										//Get the trigger object
 _grpArray = _trigger getVariable ["GroupArray",[]];				//Find the groups spawned by the trigger. Or set an empty group array if none are found.
 _isCleaning = _trigger getVariable ["isCleaning",nil];			//Find whether or not the trigger has been marked for cleanup, otherwise assume a cleanup has already happened.
 _forceDespawn = _trigger getVariable ["forceDespawn",false];	//Check whether to run despawn script even if players are present in the trigger area.
-//_preventDespawn = _trigger getVariable ["preventDespawn",false];
 if (isNil "_forceDespawn") then {_forceDespawn = false;};
 
 if (_forceDespawn) then {
@@ -56,25 +55,21 @@ if ((triggerActivated _trigger) && (!_forceDespawn)) exitWith {
 
 _totalGroupSize = 0;
 {
-	if !(isNull _x) then {
-		if (DZAI_debugMarkers > 0) then {
-			private["_markerName","_markerCount"];
-			//_markerCount = (count (waypoints _x)) - 3;
-			//diag_log format ["DEBUG :: Estimating %1 waypoints for group %2.",_markerCount,_x];
-			for "_i" from 1 to (count (waypoints _x) - 2) do {
-				_markerName = format ["%1_%2",_x,_i];
-				//diag_log format ["DEBUG :: Deleting marker: %1_%2. (Actual: %3)",_x,_i,_markerName];
-				deleteMarker _markerName;
-			};
-			sleep 0.2;
-		};
-		{deleteVehicle _x} forEach (_x getVariable ["deadUnits",[]]);	//Delete dead units
-		//_x setVariable ["deadUnits",[]];
-		{deleteVehicle _x} forEach (units _x);							//Delete live units
-		_totalGroupSize = _totalGroupSize + (_x getVariable ["groupSize",0]);
-		sleep 0.5;
-		deleteGroup _x;										//Delete the group after its units are deleted.
+	if (DZAI_debugMarkers > 0) then {
+		{
+			private["_markername"];
+			_markername = (str _x);
+			//diag_log format ["DEBUG :: Deleting waypoint marker %1. Waypoint is %2.",_markername,_x];
+			deleteMarker _markername;
+		} forEach (waypoints _x);
+		sleep 0.1;
 	};
+	{deleteVehicle _x} forEach (_x getVariable ["deadUnits",[]]);	//Delete dead units
+	{deleteVehicle _x} forEach (units _x);							//Delete live units
+	_totalGroupSize = _totalGroupSize + (_x getVariable ["groupSize",0]);
+	sleep 0.5;
+	deleteGroup _x;										//Delete the group after its units are deleted.
+	sleep 0.1;
 } forEach _grpArray;
 
 //Update active AI count

@@ -13,7 +13,7 @@ waitUntil {sleep 0.1; scriptDone _randomizeWPs};
 if (DZAI_curHeliPatrols >= DZAI_maxHeliPatrols) exitWith {};
 
 for "_i" from 1 to (DZAI_maxHeliPatrols - DZAI_curHeliPatrols) do {
-	private ["_heliType","_startPos","_helicopter","_unitGroup","_pilot","_gunner1","_gunner2"];
+	private ["_heliType","_startPos","_helicopter","_unitGroup","_pilot","_gunner1","_gunner2","_banditType"];
 	//_heliType = "UH1H_DZ";
 	_heliType = DZAI_heliTypes call BIS_fnc_selectRandom;
 	_startPos = [(getMarkerPos DZAI_centerMarker),(300 + random(DZAI_centerSize)),random(360),false] call SHK_pos;
@@ -24,9 +24,10 @@ for "_i" from 1 to (DZAI_maxHeliPatrols - DZAI_curHeliPatrols) do {
 	//diag_log format ["Created group %1",_unitGroup];
 	
 	//Create helicopter crew
-	_pilot = _unitGroup createUnit [(DZAI_BanditTypes call BIS_fnc_selectRandom), [0,0,0], [], 1, "NONE"];
-	_gunner1 = _unitGroup createUnit [(DZAI_BanditTypes call BIS_fnc_selectRandom), [0,0,0], [], 1, "NONE"];
-	_gunner2 = _unitGroup createUnit [(DZAI_BanditTypes call BIS_fnc_selectRandom), [0,0,0], [], 1, "NONE"];
+	_banditType = (DZAI_BanditTypes call BIS_fnc_selectRandom);
+	_pilot = _unitGroup createUnit [_banditType, [0,0,0], [], 1, "NONE"];
+	_gunner1 = _unitGroup createUnit [_banditType, [0,0,0], [], 1, "NONE"];
+	_gunner2 = _unitGroup createUnit [_banditType, [0,0,0], [], 1, "NONE"];
 	[_pilot,_gunner1,_gunner2] joinSilent _unitGroup;
 
 	//Create the helicopter and set variables
@@ -57,6 +58,7 @@ for "_i" from 1 to (DZAI_maxHeliPatrols - DZAI_curHeliPatrols) do {
 		_x addWeapon "NVGoggles";
 		_x addEventHandler ["HandleDamage",{_this call fnc_damageAI;}];
 		_x addEventHandler ["Killed",{[_this,"banditKills"] call local_eventKill;(_this select 0) setDamage 1;(_this select 0) removeWeapon "NVGoggles";}];
+		_x setVariable ["unconscious",true];	//Prevent AI heli crew from being knocked unconscious
 	} forEach (units _unitGroup);
 
 	//Set group behavior and waypoint
@@ -77,8 +79,8 @@ for "_i" from 1 to (DZAI_maxHeliPatrols - DZAI_curHeliPatrols) do {
 
 	//Set initial waypoint and begin patrol
 	[_unitGroup,0] setWaypointType "MOVE";
-	[_unitGroup,0] setWaypointTimeout [5,10,15];
-	[_unitGroup,0] setWaypointCompletionRadius 75;
+	[_unitGroup,0] setWaypointTimeout [0,5,15];
+	[_unitGroup,0] setWaypointCompletionRadius 150;
 	[_unitGroup,0] setWaypointStatements ["true","[(group this)] call DZAI_heliRandomPatrol;"];
 	[_unitGroup] call DZAI_heliRandomPatrol;
 	processInitCommands;

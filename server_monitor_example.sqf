@@ -199,8 +199,6 @@ diag_log "HIVE: Starting";
 
 waituntil{isNil "sm_done"}; // prevent server_monitor be called twice (bug during login of the first player)
 
-call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";
-
 #include "\z\addons\dayz_server\compile\fa_hiveMaintenance.hpp"
 
 if (isServer and isNil "sm_done") then {
@@ -440,6 +438,7 @@ if (isServer and isNil "sm_done") then {
 	
 	if (isDedicated) then {
 		_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
+		call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";
 	};
 	
 	allowConnection = true;

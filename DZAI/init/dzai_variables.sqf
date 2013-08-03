@@ -33,6 +33,7 @@ DZAI_dynDespawnWait = 120;									//Time to allow AI to remain in seconds befor
 DZAI_aiHeliPatrols = false;									//Enable or disable AI helicopter patrols. (Default: false)
 DZAI_maxHeliPatrols = 0;									//Maximum number of active AI helicopters patrols. (Default: 0).
 DZAI_heliTypes = ["UH1H_DZ"];								//Classnames of helicopter types to use. Helicopter types must have at least 2 gunner seats (Default: "UH1H_DZ").
+DZAI_heliLoot = true;										//Enable or disable loot generation on destroying AI helicopter. Dead crew members will be parachuted out after helicopter is destroyed (Default: true)
 
 //Extra AI Settings
 DZAI_findKiller = false;									//If enabled, AI group will attempt to track down player responsible for killing a group member. Players with radios will be given text warnings if they are being pursued (Default: false)
@@ -46,6 +47,9 @@ DZAI_banAIWeapons = [];										//(Only if DZAI_dynamicWeaponList = true) List 
 
 //AI loot probabilities
 DZAI_gradeChancesDyn = [0.30,0.60,0.08,0.02];				//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
+
+//Load custom DZAI settings file.
+call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\DZAI_settings_override.sqf";
 
 //AI skill settings
 DZAI_skill0 = [	
@@ -123,7 +127,7 @@ DZAI_actDynTrigs = 0;										//Keep track of current number of active dynamica
 DZAI_curDynTrigs = 0;										//Keep track of current total of inactive dynamically-spawned triggers.
 DZAI_actTrigs = 0;											//Keep track of active static triggers.	
 DZAI_dynTriggerArray = [];									//List of current dynamic triggers.	
-DZAI_dmgFactors = [0.3375,0.50625,0.3375,0,0.3375];			//AI health settings.
+DZAI_dmgFactors = [0.3375,0.50625,0.3375,1,1];				//AI health settings.
 DZAI_curHeliPatrols = 0;									//Tracks current number of active AI heli patrols.
 DZAI_heliWaypoints = [];									//Current list of randomly-generated AI heli patrol waypoints.
 

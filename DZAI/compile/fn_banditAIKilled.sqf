@@ -5,10 +5,10 @@
 		
         Usage: [_unit,_weapongrade] spawn fnc_banditAIKilled;
 		
-		Last updated: 2:12 PM 7/14/2013
+		Last updated: 12:42 PM 8/3/2013
 */
 
-private["_weapongrade","_victim","_killer","_gradeChances","_unitGroup","_groupSize"];
+private["_weapongrade","_victim","_killer","_gradeChances","_unitGroup","_groupSize","_victimName"];
 _victim = _this select 0;
 _killer = _this select 1;
 
@@ -16,7 +16,8 @@ _killer = _this select 1;
 if ((_victim getVariable["removeNVG",0]) == 1) then {_victim removeWeapon "NVGoggles";}; //Remove temporary NVGs from AI.
 
 //Set study_body variables.
-_victim setVariable["bodyName","DZAI Unit",true];
+_victimName = typeOf _victim;
+_victim setVariable["bodyName",_victimName,true];
 _victim setVariable["deathType","bled",true];
 
 //Update AI count

@@ -1,4 +1,4 @@
-DZAI Lite 0.1.9.2 - AI Addon for DayZ
+DZAI Lite 0.2 - AI Addon for DayZ
 ============
 
 
@@ -27,17 +27,34 @@ Features
 
 Installation Instructions:
 ============
-
+<b>IMPORTANT</b>: The AI helicopter patrols feature requires edits to your server_cleanup.fsm. Failure to edit this file properly will cause helicopters spawned by DZAI to explode. Instructions are provided in the Required Edits section below.
+- (Only do this if you have an older version of DZAI installed in your mission file): Delete the DZAI folder inside your mission file and remove the reference to DZAI in your init.sqf. Repack your mission pbo <b>without</b> DZAI.
 - Unpack your <b>dayz_server.pbo</b>
 - Copy the new DZAI folder inside your unpacked dayz_server folder. (You should also see config.cpp in the same level.)
 - Edit your <b>server_monitor.sqf</b>. It is located within \dayz_server\system. 
-- Locate the line that reads: <code>waituntil{isNil "sm_done"}; // prevent server_monitor be called twice (bug during login of the first player)</code> (located near line 200). If this line can't be located, find the one that reads: <code>// # END OF STREAMING #</code> (Located near line 174).
-- Underneath this line, insert the following (If reading this in a text editor, ignore the code tags!): <code>call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";</code>. Refer to the provided example server_monitor.sqf (named server_monitor_example.sqf)
+- Search for the line where server_cleanup.fsm is called, and insert the following after this line:
+
+
+    <code>call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";</code>
+
+
+An example is shown here:
+
+    if (isDedicated) then {
+        _id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
+        call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";
+    };
+
+	
+- <b>NOTE:</b> Certain DayZ mods such as DayZ Epoch do not have a server_cleanup.fsm reference. In this case, insert the required line before the line that says:
+
+    <code>allowConnection = true;</code>
+
 - Read the section below on other required edits and follow the instructions.
-- Repack your dayz_server.pbo (it should be about 400KB larger).
+- Repack your dayz_server.pbo.
 - You are now ready to start your server.
 
-Note: DZAI Lite's settings file can be found in DZAI\init\dzai_variables.sqf
+<b>Note:</b> DZAI's settings file can be found in DZAI\init\dzai_variables.sqf. You may store your custom settings changes in DZAI\DZAI_settings_override.sqf. Instructions are provided inside this file.
 
 Required Edits:
 ============
@@ -85,34 +102,25 @@ A3: DZAI reads DayZ's loot tables to find weapon classnames, followed by a verif
 Latest Updates:
 ============
 
-0.1.8 Update:
+0.2 Update
 
-- [NEW] Humanity can now be awarded to players for AI unit kills. Humanity rewarded can be edited in DZAI_variables.sqf.
-- [NEW] Added DZAI Scheduler to manage all scheduled tasks.
-- [NEW] Added prototype version of AI helicopter patrols feature, which can be enabled in DZAI_variables.sqf. Helicopter patrols require edits to server_cleanup.fsm. Instructions have been provided in the Required Edits section. More details on the helicopters feature here: http://opendayz.net/threads/release-dzai-lite-dynamic-ai-package.11116/page-8#post-61128.
-- [FIXED] Fixed error that prevented Radio text messages from being displayed to player when dynamic AI have ended their pursuit state.
-- [UPDATED] SHK_pos package included with DZAI is now only initialized if it is not already started.
-- [UPDATED] Updated DZAI Server Monitor output. Text output is now separated into overall server statistics (uptime, AI count), dynamic AI statistics.
-- [MODIFIED] Locations of debug markers for dynamic triggers are now refreshed at an interval specified by DZAI_monitorRate.
-- [MODIFIED] Renamed several script files, some added directly into DZAI_functions.sqf
-- [MODIFIED] Maximum dynamic trigger area overlap tolerance increased to 15% from 10%.
-
-0.1.9 Update:
-
-- [FIXED] AI self-healing now heals damage properly.
-- [UPDATED] Added a check if DZAI is already running to prevent multiple instances of DZAI from starting.
-- [UPDATED] Setting debugMarkers = 2 will enable continuous refreshing of dynamic trigger locations. (Setting value to 1 will disable these markers but other debug marker functionalities remain).
-- [MODIFIED] Increased AI helicopter crew skills.
-- [MODIFIED] Increased AI health. Note: Due to the differences between how AI and player health is calculated, AI units may be more or less durable than player units.
-- [MODIFIED] Adjusted minimum AI helicopter flying height to 90m.
-
-0.1.9.1 Hotfix:
-
-- [FIXED] Fixed AI HandleDamage eventhandler functionality with DDOPP Taser Mod. (AI units should have improved durability even with the Taser mod installed).
-
-0.1.9.2 Minor Update:
-
-- [UPDATED] Nearby zeds are revealed to AI groups to help reduce time required to recognize marked zeds as hostile.
-- [MODIFIED] Scaled back AI health increases slightly. (2 DMR body shots should kill an AI unit)
+- [NEW] AI units can now be knocked unconscious upon taking heavy damage (10 seconds). Headshots cause unconsciousness more easily. Note: AI helicopter crew units cannot be knocked unconscious.
+- [NEW] AI hands and legs can be broken in the same way as players (same damage thesholds).
+- [NEW] AI helicopters now eject three dead AI units in parachutes after being destroyed. These units carry military-grade gear. No units will be ejected if the helicopter is destroyed over water.
+- [NEW] Server admins can now store their custom settings in DZAI\DZAI_settings_override.sqf for reuse. Copy over the settings from DZAI\init\dzai_variables.sqf that you wish to keep to DZAI_settings_override.sqf. Keep this file when upgrading DZAI to newer versions.
+- [UPDATED] Changes to unit spawn positioning now allows AI to be spawned in tighter quarters, such as in between buildings and inside forests.
+- [UPDATED] Collision damage to AI units reduced to 10% to prevent accidental deaths due to falling off tall objects.
+- [REMOVED] Zombies around AI group leaders are no longer automatically revealed to the group.
+- [UPDATED] AI helicopters have a 25% chance of entering "Seek and Destroy" mode after reaching a waypoint, where the helicopter will attempt to visually search the area for enemy units (players). S.A.D. mode lasts for 30/60/90 seconds (minimum/average/maximum).
+- [UPDATED] Dynamic triggers now relocate instead of spawning AI if activated over water.
+- [FIXED] Patrol waypoints are no longer generated in water positions.
+- [FIXED] Dynamic triggers that have active spawned AI will not be relocated.
+- [FIXED] Targeted player seeking for dynamic AI should now work properly.
+- [MODIFIED] Examing dead AI bodies now shows skin classname of AI unit instead of displaying "DZAI Unit"
+- [MODIFIED] Dynamic AI pursuit distance increased from 200m to 300m from targeted player's initial position.
+- [MODIFIED] Scaled back AI health increases slightly. AI hands and legs take full damage.
+- [MODIFIED] Increased number of AI bandages (self-heals) from 2 to 3.
+- [MODIFIED] Increased time required for AI self-heal from 3 seconds to 3.5 seconds.
+- [MODIFIED] Increased minimum number of AI helicopter patrol waypoints from 10 to 15.
 
 Note: Older updates are archived in changelog.txt

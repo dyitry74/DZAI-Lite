@@ -3,7 +3,7 @@
 	
 	Description: Used for dynamically spawned AI. Creates a MOVE waypoint directing AI to a random player's position, then uses BIN_taskPatrol to create a circular patrol path around player's position.
 	
-	Last updated: 1:30 AM 6/28/2013
+	Last updated: 5:58 PM 7/29/2013
 */
 
 private ["_unitGroup","_spawnPos","_waypoint","_patrolDist","_statement","_targetPlayer"];
@@ -22,9 +22,9 @@ deleteWaypoint [_unitGroup,0];
 //_statement = format ["deleteWaypoint[(group this),0]; 0 = [(group this),%1,%2,%3] spawn fnc_BIN_taskPatrol;",_spawnPos,_patrolDist,DZAI_debugMarkers];
 _waypoint = _unitGroup addWaypoint [_spawnPos,0];
 _waypoint setWaypointType "MOVE";
-_waypoint setWaypointCompletionRadius 30;
+_waypoint setWaypointCompletionRadius (20 + round (random 20));
 _waypoint setWaypointTimeout [0,5,10];
-_waypoint setWaypointStatements ["true","if ((random 1) < 0.50) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
+_waypoint setWaypointStatements ["true","group this setCurrentWaypoint [group this,0]"];
 _unitGroup setCurrentWaypoint _waypoint;
 
 (units _unitGroup) glanceAt _targetPlayer;
@@ -35,7 +35,7 @@ if (_targetPlayer hasWeapon "ItemRadio") then {
 sleep 30;
 
 //Begin hunting phase
-while {(alive _targetPlayer) && !(isNull _targetPlayer) && (_targetPlayer isKindOf "Man") && ((_targetPlayer distance _spawnPos) < 200) && !((_unitGroup getVariable "groupSize") > 0)} do {
+while {(alive _targetPlayer) && !(isNull _targetPlayer) && (_targetPlayer isKindOf "Man") && ((_targetPlayer distance _spawnPos) < 300) && ((_unitGroup getVariable ["groupSize",0]) > 0)} do {
 	if !(_unitGroup getVariable ["inPursuit",false]) then {
 		_waypoint setWPPos getPosATL _targetPlayer;
 		_unitGroup setCurrentWaypoint _waypoint;
@@ -51,7 +51,8 @@ while {(alive _targetPlayer) && !(isNull _targetPlayer) && (_targetPlayer isKind
 if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Group %1 has exited hunting phase. Moving to patrol phase. (fn_seekPlayer)",_unitGroup];};
 
 //Begin patrol phase
-0 = [_unitGroup,_spawnPos,_patrolDist,DZAI_debugMarkers] spawn fnc_BIN_taskPatrol;
+_waypoint setWaypointStatements ["true","if ((random 1) < 0.50) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
+0 = [_unitGroup,(getPosATL _targetPlayer),_patrolDist,DZAI_debugMarkers] spawn fnc_BIN_taskPatrol;
 
 sleep 5;
 if ((_targetPlayer hasWeapon "ItemRadio") && !(_unitGroup getVariable ["inPursuit",false])) then {

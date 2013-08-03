@@ -8,7 +8,7 @@
 
 private ["_bldgClasses","_weapons","_lootItem","_DZAI_bannedWeapons","_unwantedWeapons","_lootList","_cfgBuildingLoot","_lootListCheck","_startTime"];
 
-if !(isNil "DZAI_weaponsInitialized") exitWith {};
+if (DZAI_weaponsInitialized) exitWith {};
 
 _startTime = diag_tickTime;
 

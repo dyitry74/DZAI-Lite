@@ -43,7 +43,6 @@ ArmaIIholic
 if (isServer) then
 {
 	waitUntil {!isNil "bis_fnc_init"};
-	
 	_grp = _this select 0;
 	_pos = _this select 1;
 	_max_dist = _this select 2;
@@ -130,35 +129,33 @@ if (isServer) then
 
 	sleep 1;
 
-	_j = count (waypoints _grp);
-
 	for "_i" from 1 to (_wp_count - 1) do
 	{
 		private ["_wp","_cur_pos","_marker","_markername"];
 
 		_cur_pos = (_wp_array select _i);
-
-		// Create waypoints based on array of positions
-		/* The index i is changed so it matches previous waypoints - j+i */
 		
-		_wp = _grp addWaypoint [_cur_pos, 0];
-		_wp setWaypointType "MOVE";
-		_wp setWaypointCompletionRadius (5 + _slack);
-		[_grp,_j+_i] setWaypointTimeout [0, 2, 16];
-		// When completing waypoint have 33% chance to choose a random next wp
-		[_grp,_j+_i] setWaypointStatements ["true", "if ((random 3) > 2) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
-		
-		if (_debug > 0) then {
-			_markername = format["%1_%2",_grp,_i];
-			//diag_log format ["DEBUG :: Created patrol waypoint %1.",_markername];
-			_marker = createMarker[_markername,[_cur_pos select 0,_cur_pos select 1]];
-			_marker setMarkerShape "ELLIPSE";
-			_marker setMarkerType "Dot";
-			_marker setMarkerColor "ColorBlue";
-			_marker setMarkerBrush "SolidBorder";
-			_marker setMarkerSize [20, 20];
+		if (!(surfaceIsWater _cur_pos)) then {
+			_wp = _grp addWaypoint [_cur_pos, 0];
+			_wp setWaypointType "MOVE";
+			_wp setWaypointCompletionRadius (5 + _slack);
+			_wp setWaypointTimeout [0, 2, 16];
+			// When completing waypoint have 33% chance to choose a random next wp
+			_wp setWaypointStatements ["true", "if ((random 3) > 2) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
+			
+			if (_debug > 0) then {
+				_markername = str (_wp);
+				if ((getMarkerColor _markername) != "") then {deleteMarker _markername};
+				//diag_log format ["DEBUG :: Created patrol waypoint %1.",_markername];
+				_marker = createMarker[_markername,[_cur_pos select 0,_cur_pos select 1]];
+				//diag_log format ["DEBUG :: Created waypoint marker name %1. Waypoint is %2.",_markername,_wp];
+				_marker setMarkerShape "ELLIPSE";
+				_marker setMarkerType "Dot";
+				_marker setMarkerColor "ColorBlue";
+				_marker setMarkerBrush "SolidBorder";
+				_marker setMarkerSize [20, 20];
+			};
 		};
-
 		sleep 0.5;
 	};
 
