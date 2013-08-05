@@ -1,4 +1,4 @@
-DZAI Lite 0.2.1 - AI Addon for DayZ
+DZAI Lite 0.2.0 - AI Addon for DayZ
 ============
 
 
@@ -122,9 +122,5 @@ Latest Updates:
 - [MODIFIED] Increased number of AI bandages (self-heals) from 2 to 3.
 - [MODIFIED] Increased time required for AI self-heal from 3 seconds to 3.5 seconds.
 - [MODIFIED] Increased minimum number of AI helicopter patrol waypoints from 10 to 15.
-
-0.2.1 Update
-
-- [NEW] Chernarus: Added optional patch fix to allow AI units to properly see certain clientside objects spawned by DayZ's Town Generator script (ie: Military/Medical tents at Chernogorsk, Balota, Stary Sobor). Note: Wrecks and roadblocks are still invisible to AI. To enable, set DZAI_buildingPatch = true in dzai_variables.sqf.
 
 Note: Older updates are archived in changelog.txt
