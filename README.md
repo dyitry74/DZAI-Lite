@@ -1,4 +1,4 @@
-DZAI Lite 0.2.0 - AI Addon for DayZ
+DZAI Lite 0.2.1 - AI Addon for DayZ
 ============
 
 
@@ -122,5 +122,10 @@ Latest Updates:
 - [MODIFIED] Increased number of AI bandages (self-heals) from 2 to 3.
 - [MODIFIED] Increased time required for AI self-heal from 3 seconds to 3.5 seconds.
 - [MODIFIED] Increased minimum number of AI helicopter patrol waypoints from 10 to 15.
+
+0.2.1 Update (Re-release):
+
+- [FIXED] Added an optional experimental fix to prevent AI units from shooting/walking through buildings and objects spawned by DayZ's CfgTownGenerator. Enable by setting DZAI_objectPatch = true in dzai_variables.sqf. Enabling this setting may be essential for DayZ Overwatch 0.2.2+.
+<b>Note</b>: Enabling DZAI_objectPatch *may* cause a flood of "Ref to nonnetwork object" errors in your RPT log. This is a harmless warning message but can be annoying as it fills up the RPT log.
 
 Note: Older updates are archived in changelog.txt

@@ -48,12 +48,15 @@ private["_worldname"];
 _worldname=toLower format ["%1",worldName];
 diag_log format["[DZAI] Server is running map %1.",_worldname];
 
+if (DZAI_objPatch) then {_nul = _worldname execVM '\z\addons\dayz_server\DZAI\scripts\buildingpatch_all_blacklist.sqf';};
+
 switch (_worldname) do {
 	case "chernarus":
 	{
 		DZAI_centerMarker setMarkerPos [7130.0073, 7826.3501];
 		DZAI_centerSize = 5500;
 		DZAI_dynTriggersMax = 17;
+		if (DZAI_buildingPatch) then {_buildings = [] execVM '\z\addons\dayz_server\DZAI\scripts\buildingpatch_chernarus.sqf';};
 	};
 	case "utes":
 	{
