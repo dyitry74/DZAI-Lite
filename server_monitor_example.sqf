@@ -1,4 +1,4 @@
-//This is an example server_monitor file to show the required edit to install DZAI. The required line is located @ line 202 of this file.
+//This is an example server_monitor file to show the required edit to install DZAI.
 //Note: DO NOT USE THIS FILE. IT IS AN EXAMPLE ONLY.
 []execVM "\z\addons\dayz_server\system\s_fps.sqf"; //server monitor FPS (writes each ~181s diag_fps+181s diag_fpsmin*)
 #include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
@@ -438,9 +438,9 @@ if (isServer and isNil "sm_done") then {
 	
 	if (isDedicated) then {
 		_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
-		call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";
 	};
 	
+	call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";
 	allowConnection = true;
 
 	// [_guaranteedLoot, _randomizedLoot, spawnOnStart, _frequency, _variance, _spawnChance, _spawnMarker, _spawnRadius, _spawnFire, _fadeFire]

@@ -22,61 +22,47 @@ Features
 - Automatically builds a list of weapons that AI can use by reading DayZ's CfgBuildingLoot. This means that AI units may carry any lootable weapon.
 - AI spawning is completely dynamic and automatically generated - there is no need to manually add spawn points.
 - AI spawn points with no players nearby will periodically relocate themselves around the map area, so there is no predicting where AI will show up next.
-- The number of AI spawned is dependent on the number of players within the trigger area, so the difficulty is self-adjusting. The more populated the area is, the more AI that will spawn in. (Minimum of 2±1 to a maximum of 6±1)
+- The number of AI spawned is dependent on the number of players within the trigger area, so the difficulty is self-adjusting. The more populated the area is, the more AI that will spawn in. (Minimum of 1±2 to a maximum of 6)
 - The AI despawn when there are no players in the area, or some time after they are killed.
 
 Installation Instructions:
 ============
-<b>IMPORTANT</b>: The AI helicopter patrols feature requires edits to your server_cleanup.fsm. Failure to edit this file properly will cause helicopters spawned by DZAI to explode. Instructions are provided in the Required Edits section below.
-- (Only do this if you have an older version of DZAI installed in your mission file): Delete the DZAI folder inside your mission file and remove the reference to DZAI in your init.sqf. Repack your mission pbo <b>without</b> DZAI.
-- Unpack your <b>dayz_server.pbo</b>
-- Copy the new DZAI folder inside your unpacked dayz_server folder. (You should also see config.cpp in the same level.)
-- Edit your <b>server_monitor.sqf</b>. It is located within \dayz_server\system. 
-- Search for the line where server_cleanup.fsm is called, and insert the following after this line:
+1. Unpack your dayz_server.pbo. If using cpbo, right click dayz_server.pbo and click "Extract".
+2. Copy the downloaded DZAI folder inside your unpacked dayz_server folder.
+3. Edit server_monitor.sqf with a text editor. It is located in \dayz_server\system.
+4. Search for the line that says:
 
+		allowConnection = true;
 
-    <code>call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";</code>
+	Change the line to this:
 
-
-An example is shown here:
-
-    if (isDedicated) then {
-        _id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
-        call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";
-    };
-
+		call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\init\dzai_initserver.sqf";
+		allowConnection = true;
 	
-- <b>NOTE:</b> Certain DayZ mods such as DayZ Epoch do not have a server_cleanup.fsm reference. In this case, insert the required line before the line that says:
-
-    <code>allowConnection = true;</code>
-
-- Read the section below on other required edits and follow the instructions.
-- Repack your dayz_server.pbo.
-- You are now ready to start your server.
-
-<b>Note:</b> DZAI's settings file can be found in DZAI\init\dzai_variables.sqf. You may store your custom settings changes in DZAI\DZAI_settings_override.sqf. Instructions are provided inside this file.
-
-Required Edits:
-============
-
-<b>server_cleanup.fsm:</b>
-In order to use DZAI's AI helicopter patrols, you must first edit your server_cleanup.fsm located in dayz_server\system. Locate this line in server_cleanup.fsm:
-
-
-	"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
-
+5. If you do not wish to use DZAI's AI helicopter patrols, you may skip this step. Otherwise, continue reading.
 	
-If you <b>do not</b> have the Animated Helicopters addon installed, change the line to this :
+	Edit your server_cleanup.fsm (located in \dayz_server\system). Search for this line: 
+
+		"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
+
+		
+	If you <b>do not</b> have the Animated HeliCrash addon installed, change the line to this :
 
 
-	"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"" && (vehicle _x getVariable [""DZAI"",0] != 1)) then {" \n
- 
- 
-If you <b>do</b> have the Animated Helicopters addon installed, change the line to this:
+		"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"" && (vehicle _x getVariable [""DZAI"",0] != 1)) then {" \n
+	 
+	 
+	If you <b>do</b> have the Animated HeliCrash addon installed, change the line to this:
 
 
-	"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"" && ((vehicle _x getVariable [""Sarge"",0] != 1) && (vehicle _x getVariable [""DZAI"",0] != 1))) then {" \n
+		"  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"" && ((vehicle _x getVariable [""Sarge"",0] != 1) && (vehicle _x getVariable [""DZAI"",0] != 1))) then {" \n
 
+		
+6. Optionally, you may edit DZAI's settings in dayz_server\DZAI\init\dzai_variables.sqf
+
+7. Repack your dayz_server.pbo by right-clicking the unpacked folder, then click on "create PBO". If prompted to overwrite, click "Yes".
+
+Note: You may store your custom settings changes in DZAI\DZAI_settings_override.sqf. This file is a convenient way to store and transfer your custom settings when upgrading to a newer version of DZAI. Further instructions are provided inside this file.
 
 Troubleshooting Instructions:
 ============

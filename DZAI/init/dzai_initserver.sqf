@@ -48,7 +48,7 @@ private["_worldname"];
 _worldname=toLower format ["%1",worldName];
 diag_log format["[DZAI] Server is running map %1.",_worldname];
 
-if (DZAI_objPatch) then {_nul = _worldname execVM '\z\addons\dayz_server\DZAI\scripts\buildingpatch_all_blacklist.sqf';};
+if (DZAI_objPatch) then {_nul = _worldname execVM '\z\addons\dayz_server\DZAI\scripts\buildingpatch_all.sqf';};
 
 switch (_worldname) do {
 	case "chernarus":
