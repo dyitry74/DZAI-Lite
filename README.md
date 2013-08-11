@@ -1,4 +1,4 @@
-DZAI Lite 0.2.1 - AI Addon for DayZ
+DZAI Lite 0.2.2 - AI Addon for DayZ
 ============
 
 
@@ -113,5 +113,14 @@ Latest Updates:
 
 - [FIXED] Added an optional experimental fix to prevent AI units from shooting/walking through buildings and objects spawned by DayZ's CfgTownGenerator. Enable by setting DZAI_objectPatch = true in dzai_variables.sqf. Enabling this setting may be essential for DayZ Overwatch 0.2.2+.
 <b>Note</b>: Enabling DZAI_objectPatch *may* cause a flood of "Ref to nonnetwork object" errors in your RPT log. This is a harmless warning message but can be annoying as it fills up the RPT log.
+
+0.2.2 Update:
+
+- [FIXED] Dynamic AI player-seeking now uses AI group leader is center point for AI patrol if target player logs out during pursuit state.
+- [FIXED] Waypoints are no longer created for a wiped-out dynamic AI group.
+- [MODIFIED] Lowered AI aimingAccuracy for all skill tiers. Large increases to AI aimingShake (lock-on time decrease) and smaller increases to AI aimingSpeed. These changes are intended to increase AI effectiveness in close quarters and decrease effectiveness at long distances.
+- [MODIFIED] Lowered collision damage reduction for AI from 90% to 80%.
+- [MODIFIED] Increased probability of generating pistol instead of rifle for weapongrade 0 AI units from 50% to 55%.
+- [MODIFIED] Dynamic AI spawn distance from target player modified from 200m-300m to 200m-250m.
 
 Note: Older updates are archived in changelog.txt

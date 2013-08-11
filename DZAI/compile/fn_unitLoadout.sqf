@@ -24,7 +24,7 @@
 		
 		switch (_weapongrade) do {
 			case 0: {
-				if ((random 1) < 0.5) then {
+				if ((random 1) < 0.55) then {
 					_weapons = DZAI_rifles0;
 				} else {
 					_weapons = DZAI_Pistols0;

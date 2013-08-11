@@ -3,10 +3,10 @@
 	
 	Description: Used for dynamically spawned AI. Creates a MOVE waypoint directing AI to a random player's position, then uses BIN_taskPatrol to create a circular patrol path around player's position.
 	
-	Last updated: 5:58 PM 7/29/2013
+	Last updated: 2:54 PM 8/10/2013
 */
 
-private ["_unitGroup","_spawnPos","_waypoint","_patrolDist","_statement","_targetPlayer"];
+private ["_unitGroup","_spawnPos","_waypoint","_patrolDist","_statement","_targetPlayer","_patrolCenter"];
 
 _unitGroup = _this select 0;
 _spawnPos = _this select 1;
@@ -48,11 +48,14 @@ while {(alive _targetPlayer) && !(isNull _targetPlayer) && (_targetPlayer isKind
 	sleep 30;
 };
 
+if ((_unitGroup getVariable ["groupSize",0]) < 1) exitWith {};
+
 if (DZAI_debugLevel > 0) then {diag_log format ["DZAI Debug: Group %1 has exited hunting phase. Moving to patrol phase. (fn_seekPlayer)",_unitGroup];};
 
 //Begin patrol phase
 _waypoint setWaypointStatements ["true","if ((random 1) < 0.50) then { group this setCurrentWaypoint [(group this), (floor (random (count (waypoints (group this)))))];};"];
-0 = [_unitGroup,(getPosATL _targetPlayer),_patrolDist,DZAI_debugMarkers] spawn fnc_BIN_taskPatrol;
+_patrolCenter = if (!(isNull _targetPlayer)) then {getPosATL _targetPlayer} else {getPosATL (leader _unitGroup)};
+0 = [_unitGroup,_patrolCenter,_patrolDist,DZAI_debugMarkers] spawn fnc_BIN_taskPatrol;
 
 sleep 5;
 if ((_targetPlayer hasWeapon "ItemRadio") && !(_unitGroup getVariable ["inPursuit",false])) then {

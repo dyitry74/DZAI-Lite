@@ -9,7 +9,7 @@ _damage = 		_this select 2;				//Resulting level of damage for the selection. (R
 _dmgSource = 	_this select 3;				//The source unit that caused the damage. 
 _projectile = 	_this select 4;				//Classname of the projectile that caused inflicted the damage. ("" for unknown, such as falling damage.) 
 
-if (_unit == _dmgSource) then {_damage = (_damage/10)};	//Reduce collision damage in case unit falls from a building or struck by a vehicle.
+if (_unit == _dmgSource) then {_damage = (_damage/5)};	//Reduce collision damage in case unit falls from a building or struck by a vehicle.
 if (((_damage > 2) || ((_damage > 0.5) && (_selection == "head_hit"))) && !(_unit getVariable ["unconscious",false])) then {_nul = [_unit] spawn DZAI_unconscious; _unit setVariable ["unconscious",true];};
 
 if (isNil {_unit getVariable "gethit"}) then {_unit setVariable ["gethit",[0,0,0,0]]};                            	// Fresh unit starts at full health
