@@ -116,7 +116,7 @@ Latest Updates:
 
 0.2.2 Update:
 
-- [FIXED] Dynamic AI player-seeking now uses AI group leader is center point for AI patrol if target player logs out during pursuit state.
+- [FIXED] Dynamic AI player-seeking now uses AI group leader as center point for AI patrol if target player logs out during pursuit state.
 - [FIXED] Waypoints are no longer created for a wiped-out dynamic AI group.
 - [MODIFIED] Lowered AI aimingAccuracy for all skill tiers. Large increases to AI aimingShake (lock-on time decrease) and smaller increases to AI aimingSpeed. These changes are intended to increase AI effectiveness in close quarters and decrease effectiveness at long distances.
 - [MODIFIED] Lowered collision damage reduction for AI from 90% to 80%.

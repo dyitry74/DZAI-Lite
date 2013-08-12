@@ -47,7 +47,7 @@ DZAI_banAIWeapons = [];										//(Only if DZAI_dynamicWeaponList = true) List 
 //Note: It is recommended to add all melee weapon classnames into this list as AI have issues using melee weapons. All melee weapons and crossbows present in DayZ 1.7.7.1 have been pre-banned ("Crossbow_DZ","Crossbow","MeleeBaseBallBat","MeleeMachete")
 
 //AI loot probabilities
-DZAI_gradeChancesDyn = [0.30,0.60,0.08,0.02];				//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
+DZAI_gradeChancesDyn = [0.25,0.65,0.08,0.02];				//Probabilities of generating each weapongrade (0,1,2,3). 0: Civilian, 1: Military, 2: MilitarySpecial, 3: Heli Crash. Weapon grade also influences the general skill level of the AI unit.
 
 //Load custom DZAI settings file.
 call compile preprocessFileLineNumbers "\z\addons\dayz_server\DZAI\DZAI_settings_override.sqf";
